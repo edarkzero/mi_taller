@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "item_price".
@@ -13,8 +14,8 @@ use Yii;
  * @property string $created_at
  * @property string $updated_at
  *
+ * @property Price $price
  * @property Item $item
- * @property Job $price
  */
 class ItemPrice extends \yii\db\ActiveRecord
 {
@@ -26,13 +27,27 @@ class ItemPrice extends \yii\db\ActiveRecord
         return 'item_price';
     }
 
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                ],
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['item_id', 'price_id', 'created_at'], 'required'],
+            [['item_id', 'price_id'], 'required'],
             [['item_id', 'price_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe']
         ];
@@ -55,16 +70,16 @@ class ItemPrice extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getItem()
+    public function getPrice()
     {
-        return $this->hasOne(Item::className(), ['id' => 'item_id']);
+        return $this->hasOne(Price::className(), ['id' => 'price_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPrice()
+    public function getItem()
     {
-        return $this->hasOne(Job::className(), ['id' => 'price_id']);
+        return $this->hasOne(Item::className(), ['id' => 'item_id']);
     }
 }

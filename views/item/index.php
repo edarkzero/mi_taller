@@ -25,13 +25,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'name',
             'code',
+            [
+                'attribute' => 'item_total',
+                'value' => function ($model, $key, $index, $column)
+                {
+                    return $model->getTotal();
+                },
+                'format' => 'currency'
+            ],
             'quantity',
             'quantity_stock',
-            // 'created_at',
-            // 'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

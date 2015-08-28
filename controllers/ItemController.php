@@ -2,9 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\ItemPrice;
+use app\models\Price;
 use Yii;
 use app\models\Item;
 use app\models\ItemSearch;
+use yii\base\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,12 +64,30 @@ class ItemController extends Controller
     public function actionCreate()
     {
         $model = new Item();
+        $modelPrice = new Price();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $modelPrice->load(Yii::$app->request->post()) && $modelPrice->validate()) {
+            $transaction = $model->getDb()->beginTransaction();
+            try
+            {
+                if(!$model->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($model->tableName())),'msj' => print_r($model->getErrors(),true)]),500);
+                if(!$modelPrice->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($modelPrice->tableName())),'msj' => print_r($modelPrice->getErrors(),true)]),500);
+                $modelItemPrice = new ItemPrice();
+                $modelItemPrice->item_id = $model->id;
+                $modelItemPrice->price_id = $modelPrice->id;
+                if(!$modelItemPrice->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($modelItemPrice->tableName())),'msj' => print_r($modelItemPrice->getErrors(),true)]),500);
+                $transaction->commit();
+            }
+            catch(\Exception $e)
+            {
+                $transaction->rollBack();
+                throw $e;
+            }
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'modelPrice' => $modelPrice
             ]);
         }
     }
@@ -80,12 +101,27 @@ class ItemController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelItemPrice = $model->itemPrices;
+        $modelPrice = $modelItemPrice[0]->price;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $modelPrice->load(Yii::$app->request->post()) && $modelPrice->validate()) {
+            $transaction = $model->getDb()->beginTransaction();
+            try
+            {
+                if(!$model->save(false)) throw new Exception(Yii::t('app','Error updating {model}: {msj}',['model' => Yii::t('app',ucfirst($model->tableName())),'msj' => print_r($model->getErrors(),true)]),500);
+                if(!$modelPrice->save(false)) throw new Exception(Yii::t('app','Error updating {model}: {msj}',['model' => Yii::t('app',ucfirst($modelPrice->tableName())),'msj' => print_r($modelPrice->getErrors(),true)]),500);
+                $transaction->commit();
+            }
+            catch(\Exception $e)
+            {
+                $transaction->rollBack();
+                throw $e;
+            }
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'modelPrice' => $modelPrice
             ]);
         }
     }
@@ -98,7 +134,23 @@ class ItemController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $modelItemPrice = $model->itemPrices;
+        $modelPrice = $modelItemPrice[0]->price;
+
+        $transaction = $model->getDb()->beginTransaction();
+        try
+        {
+            $modelItemPrice[0]->delete();
+            $model->delete();
+            $modelPrice->delete();
+            $transaction->commit();
+        }
+        catch(\Exception $e)
+        {
+            $transaction->rollBack();
+            throw $e;
+        }
 
         return $this->redirect(['index']);
     }

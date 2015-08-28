@@ -28,7 +28,7 @@ class Log extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['message', 'created_at'], 'required'],
+            [['message'], 'required'],
             [['message'], 'string'],
             [['created_at', 'updated_at'], 'safe']
         ];

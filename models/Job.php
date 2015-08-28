@@ -11,8 +11,6 @@ use Yii;
  * @property string $name
  * @property string $created_at
  * @property string $updated_at
- *
- * @property ItemPrice[] $itemPrices
  */
 class Job extends \yii\db\ActiveRecord
 {
@@ -30,7 +28,7 @@ class Job extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'created_at'], 'required'],
+            [['name'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique']
@@ -48,13 +46,5 @@ class Job extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created_at'),
             'updated_at' => Yii::t('app', 'Updated_at'),
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getItemPrices()
-    {
-        return $this->hasMany(ItemPrice::className(), ['price_id' => 'id']);
     }
 }

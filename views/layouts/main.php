@@ -27,7 +27,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => Yii::$app->params['company'],
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,13 +36,13 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Item', 'url' => ['/item/index']],
-            ['label' => 'Job', 'url' => ['/job/index']],
-            ['label' => 'Person', 'url' => ['/person/index']],
-            ['label' => 'Log', 'url' => ['/log/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => \Yii::t('app','Home'), 'url' => ['/site/index']],
+            ['label' => \Yii::t('app','Item'), 'url' => ['/item/index']],
+            ['label' => \Yii::t('app','Job'), 'url' => ['/job/index']],
+            ['label' => \Yii::t('app','Person'), 'url' => ['/person/index']],
+            ['label' => \Yii::t('app','Log'), 'url' => ['/log/index']],
+            ['label' => \Yii::t('app','About'), 'url' => ['/site/about']],
+            ['label' => \Yii::t('app','Contact'), 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ?
                 ['label' => 'Login', 'url' => ['/site/login']] :
                 [

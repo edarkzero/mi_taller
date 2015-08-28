@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "price".
@@ -24,13 +25,27 @@ class Price extends \yii\db\ActiveRecord
         return 'price';
     }
 
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                ],
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['price', 'tax', 'total', 'created_at'], 'required'],
+            [['price', 'tax', 'total'], 'required'],
             [['price', 'tax', 'total'], 'number'],
             [['created_at', 'updated_at'], 'safe']
         ];

@@ -6,12 +6,15 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Item;
+use yii\data\Sort;
 
 /**
  * ItemSearch represents the model behind the search form about `app\models\Item`.
  */
 class ItemSearch extends Item
 {
+    public $item_total;
+
     /**
      * @inheritdoc
      */
@@ -19,7 +22,7 @@ class ItemSearch extends Item
     {
         return [
             [['id', 'quantity', 'quantity_stock'], 'integer'],
-            [['name', 'code', 'created_at', 'updated_at'], 'safe'],
+            [['name', 'code', 'created_at', 'updated_at','item_total'], 'safe'],
         ];
     }
 
@@ -42,9 +45,24 @@ class ItemSearch extends Item
     public function search($params)
     {
         $query = Item::find();
+        $query->innerJoinWith('itemPrices.price');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => new Sort([
+                'attributes' => [
+                    'name',
+                    'code',
+                    'quantity',
+                    'quantity_stock',
+                    'created_at',
+                    'updated_at',
+                    'item_total' => [
+                        'asc' => ['price.total' => SORT_ASC],
+                        'desc' => ['price.total' => SORT_DESC]
+                    ]
+                ],
+            ])
         ]);
 
         $this->load($params);
@@ -56,15 +74,14 @@ class ItemSearch extends Item
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
             'quantity' => $this->quantity,
             'quantity_stock' => $this->quantity_stock,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'updated_at' => $this->updated_at
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'code', $this->code]);
+            ->andFilterWhere(['like', 'code', $this->code])->andFilterWhere(['like','price.total',$this->item_total]);
 
         return $dataProvider;
     }
