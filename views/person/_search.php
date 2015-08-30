@@ -23,7 +23,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'lastname') ?>
 
-    <?= $form->field($model, 'created_at') ?>
+    <?= $form->field($model, 'job_id') ?>
+
+    <?php // echo $form->field($model, 'created_at') ?>
 
     <?php // echo $form->field($model, 'updated_at') ?>
 

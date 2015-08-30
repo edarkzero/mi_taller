@@ -37,6 +37,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => \Yii::t('app','Home'), 'url' => ['/site/index']],
+            ['label' => \Yii::t('app','Billing'), 'url' => ['/billing/index']],
             ['label' => \Yii::t('app','Item'), 'url' => ['/item/index']],
             ['label' => \Yii::t('app','Job'), 'url' => ['/job/index']],
             ['label' => \Yii::t('app','Person'), 'url' => ['/person/index']],

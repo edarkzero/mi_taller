@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'document',
             'firstname',
             'lastname',
+            'job_id',
             'created_at',
             'updated_at',
         ],

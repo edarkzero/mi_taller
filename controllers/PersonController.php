@@ -2,9 +2,13 @@
 
 namespace app\controllers;
 
+use app\models\Job;
 use Yii;
 use app\models\Person;
 use app\models\PersonSearch;
+use yii\base\Model;
+use yii\db\Query;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,12 +65,37 @@ class PersonController extends Controller
     public function actionCreate()
     {
         $model = new Person();
+        $jobModel = new Job();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($jobModel->load(Yii::$app->request->post()) && $jobModel->validate() && $model->load(Yii::$app->request->post()) && $model->validate()) {
+            $transaction = $model->getDb()->beginTransaction();
+            try
+            {
+                if(is_numeric($jobModel->name))
+                    $jobModel = $jobModel->findOne($jobModel->name);
+                else {
+                    $jobModel = new Job();
+                    $jobModel->load(Yii::$app->request->post());
+                    if (!$jobModel->save(false))
+                        throw new Exception(Yii::t('app', 'Error saving {model}: {msj}', ['model' => Yii::t('app', ucfirst($jobModel->tableName())), 'msj' => print_r($jobModel->getErrors(), true)]), 500);
+                }
+
+                $model->job_id = $jobModel->id;
+
+                if(!$model->save(false))
+                    throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($model->tableName())),'msj' => print_r($model->getErrors(),true)]),500);
+                $transaction->commit();
+            }
+            catch(\Exception $e)
+            {
+                $transaction->rollBack();
+                throw $e;
+            }
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'jobModel' => $jobModel
             ]);
         }
     }
@@ -80,12 +109,38 @@ class PersonController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $jobModel = $model->job;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($jobModel->load(Yii::$app->request->post()) && $jobModel->validate() && $model->load(Yii::$app->request->post()) && $model->validate()) {
+            $transaction = $model->getDb()->beginTransaction();
+            try
+            {
+                if(is_numeric($jobModel->name))
+                    $jobModel = $jobModel->findOne($jobModel->name);
+                else {
+                    $jobModel = new Job();
+                    $jobModel->load(Yii::$app->request->post());
+                    if (!$jobModel->save(false))
+                        throw new Exception(Yii::t('app', 'Error saving {model}: {msj}', ['model' => Yii::t('app', ucfirst($jobModel->tableName())), 'msj' => print_r($jobModel->getErrors(), true)]), 500);
+                }
+
+                if($model->job_id != $jobModel->id)
+                    $model->job_id = $jobModel->id;
+
+                if(!$model->save(false))
+                    throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($model->tableName())),'msj' => print_r($model->getErrors(),true)]),500);
+                $transaction->commit();
+            }
+            catch(\Exception $e)
+            {
+                $transaction->rollBack();
+                throw $e;
+            }
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'jobModel' => $jobModel
             ]);
         }
     }
@@ -117,5 +172,25 @@ class PersonController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionJobs($q = null, $id = null)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if(is_null($q)) $q = "";
+        $out = ['results' => []];
+        $occurrence = false;
+        $jobs = Job::find()->where('name LIKE :q')->params([':q' => '%'.$q.'%'])->asArray()->all();
+        foreach($jobs as $job)
+        {
+            if ($job['name'] == $q)
+                $occurrence = true;
+
+            $out['results'][] = ['id' => $job['id'],'text' => $job['name']];
+        }
+
+        if(!$occurrence && $q != "")
+            $out['results'][] = ['id' => $q, 'text' => $q];
+        return $out;
     }
 }

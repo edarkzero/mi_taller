@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "job".
@@ -11,6 +12,8 @@ use Yii;
  * @property string $name
  * @property string $created_at
  * @property string $updated_at
+ *
+ * @property Person[] $people
  */
 class Job extends \yii\db\ActiveRecord
 {
@@ -20,6 +23,20 @@ class Job extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'job';
+    }
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                ],
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
     }
 
     /**
@@ -46,5 +63,13 @@ class Job extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created_at'),
             'updated_at' => Yii::t('app', 'Updated_at'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPeople()
+    {
+        return $this->hasMany(Person::className(), ['job_id' => 'id']);
     }
 }
