@@ -170,4 +170,20 @@ class ItemController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    public function actionPrice()
+    {
+        if(isset($_POST['p']))
+        {
+            $modelPrice = new Price();
+            $modelPrice->price = $_POST['p']['p_price'];
+            $modelPrice->tax = $_POST['p']['p_tax'];
+            $modelPrice->total = $_POST['p']['p_total'];
+            $modelPrice->calculate();
+            echo $modelPrice->getAjaxValue();
+        }
+
+        else
+            throw new Exception(Yii::t('error','Bad request'));
+    }
 }

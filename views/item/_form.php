@@ -3,6 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\money\MaskMoney;
+use yii\helpers\Url;
+use app\assets\TotalFieldAsset;
+
+TotalFieldAsset::register($this);
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Item */
@@ -32,6 +36,13 @@ $maskPercentOptions = [
 ];
 
 ?>
+
+<script>
+    var f_price = "#<?= Html::getInputId($modelPrice,'price'); ?>-disp";
+    var f_tax = "#<?= Html::getInputId($modelPrice,'tax'); ?>-disp";
+    var f_total = "#<?= Html::getInputId($modelPrice,'total'); ?>-disp";
+    var URL_PRICE = "<?= Url::to(['item/price']); ?>";
+</script>
 
 <div class="item-form">
 

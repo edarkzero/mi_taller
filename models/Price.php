@@ -65,4 +65,37 @@ class Price extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('app', 'Updated_at'),
         ];
     }
+
+    public function getPriceTax()
+    {
+        $tax = (double)($this->tax)/100;
+        return (double)($this->price)*$tax;
+    }
+
+    public function calculate()
+    {
+        $this->price = (double)$this->price;
+        $this->tax = (double)$this->tax;
+        $this->total = (double)($this->price)+$this->getPriceTax();
+        $this->total = round($this->total,2);
+    }
+
+    public function getAjaxValue()
+    {
+        $result = [];
+        $result['price'] = $this->price;
+        $result['tax'] = $this->tax;
+        $result['total'] = $this->total;
+        echo json_encode($result);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            //$this->calculate();
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
