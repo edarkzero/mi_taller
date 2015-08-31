@@ -45,5 +45,9 @@ return [
     'Error updating {model}: {msj}' => 'Error editando {model}: {msj}',
     'Error deleting {model}: {msj}' => 'Error eliminando {model}: {msj}',
     'Select an option ...' => 'Selecciona una opción ...',
-    'Billing' => 'Facturación'
+    'Billing' => 'Facturación',
+    'Step {n}' => 'Paso {n}',
+    'Car parts selection' => 'Selección de piezas de vehículo',
+    'Next' => 'Siguiente',
+    'Previous' => 'Anterior'
 ];
