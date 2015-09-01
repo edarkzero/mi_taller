@@ -49,5 +49,13 @@ return [
     'Step {n}' => 'Paso {n}',
     'Car parts selection' => 'Selección de piezas de vehículo',
     'Next' => 'Siguiente',
-    'Previous' => 'Anterior'
+    'Previous' => 'Anterior',
+    '{n_door} doors {car_type}' => '{car_type} {n_door} puertas',
+    'Rear view' => 'Vista trasera',
+    'Front view' => 'Vista frontal',
+    'Right side view' => 'Vista lateral derecha',
+    'Left side view' => 'Vista lateral izquierda',
+    'Sedan' => 'Sedan',
+    'Truck' => 'Camión',
+    'Compact' => 'Compacto'
 ];

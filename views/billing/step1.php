@@ -1,37 +1,94 @@
 <?php
 use yii\helpers\Html;
+use app\assets\BillingAsset;
 
 /* @var $this yii\web\View */
+
+BillingAsset::register($this);
 
 $this->title = Yii::t('app', 'Billing') . ' ' . Yii::t('app', 'Step {n}', ['n' => 1]);
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Billing'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+
 <h1><?= Html::encode($this->title) ?></h1>
 
-<p>
-    <?= Yii::t('app', 'Car parts selection'); ?>
-</p>
+<div class="row">
+    <div class="col-xs-1">
+        <a href="javascript:void(0)" class="btn btn-primary btn-raised mdi-action-grade"></a>
+        <a href="javascript:void(0)" class="btn btn-primary btn-raised mdi-action-grade"></a>
+        <a href="javascript:void(0)" class="btn btn-primary btn-raised mdi-action-grade"></a>
+        <a href="javascript:void(0)" class="btn btn-primary btn-raised mdi-action-grade"></a>
+    </div>
+    <div class="col-xs-11">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center">
+                <h3 class="panel-title"><?= Yii::t('app', 'Car parts selection'); ?></h3>
+            </div>
+            <div class="panel-body">
+                <?= \yii\bootstrap\Carousel::widget([
+                    'items' => [
+                        [
+                            'content' => '<img class="img-responsive center-block" src="'.Yii::getAlias('@web').'/images/car-blueprint/sedan-left.png"/>',
+                            //'caption' => Yii::t('app','Left side view')
+                        ],
+                        [
+                            'content' => '<img class="img-responsive center-block" src="'.Yii::getAlias('@web').'/images/car-blueprint/sedan-right.png"/>',
+                            //'caption' => Yii::t('app','Right side view')
+                        ],
+                        [
+                            'content' => '<img class="img-responsive center-block" src="'.Yii::getAlias('@web').'/images/car-blueprint/sedan-back.png"/>',
+                            //'caption' => Yii::t('app','Rear view')
+                        ],
+                        [
+                            'content' => '<img class="img-responsive center-block" src="'.Yii::getAlias('@web').'/images/car-blueprint/sedan-front.png"/>',
+                            //'caption' => Yii::t('app','Front view')
+                        ],
+                    ],
+                    'controls' => [
+                        '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span><span class="sr-only">' . Yii::t('app', 'Previous') . '</span>',
+                        '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><span class="sr-only">' . Yii::t('app', 'Next') . '</span>'
+                    ],
+                    'clientOptions' => ['interval' => false],
+                    'options' => ['class' => 'slide','style' => 'background-color:#F0FFFF','id' => 'car-slide']
+                ]);
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div class="col-xs-12">
-    <?= \yii\bootstrap\Carousel::widget([
-        'items' => [
-            [
-                'content' => '<img class="img-responsive center-block" src="http://placehold.it/400x200.png"/>',
-                'caption' => '<h4>This is title</h4><p>This is the caption text</p>'
-            ],
-            [
-                'content' => '<img class="img-responsive center-block" src="http://placehold.it/350x200.png"/>',
-                'caption' => '<h4>This is the other title</h4>'
-            ],
-        ],
-        'controls' => [
-            '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span><span class="sr-only">'.Yii::t('app','Previous').'</span>',
-            '<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span><span class="sr-only">'.Yii::t('app','Next').'</span>'
-        ],
-        'clientOptions' => ['interval' => false],
-        'options' => ['class' => 'slide']
-    ]);
-    ?>
+<div class="row">
+    <div class="col-xs-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center">
+                <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app','Sedan')]); ?></h3>
+            </div>
+            <div class="panel-body">
+                <img class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/sedan-front.png"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center">
+                <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app','Truck')]); ?></h3>
+            </div>
+            <div class="panel-body">
+                <img class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/sedan-front.png"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading text-center">
+                <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app','Compact')]); ?></h3>
+            </div>
+            <div class="panel-body">
+                <img class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/sedan-front.png"/>
+            </div>
+        </div>
+    </div>
 </div>
