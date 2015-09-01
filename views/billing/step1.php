@@ -16,13 +16,13 @@ $this->params['breadcrumbs'][] = $this->title;
 <h1><?= Html::encode($this->title) ?></h1>
 
 <div class="row">
-    <div class="col-xs-1">
-        <a href="javascript:void(0)" class="btn btn-primary btn-raised mdi-action-grade"></a>
-        <a href="javascript:void(0)" class="btn btn-primary btn-raised mdi-action-grade"></a>
-        <a href="javascript:void(0)" class="btn btn-primary btn-raised mdi-action-grade"></a>
-        <a href="javascript:void(0)" class="btn btn-primary btn-raised mdi-action-grade"></a>
+    <div class="col-md-2">
+        <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="0"><?= Yii::t('app','Left'); ?></a>
+        <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="1"><?= Yii::t('app','Right'); ?></a>
+        <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="2"><?= Yii::t('app','Rear'); ?></a>
+        <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="3"><?= Yii::t('app','Front'); ?></a>
     </div>
-    <div class="col-xs-11">
+    <div class="col-md-10">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
                 <h3 class="panel-title"><?= Yii::t('app', 'Car parts selection'); ?></h3>
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <div class="row">
-    <div class="col-xs-4">
+    <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
                 <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app','Sedan')]); ?></h3>
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
                 <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app','Truck')]); ?></h3>
@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
-    <div class="col-xs-4">
+    <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
                 <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app','Compact')]); ?></h3>

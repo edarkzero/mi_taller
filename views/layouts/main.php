@@ -19,7 +19,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <link rel="shortcut icon" href=<?= Yii::getAlias('@web'); ?>/favicon.ico/>
+    <link rel="shortcut icon" href="<?= Yii::getAlias('@web') ?>/images/favicon.ico">
     <?php $this->head() ?>
 </head>
 <body>
@@ -38,11 +38,11 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => \Yii::t('app','Home'), 'url' => ['/site/index']],
-            ['label' => \Yii::t('app','Billing'), 'url' => ['/billing/index']],
-            ['label' => \Yii::t('app','Item'), 'url' => ['/item/index']],
-            ['label' => \Yii::t('app','Job'), 'url' => ['/job/index']],
-            ['label' => \Yii::t('app','Person'), 'url' => ['/person/index']],
-            ['label' => \Yii::t('app','Log'), 'url' => ['/log/index']],
+            ['label' => \Yii::t('app','Billing'), 'url' => ['/billing/index'],'active' => Yii::$app->controller->id == 'billing'],
+            ['label' => \Yii::t('app','Item'), 'url' => ['/item/index'],'active' => Yii::$app->controller->id == 'item'],
+            ['label' => \Yii::t('app','Job'), 'url' => ['/job/index'],'active' => Yii::$app->controller->id == 'job'],
+            ['label' => \Yii::t('app','Person'), 'url' => ['/person/index'],'active' => Yii::$app->controller->id == 'person'],
+            ['label' => \Yii::t('app','Log'), 'url' => ['/log/index'],'active' => Yii::$app->controller->id == 'log'],
             ['label' => \Yii::t('app','About'), 'url' => ['/site/about']],
             ['label' => \Yii::t('app','Contact'), 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ?

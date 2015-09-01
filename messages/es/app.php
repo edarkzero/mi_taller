@@ -57,5 +57,9 @@ return [
     'Left side view' => 'Vista lateral izquierda',
     'Sedan' => 'Sedan',
     'Truck' => 'Camión',
-    'Compact' => 'Compacto'
+    'Compact' => 'Compacto',
+    'Rear' => 'Trasera',
+    'Front' => 'Frontal',
+    'Left' => 'Izquierda',
+    'Right' => 'Derecha'
 ];
