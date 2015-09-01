@@ -2,8 +2,8 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=mi_taller',
+    'dsn' => 'mysql:host=localhost;dbname=mi_taller;port=3307;',
     'username' => 'root',
-    'password' => '',
+    'password' => '123456',
     'charset' => 'utf8',
 ];

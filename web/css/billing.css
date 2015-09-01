@@ -2,3 +2,8 @@
 {
     width: 100%;
 }
+
+#car-slide .carousel-indicators
+{
+    display: none;
+}
