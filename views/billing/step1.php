@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="1"><?= Yii::t('app','Right'); ?></a>
         <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="2"><?= Yii::t('app','Rear'); ?></a>
         <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="3"><?= Yii::t('app','Front'); ?></a>
+        <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="4"><?= Yii::t('app','Aerial'); ?></a>
     </div>
     <div class="col-md-10">
         <div class="panel panel-primary">
@@ -45,6 +46,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'content' => '<img class="img-responsive center-block" src="'.Yii::getAlias('@web').'/images/car-blueprint/sedan-front.png"/>',
                             //'caption' => Yii::t('app','Front view')
+                        ],
+                        [
+                            'content' => '<img class="img-responsive center-block" src="'.Yii::getAlias('@web').'/images/car-blueprint/sedan-air.png"/>',
+                            //'caption' => Yii::t('app','Aerial view')
                         ],
                     ],
                     'controls' => [

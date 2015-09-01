@@ -55,11 +55,13 @@ return [
     'Front view' => 'Vista frontal',
     'Right side view' => 'Vista lateral derecha',
     'Left side view' => 'Vista lateral izquierda',
+    'Aerial view' => 'Vista aérea',
     'Sedan' => 'Sedan',
     'Truck' => 'Camión',
     'Compact' => 'Compacto',
     'Rear' => 'Trasera',
     'Front' => 'Frontal',
     'Left' => 'Izquierda',
-    'Right' => 'Derecha'
+    'Right' => 'Derecha',
+    'Aerial' => 'Aérea'
 ];
