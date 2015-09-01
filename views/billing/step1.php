@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app','Truck')]); ?></h3>
             </div>
             <div class="panel-body">
-                <img class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/sedan-front.png"/>
+                <img class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/wagon-front.png"/>
             </div>
         </div>
     </div>
