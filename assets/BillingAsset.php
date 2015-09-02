@@ -18,6 +18,7 @@ class BillingAsset extends AssetBundle
     ];
     public $js = [
         'js/billing.js',
+        'js/jquery.maphilight.min.js'
     ];
     public $depends = [
         'app\assets\AppAsset',
