@@ -63,5 +63,6 @@ return [
     'Front' => 'Frontal',
     'Left' => 'Izquierda',
     'Right' => 'Derecha',
-    'Aerial' => 'Aérea'
+    'Aerial' => 'Aérea',
+    'Part details' => 'Detalles de pieza'
 ];
