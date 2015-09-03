@@ -106,5 +106,6 @@ return [
     'System' => 'Sistema',
     'Low stock items' => 'Artículos con poca disponibilidad',
     'Empty stock items' => 'Artículos sin disponibilidad',
-    'See more' => 'Ver más'
+    'See more' => 'Ver más',
+    'In developing' => 'En desarrollo'
 ];

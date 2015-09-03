@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Item;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -47,9 +48,18 @@ class SiteController extends Controller
         ];
     }
 
+    /**
+     * @return string
+     */
     public function actionIndex()
     {
-        return $this->render('index');
+        $low_stock_items = Item::find()->where('')->all();
+        $empty_stock_items = Item::find()->where('')->all();
+
+        return $this->render('index',[
+            'low_stock_items' => $low_stock_items,
+            'empty_stock_items' => $empty_stock_items
+        ]);
     }
 
     public function actionLogin()

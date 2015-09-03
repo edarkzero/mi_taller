@@ -1,6 +1,8 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $low_stock_items app\models\Item[] */
+/* @var $empty_stock_items app\models\Item[] */
 
 $this->title = Yii::$app->params['company'];
 ?>
@@ -18,30 +20,25 @@ $this->title = Yii::$app->params['company'];
             <div class="col-lg-4">
                 <h2><?= Yii::t('app','Low stock items') ?></h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <?php foreach ($low_stock_items as $item): ?>
+                    <p><?= $item->name; ?>: <?= $item->quantity ?></p>
+                <?php endforeach; ?>
 
                 <p><a class="btn btn-default" href="<?= \yii\helpers\Url::to(['item/index']) ?>"><?= Yii::t('app','See more') ?> &raquo;</a></p>
             </div>
             <div class="col-lg-4">
                 <h2><?= Yii::t('app','Empty stock items') ?></h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <?php foreach ($empty_stock_items as $item): ?>
+                    <p><?= $item->name; ?>: <?= $item->quantity ?></p>
+                <?php endforeach; ?>
 
                 <p><a class="btn btn-default" href="<?= \yii\helpers\Url::to(['item/index']) ?>"><?= Yii::t('app','See more') ?> &raquo;</a></p>
             </div>
             <div class="col-lg-4">
                 <h2><?= Yii::t('app','System alerts') ?></h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                <p><?= Yii::t('app','In developing') ?>...</p>
 
                 <p><a class="btn btn-default" href="<?= \yii\helpers\Url::to(['log/index']) ?>"><?= Yii::t('app','See more') ?> &raquo;</a></p>
             </div>
