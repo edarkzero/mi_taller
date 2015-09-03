@@ -89,5 +89,7 @@ return [
     'Username' => 'Usuario',
     'Password' => 'Contraseña',
     'Remember Me' => 'Recordarme',
-    'Login' => 'Ingresar'
+    'Login' => 'Ingresar',
+    'The above error occurred while the Web server was processing your request.' => 'Se ha producido el error anterior, mientras que el servidor Web se procesando su solicitud.',
+    'Please contact us if you think this is a server error. Thank you.' => 'Póngase en contacto con nosotros si usted piensa que esto es un error en el servidor. Gracias you.please comunícate con nosotros si cree que ésto es un error en el servidor. Gracias.'
 ];

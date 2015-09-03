@@ -12,6 +12,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * PersonController implements the CRUD actions for Person model.
@@ -25,6 +26,20 @@ class PersonController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'matchCallback' => function ($rule, $action) {
+                            return \Yii::$app->user->id == 100;
+                        },
+                        'denyCallback' => function ($rule, $action) {
+                            throw new \Exception('You are not allowed to access this page');
+                        }
+                    ],
                 ],
             ],
         ];
