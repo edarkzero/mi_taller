@@ -103,9 +103,16 @@ class CarPartController extends Controller
             return $this->redirect(['index']);
         } else
         {
+            $sizes = ArrayHelper::map(Size::find()->asArray()->all(),'id','name');
+            $colors = ArrayHelper::map(Color::find()->asArray()->all(),'id','name');
+            $damages = ArrayHelper::map(Damage::find()->asArray()->all(),'id','name');
+
             return $this->render('create', [
                 'model'      => $model,
-                'modelPrice' => $modelPrice
+                'modelPrice' => $modelPrice,
+                'sizes' => $sizes,
+                'colors' => $colors,
+                'damages' => $damages
             ]);
         }
     }
@@ -137,9 +144,16 @@ class CarPartController extends Controller
             return $this->redirect(['index']);
         } else
         {
+            $sizes = ArrayHelper::map(Size::find()->asArray()->all(),'id','name');
+            $colors = ArrayHelper::map(Color::find()->asArray()->all(),'id','name');
+            $damages = ArrayHelper::map(Damage::find()->asArray()->all(),'id','name');
+
             return $this->render('update', [
                 'model'       => $model,
-                'modelPrices' => $modelPrice
+                'modelPrice' => $modelPrice,
+                'sizes' => $sizes,
+                'colors' => $colors,
+                'damages' => $damages
             ]);
         }
     }

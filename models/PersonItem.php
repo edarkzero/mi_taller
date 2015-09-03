@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -11,6 +12,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $id
  * @property string $item_id
  * @property string $person_id
+ * @property int $amount
  * @property string $created_at
  * @property string $updated_at
  *
@@ -19,7 +21,7 @@ use yii\behaviors\TimestampBehavior;
  */
 class PersonItem extends \yii\db\ActiveRecord
 {
-    public $item_name,$person_name;
+    public $item_name, $person_name;
 
     /**
      * @inheritdoc
@@ -33,14 +35,20 @@ class PersonItem extends \yii\db\ActiveRecord
     {
         return [
             'timestamp' => [
-                'class' => TimestampBehavior::className(),
+                'class'      => TimestampBehavior::className(),
                 'attributes' => [
                     \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
                 ],
-                'value' => new \yii\db\Expression('NOW()'),
+                'value'      => new \yii\db\Expression('NOW()'),
             ],
         ];
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert,$changedAttributes);
+        $this->calculateItemsLeft($changedAttributes);
     }
 
     /**
@@ -49,9 +57,9 @@ class PersonItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['item_id', 'person_id'], 'required'],
-            [['item_id', 'person_id'], 'integer'],
-            [['created_at', 'updated_at','item_name','person_name'], 'safe']
+            [['item_id', 'person_id', 'amount'], 'required'],
+            [['item_id', 'person_id', 'amount'], 'integer'],
+            [['created_at', 'updated_at', 'item_name', 'person_name'], 'safe']
         ];
     }
 
@@ -61,9 +69,10 @@ class PersonItem extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'item_id' => Yii::t('app', 'Item'),
-            'person_id' => Yii::t('app', 'Person'),
+            'id'         => Yii::t('app', 'ID'),
+            'item_id'    => Yii::t('app', 'Item'),
+            'person_id'  => Yii::t('app', 'Person'),
+            'amount'     => Yii::t('app', 'Amount'),
             'created_at' => Yii::t('app', 'Created_at'),
             'updated_at' => Yii::t('app', 'Updated_at'),
         ];
@@ -93,5 +102,20 @@ class PersonItem extends \yii\db\ActiveRecord
     public function getPersonName()
     {
         return isset($this->person->firstname) ? $this->person->getFullName() : '';
+    }
+
+    private function calculateItemsLeft($params)
+    {
+        $oldAmount = isset($params['amount']);
+        $amount = (int)($oldAmount ? $params['amount'] : $this->amount);
+        if(isset($this->item))
+        {
+            $item = $this->item;
+            if($oldAmount)
+                $amount = (int)($this->amount) - $amount;
+            $item->quantity = (int)($item->quantity) - $amount;
+            if (!$item->save(false))
+                throw new Exception(Yii::t('app', 'Error updating {model}: {msj}', ['model' => Yii::t('app', ucfirst($item->tableName())), 'msj' => print_r($item->getErrors(), true)]), 500);
+        }
     }
 }

@@ -5,6 +5,8 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PersonItem */
+/* @var $items array */
+/* @var $people array */
 
 $this->title = Yii::t('app', 'Create {modelClass}: ', ['modelClass' => Yii::t('app','Item')]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assignment'), 'url' => ['index']];
@@ -16,6 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'items' => $items,
+        'people' => $people
     ]) ?>
 
 </div>

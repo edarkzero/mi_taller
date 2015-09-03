@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\PersonItem;
 use yii\data\Sort;
 
 /**
@@ -19,7 +18,7 @@ class PersonItemSearch extends PersonItem
     public function rules()
     {
         return [
-            [['id', 'item_id', 'person_id'], 'integer'],
+            [['id', 'item_id', 'person_id','amount'], 'integer'],
             [['created_at', 'updated_at','item_name','person_name'], 'safe'],
         ];
     }
@@ -57,6 +56,7 @@ class PersonItemSearch extends PersonItem
                         'asc' => ['person.lastname' => SORT_ASC],
                         'desc' => ['person.lastname' => SORT_DESC]
                     ],
+                    'amount',
                     'created_at',
                     'updated_at'
                 ],

@@ -43,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->getPersonName();
                 }
             ],
+            'amount',
             'created_at:datetime',
             'updated_at:datetime',
 

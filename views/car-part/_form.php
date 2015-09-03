@@ -13,6 +13,9 @@ TotalFieldAsset::register($this);
 /* @var $model app\models\CarPart */
 /* @var $modelPrice app\models\Price */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $sizes array */
+/* @var $colors array */
+/* @var $damages array */
 
 $maskMoneyOptions = [
     'prefix' => 'Bs.',
@@ -55,6 +58,7 @@ $damageUrl = \yii\helpers\Url::to(['car-part/damage']);
     <?=
     $form->field($model, 'size_id')->widget(Select2::classname(), [
         'options' => ['placeholder' => Yii::t('app','Select an option ...')],
+        'data' => $sizes,
         'pluginOptions' => [
             'allowClear' => true,
             'ajax' => [
@@ -68,6 +72,7 @@ $damageUrl = \yii\helpers\Url::to(['car-part/damage']);
     <?=
     $form->field($model, 'color_id')->widget(Select2::classname(), [
         'options' => ['placeholder' => Yii::t('app','Select an option ...')],
+        'data' => $colors,
         'pluginOptions' => [
             'allowClear' => true,
             'ajax' => [
@@ -81,6 +86,7 @@ $damageUrl = \yii\helpers\Url::to(['car-part/damage']);
     <?=
     $form->field($model, 'damage_id')->widget(Select2::classname(), [
         'options' => ['placeholder' => Yii::t('app','Select an option ...')],
+        'data' => $damages,
         'pluginOptions' => [
             'allowClear' => true,
             'ajax' => [

@@ -84,6 +84,7 @@ return [
     'Colors' => 'Colores',
     'Size' => 'Tamaño',
     'Sizes' => 'Tamaños',
+    'Amount' => 'Cantidad',
     'Damage' => 'Daño',
     'Damages' => 'Daños',
     'Configuration' => 'Configuración',
@@ -97,5 +98,13 @@ return [
     'Please contact us if you think this is a server error. Thank you.' => 'Póngase en contacto con nosotros si usted piensa que esto es un error en el servidor. Gracias you.please comunícate con nosotros si cree que ésto es un error en el servidor. Gracias.',
     'Admin' => 'Administrar',
     'Assign' => 'Asignar',
-    'Assignment' => 'Asignación'
+    'Assignment' => 'Asignación',
+    'Administrative System' => 'Sistema Administrativo',
+    'Inventory management and billing' => 'Gestión de inventario y facturación',
+    'System alerts' => 'Alertas de sistema',
+    'Alerts' => 'Alertas',
+    'System' => 'Sistema',
+    'Low stock items' => 'Artículos con poca disponibilidad',
+    'Empty stock items' => 'Artículos sin disponibilidad',
+    'See more' => 'Ver más'
 ];

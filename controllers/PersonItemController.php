@@ -65,10 +65,15 @@ class PersonItemController extends Controller
         $model = new PersonItem();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
+            $people = \yii\helpers\ArrayHelper::map($model->person->find()->asArray()->all(),'id','lastname');
+            $items = \yii\helpers\ArrayHelper::map($model->item->find()->asArray()->all(),'id','name');
+
             return $this->render('create', [
                 'model' => $model,
+                'items' => $items,
+                'people' => $people
             ]);
         }
     }
@@ -84,10 +89,15 @@ class PersonItemController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
+            $people = \yii\helpers\ArrayHelper::map($model->person->find()->asArray()->all(),'id','lastname');
+            $items = \yii\helpers\ArrayHelper::map($model->item->find()->asArray()->all(),'id','name');
+
             return $this->render('update', [
                 'model' => $model,
+                'items' => $items,
+                'people' => $people
             ]);
         }
     }
