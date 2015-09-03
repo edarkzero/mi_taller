@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "car_part".
@@ -22,6 +23,12 @@ use Yii;
  */
 class CarPart extends \yii\db\ActiveRecord
 {
+
+    public $size_name;
+    public $color_name;
+    public $damage_name;
+    public $price_total;
+
     /**
      * @inheritdoc
      */
@@ -30,12 +37,27 @@ class CarPart extends \yii\db\ActiveRecord
         return 'car_part';
     }
 
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                ],
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
+            [['size_id'], 'required'],
             [['size_id', 'color_id', 'damage_id', 'price_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe']
         ];
@@ -87,5 +109,25 @@ class CarPart extends \yii\db\ActiveRecord
     public function getPrice()
     {
         return $this->hasOne(Price::className(), ['id' => 'price_id']);
+    }
+
+    public function getPriceTotal()
+    {
+        return isset($this->price->total) ? $this->price->total : "";
+    }
+
+    public function getSizeName()
+    {
+        return isset($this->size->name) ? $this->size->name : "";
+    }
+
+    public function getColorName()
+    {
+        return isset($this->color->name) ? $this->color->name : "";
+    }
+
+    public function getDamageName()
+    {
+        return isset($this->damage->name) ? $this->damage->name : "";
     }
 }

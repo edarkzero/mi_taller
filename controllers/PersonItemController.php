@@ -3,17 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Size;
-use app\models\SizeSearch;
+use app\models\PersonItem;
+use app\models\PersonItemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
 /**
- * SizeController implements the CRUD actions for Size model.
+ * PersonItemController implements the CRUD actions for PersonItem model.
  */
-class SizeController extends Controller
+class PersonItemController extends Controller
 {
     public function behaviors()
     {
@@ -24,30 +23,16 @@ class SizeController extends Controller
                     'delete' => ['post'],
                 ],
             ],
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'matchCallback' => function ($rule, $action) {
-                            return \Yii::$app->user->id == 100;
-                        },
-                        'denyCallback' => function ($rule, $action) {
-                            throw new \Exception('You are not allowed to access this page');
-                        }
-                    ],
-                ],
-            ],
         ];
     }
 
     /**
-     * Lists all Size models.
+     * Lists all PersonItem models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SizeSearch();
+        $searchModel = new PersonItemSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -57,7 +42,7 @@ class SizeController extends Controller
     }
 
     /**
-     * Displays a single Size model.
+     * Displays a single PersonItem model.
      * @param string $id
      * @return mixed
      */
@@ -69,16 +54,16 @@ class SizeController extends Controller
     }
 
     /**
-     * Creates a new Size model.
+     * Creates a new PersonItem model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Size();
+        $model = new PersonItem();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -87,7 +72,7 @@ class SizeController extends Controller
     }
 
     /**
-     * Updates an existing Size model.
+     * Updates an existing PersonItem model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -97,7 +82,7 @@ class SizeController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -106,7 +91,7 @@ class SizeController extends Controller
     }
 
     /**
-     * Deletes an existing Size model.
+     * Deletes an existing PersonItem model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -119,15 +104,15 @@ class SizeController extends Controller
     }
 
     /**
-     * Finds the Size model based on its primary key value.
+     * Finds the PersonItem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Size the loaded model
+     * @return PersonItem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Size::findOne($id)) !== null) {
+        if (($model = PersonItem::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

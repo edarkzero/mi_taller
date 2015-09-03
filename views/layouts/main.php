@@ -39,7 +39,14 @@ AppAsset::register($this);
         'items' => [
             ['label' => \Yii::t('app','Home'), 'url' => ['/site/index']],
             ['label' => \Yii::t('app','Billing'), 'url' => ['/billing/index'],'active' => Yii::$app->controller->id == 'billing'],
-            ['label' => \Yii::t('app','Item'), 'url' => ['/item/index'],'active' => Yii::$app->controller->id == 'item'],
+            [
+                'label' => Yii::t('app','Item'),
+                'items' => [
+                    ['label' => \Yii::t('app','Admin'), 'url' => ['/item/index'],'active' => Yii::$app->controller->id == 'item'],
+                    ['label' => \Yii::t('app','Assign'), 'url' => ['/person-item/index'],'active' => Yii::$app->controller->id == 'person-item'],
+                ],
+                'active' =>  Yii::$app->controller->id == 'item' || Yii::$app->controller->id == 'person-item'
+            ],
             [
                 'label' => Yii::t('app','Employed'),
                 'items' => [
@@ -59,8 +66,8 @@ AppAsset::register($this);
                 //'active' =>  Yii::$app->controller->id == 'job' || Yii::$app->controller->id == 'person'
             ],
             ['label' => \Yii::t('app','Log'), 'url' => ['/log/index'],'active' => Yii::$app->controller->id == 'log'],
-            ['label' => \Yii::t('app','About'), 'url' => ['/site/about']],
-            ['label' => \Yii::t('app','Contact'), 'url' => ['/site/contact']],
+            /*['label' => \Yii::t('app','About'), 'url' => ['/site/about']],
+            ['label' => \Yii::t('app','Contact'), 'url' => ['/site/contact']],*/
             Yii::$app->user->isGuest ?
                 ['label' => 'Login', 'url' => ['/site/login']] :
                 [

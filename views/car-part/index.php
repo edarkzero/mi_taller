@@ -25,12 +25,40 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'size_id',
-            'color_id',
-            'damage_id',
-            'price_id',
-            // 'created_at',
-            // 'updated_at',
+            [
+                'attribute' => 'size_name',
+                'label' => $searchModel->getAttributeLabel('size'),
+                'value' => function ($model, $key, $index, $column)
+                {
+                    return $model->getSizeName();
+                }
+            ],
+            [
+                'attribute' => 'color_name',
+                'label' => $searchModel->getAttributeLabel('color'),
+                'value' => function ($model, $key, $index, $column)
+                {
+                    return $model->getColorName();
+                }
+            ],
+            [
+                'attribute' => 'damage_name',
+                'label' => $searchModel->getAttributeLabel('damage'),
+                'value' => function ($model, $key, $index, $column)
+                {
+                    return $model->getDamageName();
+                }
+            ],
+            [
+                'attribute' => 'price_total',
+                'value' => function ($model, $key, $index, $column)
+                {
+                    return $model->getPriceTotal();
+                },
+                'format' => 'currency'
+            ],
+            'created_at:datetime',
+            'updated_at:datetime',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -2,9 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\Color;
+use app\models\Damage;
+use app\models\Price;
+use app\models\Size;
 use Yii;
 use app\models\CarPart;
 use app\models\CarPartSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -18,8 +23,8 @@ class CarPartController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
+            'verbs'  => [
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
                 ],
@@ -28,11 +33,13 @@ class CarPartController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'allow' => true,
-                        'matchCallback' => function ($rule, $action) {
+                        'allow'         => true,
+                        'matchCallback' => function ($rule, $action)
+                        {
                             return \Yii::$app->user->id == 100;
                         },
-                        'denyCallback' => function ($rule, $action) {
+                        'denyCallback'  => function ($rule, $action)
+                        {
                             throw new \Exception('You are not allowed to access this page');
                         }
                     ],
@@ -51,7 +58,7 @@ class CarPartController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -76,12 +83,29 @@ class CarPartController extends Controller
     public function actionCreate()
     {
         $model = new CarPart();
+        $modelPrice = new Price();
+        $modelPrice->tax = 12;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $modelPrice->load(Yii::$app->request->post()) && $modelPrice->validate()) {
+            $transaction = $model->getDb()->beginTransaction();
+            try
+            {
+                if(!$modelPrice->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($modelPrice->tableName())),'msj' => print_r($modelPrice->getErrors(),true)]),500);
+                $model->price_id = $modelPrice->id;
+                if(!$model->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($model->tableName())),'msj' => print_r($model->getErrors(),true)]),500);
+                $transaction->commit();
+            }
+            catch(\Exception $e)
+            {
+                $transaction->rollBack();
+                throw $e;
+            }
+            return $this->redirect(['index']);
+        } else
+        {
             return $this->render('create', [
-                'model' => $model,
+                'model'      => $model,
+                'modelPrice' => $modelPrice
             ]);
         }
     }
@@ -95,12 +119,27 @@ class CarPartController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelPrice = $model->price;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $modelPrice->load(Yii::$app->request->post()) && $modelPrice->validate()) {
+            $transaction = $model->getDb()->beginTransaction();
+            try
+            {
+                if(!$model->save(false)) throw new Exception(Yii::t('app','Error updating {model}: {msj}',['model' => Yii::t('app',ucfirst($model->tableName())),'msj' => print_r($model->getErrors(),true)]),500);
+                if(!$modelPrice->save(false)) throw new Exception(Yii::t('app','Error updating {model}: {msj}',['model' => Yii::t('app',ucfirst($modelPrice->tableName())),'msj' => print_r($modelPrice->getErrors(),true)]),500);
+                $transaction->commit();
+            }
+            catch(\Exception $e)
+            {
+                $transaction->rollBack();
+                throw $e;
+            }
+            return $this->redirect(['index']);
+        } else
+        {
             return $this->render('update', [
-                'model' => $model,
+                'model'       => $model,
+                'modelPrices' => $modelPrice
             ]);
         }
     }
@@ -113,7 +152,21 @@ class CarPartController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $modelPrice = $model->price;
+
+        $transaction = $model->getDb()->beginTransaction();
+        try
+        {
+            $modelPrice->delete();
+            $model->delete();
+            $transaction->commit();
+        }
+        catch(\Exception $e)
+        {
+            $transaction->rollBack();
+            throw $e;
+        }
 
         return $this->redirect(['index']);
     }
@@ -127,10 +180,67 @@ class CarPartController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = CarPart::findOne($id)) !== null) {
+        if (($model = CarPart::findOne($id)) !== null)
+        {
             return $model;
-        } else {
+        } else
+        {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionSize($q = null, $id = null)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if (is_null($q)) $q = "";
+        $out = ['results' => []];
+        $jobs = Size::find()->where('name LIKE :q')->params([':q' => '%' . $q . '%'])->asArray()->all();
+        foreach ($jobs as $job)
+        {
+            $out['results'][] = ['id' => $job['id'], 'text' => $job['name']];
+        }
+        return $out;
+    }
+
+    public function actionColor($q = null, $id = null)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if (is_null($q)) $q = "";
+        $out = ['results' => []];
+        $jobs = Color::find()->where('name LIKE :q')->params([':q' => '%' . $q . '%'])->asArray()->all();
+        foreach ($jobs as $job)
+        {
+            $out['results'][] = ['id' => $job['id'], 'text' => $job['name']];
+        }
+        return $out;
+    }
+
+    public function actionDamage($q = null, $id = null)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if (is_null($q)) $q = "";
+        $out = ['results' => []];
+        $jobs = Damage::find()->where('name LIKE :q')->params([':q' => '%' . $q . '%'])->asArray()->all();
+        foreach ($jobs as $job)
+        {
+            $out['results'][] = ['id' => $job['id'], 'text' => $job['name']];
+        }
+        return $out;
+    }
+
+    public function actionPrice()
+    {
+        if(isset($_POST['p']))
+        {
+            $modelPrice = new Price();
+            $modelPrice->price = $_POST['p']['p_price'];
+            $modelPrice->tax = $_POST['p']['p_tax'];
+            $modelPrice->total = $_POST['p']['p_total'];
+            $modelPrice->calculate();
+            echo $modelPrice->getAjaxValue();
+        }
+
+        else
+            throw new Exception(Yii::t('error','Bad request'));
     }
 }
