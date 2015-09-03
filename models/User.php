@@ -14,18 +14,30 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
         '100' => [
             'id' => '100',
             'username' => 'admin',
-            'password' => 'admin',
+            'password' => '123456',
             'authKey' => 'test100key',
             'accessToken' => '100-token',
         ],
         '101' => [
             'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
+            'username' => 'user',
+            'password' => '654321',
             'authKey' => 'test101key',
             'accessToken' => '101-token',
         ],
     ];
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'password' => Yii::t('app', 'Password'),
+            'username' => Yii::t('app', 'Username'),
+            'rememberMe' => Yii::t('app', 'Remember Me'),
+        ];
+    }
 
     /**
      * @inheritdoc

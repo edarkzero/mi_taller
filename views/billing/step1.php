@@ -18,11 +18,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="row">
     <div class="col-md-2">
-        <a href="javascript:highlightAll()" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="0"><?= Yii::t('app','Left'); ?></a>
+        <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="0"><?= Yii::t('app','Left'); ?></a>
         <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="1"><?= Yii::t('app','Right'); ?></a>
         <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="2"><?= Yii::t('app','Rear'); ?></a>
         <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="3"><?= Yii::t('app','Front'); ?></a>
         <a href="javascript:void(0)" class="btn btn-primary btn-raised car-slide-select" data-target="#car-slide" data-slide-to="4"><?= Yii::t('app','Aerial'); ?></a>
+        <a href="javascript:highlightAll($('area'),true)" class="btn btn-primary btn-raised car-slide-select"><?= Yii::t('app','All'); ?></a>
+        <a href="javascript:highlightAll($('area'),false)" class="btn btn-primary btn-raised car-slide-select"><?= Yii::t('app','None'); ?></a>
     </div>
     <div class="col-md-10">
         <div class="panel panel-primary">

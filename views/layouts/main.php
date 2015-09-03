@@ -40,8 +40,24 @@ AppAsset::register($this);
             ['label' => \Yii::t('app','Home'), 'url' => ['/site/index']],
             ['label' => \Yii::t('app','Billing'), 'url' => ['/billing/index'],'active' => Yii::$app->controller->id == 'billing'],
             ['label' => \Yii::t('app','Item'), 'url' => ['/item/index'],'active' => Yii::$app->controller->id == 'item'],
-            ['label' => \Yii::t('app','Job'), 'url' => ['/job/index'],'active' => Yii::$app->controller->id == 'job'],
-            ['label' => \Yii::t('app','Person'), 'url' => ['/person/index'],'active' => Yii::$app->controller->id == 'person'],
+            [
+                'label' => Yii::t('app','Employed'),
+                'items' => [
+                    ['label' => \Yii::t('app','Job'), 'url' => ['/job/index'],'active' => Yii::$app->controller->id == 'job'],
+                    ['label' => \Yii::t('app','Person'), 'url' => ['/person/index'],'active' => Yii::$app->controller->id == 'person'],
+                ],
+                'active' =>  Yii::$app->controller->id == 'job' || Yii::$app->controller->id == 'person'
+            ],
+            [
+                'label' => Yii::t('app','Configuration'),
+                'items' => [
+                    ['label' => \Yii::t('app','Part'), 'url' => ['/car-part/index'],'active' => Yii::$app->controller->id == 'car-part'],
+                    ['label' => \Yii::t('app','Size'), 'url' => ['/size/index'],'active' => Yii::$app->controller->id == 'size'],
+                    ['label' => \Yii::t('app','Damage'), 'url' => ['/damage/index'],'active' => Yii::$app->controller->id == 'damage'],
+                    ['label' => \Yii::t('app','Color'), 'url' => ['/color/index'],'active' => Yii::$app->controller->id == 'color'],
+                ],
+                //'active' =>  Yii::$app->controller->id == 'job' || Yii::$app->controller->id == 'person'
+            ],
             ['label' => \Yii::t('app','Log'), 'url' => ['/log/index'],'active' => Yii::$app->controller->id == 'log'],
             ['label' => \Yii::t('app','About'), 'url' => ['/site/about']],
             ['label' => \Yii::t('app','Contact'), 'url' => ['/site/contact']],
