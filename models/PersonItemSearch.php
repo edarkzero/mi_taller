@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\PersonItem;
+use yii\data\Sort;
 
 /**
  * PersonItemSearch represents the model behind the search form about `app\models\PersonItem`.
@@ -19,7 +20,7 @@ class PersonItemSearch extends PersonItem
     {
         return [
             [['id', 'item_id', 'person_id'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at','item_name','person_name'], 'safe'],
         ];
     }
 
@@ -42,9 +43,24 @@ class PersonItemSearch extends PersonItem
     public function search($params)
     {
         $query = PersonItem::find();
+        $query->innerJoinWith(['person','item']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => new Sort([
+                'attributes' => [
+                    'item_name' => [
+                        'asc' => ['item.name' => SORT_ASC],
+                        'desc' => ['item.name' => SORT_DESC]
+                    ],
+                    'person_name' => [
+                        'asc' => ['person.lastname' => SORT_ASC],
+                        'desc' => ['person.lastname' => SORT_DESC]
+                    ],
+                    'created_at',
+                    'updated_at'
+                ],
+            ])
         ]);
 
         $this->load($params);
@@ -56,12 +72,13 @@ class PersonItemSearch extends PersonItem
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
-            'item_id' => $this->item_id,
-            'person_id' => $this->person_id,
+            /*'item_id' => $this->item_id,
+            'person_id' => $this->person_id,*/
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
+
+        $query->andWhere('item.name LIKE :in OR item.code LIKE :in OR person.firstname LIKE :pn OR person.lastname LIKE :pn',[':pn' => '%'.$this->person_name.'%',':in' => '%'.$this->person_name.'%']);
 
         return $dataProvider;
     }

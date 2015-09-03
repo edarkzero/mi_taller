@@ -2,23 +2,45 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PersonItem */
 /* @var $form yii\widgets\ActiveForm */
+
+$personUrl = \yii\helpers\Url::to(['person-item/person']);
+$itemUrl = \yii\helpers\Url::to(['person-item/item']);
 ?>
 
 <div class="person-item-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'item_id')->textInput(['maxlength' => true]) ?>
+    <?=
+    $form->field($model, 'item_id')->widget(Select2::classname(), [
+        'options' => ['placeholder' => Yii::t('app','Select an option ...')],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'ajax' => [
+                'url' => $itemUrl,
+                'dataType' => 'json'
+            ],
+        ],
+    ]);
+    ?>
 
-    <?= $form->field($model, 'person_id')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?=
+    $form->field($model, 'person_id')->widget(Select2::classname(), [
+        'options' => ['placeholder' => Yii::t('app','Select an option ...')],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'ajax' => [
+                'url' => $personUrl,
+                'dataType' => 'json'
+            ],
+        ],
+    ]);
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

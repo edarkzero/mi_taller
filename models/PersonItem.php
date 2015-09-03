@@ -19,6 +19,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class PersonItem extends \yii\db\ActiveRecord
 {
+    public $item_name,$person_name;
+
     /**
      * @inheritdoc
      */
@@ -49,7 +51,7 @@ class PersonItem extends \yii\db\ActiveRecord
         return [
             [['item_id', 'person_id'], 'required'],
             [['item_id', 'person_id'], 'integer'],
-            [['created_at', 'updated_at'], 'safe']
+            [['created_at', 'updated_at','item_name','person_name'], 'safe']
         ];
     }
 
@@ -81,5 +83,15 @@ class PersonItem extends \yii\db\ActiveRecord
     public function getPerson()
     {
         return $this->hasOne(Person::className(), ['id' => 'person_id']);
+    }
+
+    public function getItemName()
+    {
+        return isset($this->item->name) ? $this->item->name : '';
+    }
+
+    public function getPersonName()
+    {
+        return isset($this->person->firstname) ? $this->person->getFullName() : '';
     }
 }

@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\PersonItem;
+use app\models\Person;
+use app\models\Item;
 use app\models\PersonItemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -117,5 +119,31 @@ class PersonItemController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionPerson($q = null, $id = null)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if (is_null($q)) $q = "";
+        $out = ['results' => []];
+        $jobs = Person::find()->where('firstname LIKE :q OR lastname LIKE :q')->params([':q' => '%' . $q . '%'])->asArray()->all();
+        foreach ($jobs as $job)
+        {
+            $out['results'][] = ['id' => $job['id'], 'text' => $job['firstname'].' '.$job['lastname']];
+        }
+        return $out;
+    }
+
+    public function actionItem($q = null, $id = null)
+    {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if (is_null($q)) $q = "";
+        $out = ['results' => []];
+        $jobs = Item::find()->where('name LIKE :q OR code LIKE :q')->params([':q' => '%' . $q . '%'])->asArray()->all();
+        foreach ($jobs as $job)
+        {
+            $out['results'][] = ['id' => $job['id'], 'text' => $job['name']];
+        }
+        return $out;
     }
 }

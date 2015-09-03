@@ -8,6 +8,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Assignment');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Item'), 'url' => ['item/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="person-item-index">
@@ -17,6 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}: ', ['modelClass' => Yii::t('app','Assignment')]), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Admin {modelClass}: ', ['modelClass' => Yii::t('app','Items')]), ['item/index'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -25,8 +27,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'item_id',
-            'person_id',
+            [
+                'attribute' => 'item_name',
+                'label' => $searchModel->getAttributeLabel('item'),
+                'value' => function ($model, $key, $index, $column)
+                {
+                    return $model->getItemName();
+                }
+            ],
+            [
+                'attribute' => 'person_name',
+                'label' => $searchModel->getAttributeLabel('person'),
+                'value' => function ($model, $key, $index, $column)
+                {
+                    return $model->getPersonName();
+                }
+            ],
             'created_at:datetime',
             'updated_at:datetime',
 
