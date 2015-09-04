@@ -10,6 +10,7 @@ use app\models\PersonItemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * PersonItemController implements the CRUD actions for PersonItem model.
@@ -23,6 +24,20 @@ class PersonItemController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'matchCallback' => function ($rule, $action) {
+                            return \Yii::$app->user->id == 100;
+                        },
+                        'denyCallback' => function ($rule, $action) {
+                            throw new \Exception('You are not allowed to access this page');
+                        }
+                    ],
                 ],
             ],
         ];
