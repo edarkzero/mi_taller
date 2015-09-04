@@ -50,6 +50,8 @@ return [
     'Select an option ...' => 'Selecciona una opción ...',
     'Billing' => 'Facturación',
     'Bill' => 'Factura',
+    'Bills' => 'Facturas',
+    'Discount' => 'Descuento',
     'Employed' => 'Empleado',
     'Step {n}' => 'Paso {n}',
     'Car parts selection' => 'Selección de piezas de vehículo',
