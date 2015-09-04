@@ -53,8 +53,8 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $low_stock_items = Item::find()->where('')->all();
-        $empty_stock_items = Item::find()->where('')->all();
+        $low_stock_items = Item::find()->where('quantity >= 1 AND quantity <= 10')->all();
+        $empty_stock_items = Item::find()->where('quantity = 0')->all();
 
         return $this->render('index',[
             'low_stock_items' => $low_stock_items,

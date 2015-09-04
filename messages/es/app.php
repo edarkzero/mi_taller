@@ -107,5 +107,6 @@ return [
     'Low stock items' => 'Artículos con poca disponibilidad',
     'Empty stock items' => 'Artículos sin disponibilidad',
     'See more' => 'Ver más',
-    'In developing' => 'En desarrollo'
+    'In developing' => 'En desarrollo',
+    'No occurrences' => 'Sin ocurrencias'
 ];
