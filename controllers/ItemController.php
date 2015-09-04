@@ -80,6 +80,7 @@ class ItemController extends Controller
     {
         $model = new Item();
         $modelPrice = new Price();
+        $modelPrice->tax = 12;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $modelPrice->load(Yii::$app->request->post()) && $modelPrice->validate()) {
             $transaction = $model->getDb()->beginTransaction();
