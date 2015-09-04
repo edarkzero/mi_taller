@@ -38,7 +38,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => \Yii::t('app','Home'), 'url' => ['/site/index']],
-            ['label' => \Yii::t('app','Billing'), 'url' => ['/billing/index'],'active' => Yii::$app->controller->id == 'billing'],
+            ['label' => \Yii::t('app','Billing'), 'url' => ['/bill/index'],'active' => Yii::$app->controller->id == 'bill'],
             [
                 'label' => Yii::t('app','Item'),
                 'items' => [
