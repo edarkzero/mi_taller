@@ -46,7 +46,7 @@ $(document).ready(function (e)
 
         if(!isSelectedElem) {
             $('#part-detail-modal').modal('show');
-            $('#part-detail-modal .modal-body').html('Tabulator: ' + $elem.attr('data-tabulator') + ", Part: " + $elem.attr('data-part'));
+            //$('#part-detail-modal .modal-body').html('Tabulator: ' + $elem.attr('data-tabulator') + ", Part: " + $elem.attr('data-part'));
         }
     });
 

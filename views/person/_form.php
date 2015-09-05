@@ -7,6 +7,7 @@ use kartik\select2\Select2;
 /* @var $this yii\web\View */
 /* @var $model app\models\Person */
 /* @var $jobModel app\models\Job */
+/* @var $jobs array */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -25,6 +26,7 @@ use kartik\select2\Select2;
     <?=
     $form->field($jobModel, 'name')->widget(Select2::classname(), [
         'options' => ['placeholder' => Yii::t('app','Select an option ...')],
+        'theme' => Select2::THEME_BOOTSTRAP,
         'pluginOptions' => [
             'allowClear' => true,
             'ajax' => [

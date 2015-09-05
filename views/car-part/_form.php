@@ -59,6 +59,7 @@ $damageUrl = \yii\helpers\Url::to(['car-part/damage']);
     $form->field($model, 'size_id')->widget(Select2::classname(), [
         'options' => ['placeholder' => Yii::t('app','Select an option ...')],
         'data' => $sizes,
+        'theme' => Select2::THEME_BOOTSTRAP,
         'pluginOptions' => [
             'allowClear' => true,
             'ajax' => [
@@ -73,6 +74,7 @@ $damageUrl = \yii\helpers\Url::to(['car-part/damage']);
     $form->field($model, 'color_id')->widget(Select2::classname(), [
         'options' => ['placeholder' => Yii::t('app','Select an option ...')],
         'data' => $colors,
+        'theme' => Select2::THEME_BOOTSTRAP,
         'pluginOptions' => [
             'allowClear' => true,
             'ajax' => [
@@ -87,6 +89,7 @@ $damageUrl = \yii\helpers\Url::to(['car-part/damage']);
     $form->field($model, 'damage_id')->widget(Select2::classname(), [
         'options' => ['placeholder' => Yii::t('app','Select an option ...')],
         'data' => $damages,
+        'theme' => Select2::THEME_BOOTSTRAP,
         'pluginOptions' => [
             'allowClear' => true,
             'ajax' => [

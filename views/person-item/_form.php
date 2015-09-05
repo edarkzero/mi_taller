@@ -22,6 +22,7 @@ $itemUrl = \yii\helpers\Url::to(['person-item/item']);
     $form->field($model, 'item_id')->widget(Select2::classname(), [
         'options' => ['placeholder' => Yii::t('app','Select an option ...')],
         'data' => $items,
+        'theme' => Select2::THEME_BOOTSTRAP,
         'pluginOptions' => [
             'allowClear' => true,
             'ajax' => [
@@ -36,6 +37,7 @@ $itemUrl = \yii\helpers\Url::to(['person-item/item']);
     $form->field($model, 'person_id')->widget(Select2::classname(), [
         'options' => ['placeholder' => Yii::t('app','Select an option ...')],
         'data' => $people,
+        'theme' => Select2::THEME_BOOTSTRAP,
         'pluginOptions' => [
             'allowClear' => true,
             'ajax' => [

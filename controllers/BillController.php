@@ -2,9 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\CarPart;
+use app\models\Damage;
+use app\models\Size;
+use app\models\Color;
 use Yii;
 use app\models\Bill;
 use app\models\BillSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -81,7 +86,7 @@ class BillController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
-                'model' => $model,
+                'model' => $model
             ]);
         }
     }
@@ -136,7 +141,17 @@ class BillController extends Controller
 
     public function actionStep1()
     {
-        return $this->render('step1');
+        $carPart = new CarPart();
+        $sizes = ArrayHelper::map(Size::find()->asArray()->all(),'id','name');
+        $colors = ArrayHelper::map(Color::find()->asArray()->all(),'id','name');
+        $damages = ArrayHelper::map(Damage::find()->asArray()->all(),'id','name');
+
+        return $this->render('step1',[
+            'carPart' => $carPart,
+            'sizes' => $sizes,
+            'colors' => $colors,
+            'damages' => $damages
+        ]);
     }
 
     public function actionStep2()
