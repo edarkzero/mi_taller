@@ -52,4 +52,22 @@ class Car extends \yii\db\ActiveRecord
     {
         return $this->hasMany(CarView::className(), ['car_id' => 'id']);
     }
+
+    public function afterSave($insert,$changedAttributes)
+    {
+        parent::afterSave($insert,$changedAttributes);
+        $log = new Log();
+
+        if($insert)
+            $log->saveDatabaseOperation('create',$this->tableName(),$this->name);
+        else
+            $log->saveDatabaseOperation('update',$this->tableName(),$this->name);
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        $log = new Log();
+        $log->saveDatabaseOperation('delete',$this->tableName(),$this->name);
+    }
 }

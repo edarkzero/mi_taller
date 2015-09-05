@@ -62,6 +62,11 @@ class Log extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @param $action string
+     * @param $model string
+     * @param $id string
+     */
     public function saveDatabaseOperation($action,$model,$id)
     {
         $modelName = Yii::t('app',ucfirst($model));
@@ -72,6 +77,8 @@ class Log extends \yii\db\ActiveRecord
             $this->message = Yii::t('app','{model}, {n}, updated.',['model' => $modelName,'n' => $id]);
         elseif($action == 'delete')
             $this->message = Yii::t('app','{model}, {n}, deleted.',['model' => $modelName,'n' => $id]);
+        elseif($action == 'error')
+            $this->message = $model.','.$id;
 
         $this->save();
     }

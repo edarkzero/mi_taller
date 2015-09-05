@@ -72,6 +72,24 @@ class Person extends \yii\db\ActiveRecord
         ];
     }
 
+    public function afterSave($insert,$changedAttributes)
+    {
+        parent::afterSave($insert,$changedAttributes);
+        $log = new Log();
+
+        if($insert)
+            $log->saveDatabaseOperation('create',$this->tableName(),$this->getFullName());
+        else
+            $log->saveDatabaseOperation('update',$this->tableName(),$this->getFullName());
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        $log = new Log();
+        $log->saveDatabaseOperation('delete',$this->tableName(),$this->getFullName());
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

@@ -78,13 +78,9 @@ class Color extends \yii\db\ActiveRecord
         $log = new Log();
 
         if($insert)
-        {
             $log->saveDatabaseOperation('create',$this->tableName(),$this->name);
-        }
         else
-        {
             $log->saveDatabaseOperation('update',$this->tableName(),$this->name);
-        }
     }
 
     public function afterDelete()

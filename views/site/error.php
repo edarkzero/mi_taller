@@ -7,6 +7,9 @@
 
 use yii\helpers\Html;
 
+$log = new \app\models\Log();
+$log->saveDatabaseOperation('error',$name,$message);
+
 $this->title = $name;
 ?>
 <div class="site-error">
