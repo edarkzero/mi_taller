@@ -82,8 +82,8 @@ class PersonItemController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
-            $people = \yii\helpers\ArrayHelper::map($model->person->find()->asArray()->all(),'id','lastname');
-            $items = \yii\helpers\ArrayHelper::map($model->item->find()->asArray()->all(),'id','name');
+            $people = \yii\helpers\ArrayHelper::map(Person::find()->asArray()->all(),'id','lastname');
+            $items = \yii\helpers\ArrayHelper::map(Item::find()->asArray()->all(),'id','name');
 
             return $this->render('create', [
                 'model' => $model,
