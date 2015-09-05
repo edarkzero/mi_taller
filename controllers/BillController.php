@@ -9,6 +9,7 @@ use app\models\Color;
 use Yii;
 use app\models\Bill;
 use app\models\BillSearch;
+use yii\base\Security;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

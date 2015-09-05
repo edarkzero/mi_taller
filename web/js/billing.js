@@ -1,3 +1,7 @@
+var s2Size= null;
+var s2Color = null;
+var s2Damage = null;
+
 var carSlideImg = '#car-slide .item img';
 var carSlideMap = '#car-slide .item map';
 var carSlideImgActive = '#car-slide .item.active img';
@@ -13,6 +17,10 @@ var wagon_right_area = '<area data-tabulator="'+Math.random()+'" shape="poly" co
 
 $(document).ready(function (e)
 {
+    /*s2Size = $('#carpart-size_id').select2('data');
+    s2Color = $('#carpart-color_id').select2('data');
+    s2Damage = $('#carpart-damage_id').select2('data');*/
+
     $('.car-select-option').click(function (e)
     {
         var glue = '/';
@@ -46,6 +54,12 @@ $(document).ready(function (e)
 
         if(!isSelectedElem) {
             $('#part-detail-modal').modal('show');
+            jQuery.when(jQuery('#carpart-size_id').select2(window[$('#carpart-size_id').attr('data-krajee-select2')]));
+            jQuery.when(jQuery('#carpart-color_id').select2(window[$('#carpart-color_id').attr('data-krajee-select2')]));
+            jQuery.when(jQuery('#carpart-damage_id').select2(window[$('#carpart-damage_id').attr('data-krajee-select2')]));
+            $('#carpart-size_id').val("1").trigger('change');
+            $('#carpart-color_id').val("1").trigger('change');
+            $('#carpart-damage_id').val("1").trigger('change');
             //$('#part-detail-modal .modal-body').html('Tabulator: ' + $elem.attr('data-tabulator') + ", Part: " + $elem.attr('data-part'));
         }
     });

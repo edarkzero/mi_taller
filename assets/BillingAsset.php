@@ -22,5 +22,6 @@ class BillingAsset extends AssetBundle
     ];
     public $depends = [
         'app\assets\AppAsset',
+        'kartik\select2\Select2Asset',
     ];
 }
