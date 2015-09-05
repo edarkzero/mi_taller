@@ -8,7 +8,7 @@ use yii\helpers\Html;
 /* @var $items array */
 /* @var $people array */
 
-$this->title = Yii::t('app', 'Create {modelClass}: ', ['modelClass' => Yii::t('app','Item')]);
+$this->title = Yii::t('app', 'Assign {modelClass}: ', ['modelClass' => Yii::t('app','Item')]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Assignment'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

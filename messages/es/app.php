@@ -42,6 +42,7 @@ return [
     'Update {modelClass}: ' => 'Editar {modelClass}',
     'Delete {modelClass}: ' => 'Eliminar {modelClass}',
     'Assign {modelClass}: ' => 'Asignar {modelClass}',
+    'Reassign {modelClass}: ' => 'Reasignar {modelClass}',
     'Admin {modelClass}: ' => 'Administrar {modelClass}',
     'View {modelClass}: ' => 'Ver {modelClass}',
     'Error saving {model}: {msj}' => 'Error guardando {model}: {msj}',
@@ -110,5 +111,6 @@ return [
     'Empty stock items' => 'Artículos sin disponibilidad',
     'See more' => 'Ver más',
     'In developing' => 'En desarrollo',
-    'No occurrences' => 'Sin ocurrencias'
+    'No occurrences' => 'Sin ocurrencias',
+    'Reassign' => 'Reasignar'
 ];
