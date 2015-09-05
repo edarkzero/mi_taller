@@ -115,8 +115,8 @@ return [
     'In developing' => 'En desarrollo',
     'No occurrences' => 'Sin ocurrencias',
     'Reassign' => 'Reasignar',
-    '{model}, {n}, created.' => '{model}: {n}, creado.',
-    '{model}, {n}, deleted.' => '{model}: {n}, eliminado.',
-    '{model}, {n}, updated.' => '{model}: {n}, modificado.',
+    '{model}, {n}, created.' => '{model}, {n}, creado.',
+    '{model}, {n}, deleted.' => '{model}, {n}, eliminado.',
+    '{model}, {n}, updated.' => '{model}, {n}, modificado.',
     'Person_item' => 'Asignación de artículo'
 ];
