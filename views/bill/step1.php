@@ -110,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 Modal::begin([
     'header' => '<h2>' . Yii::t('app', 'Part details') . '</h2>',
-    'id' => 'part-detail-modal'
+    'options' => ['id' => 'part-detail-modal','tabindex' => false]
 ]);
 
 $form = ActiveForm::begin([
