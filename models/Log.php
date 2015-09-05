@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "log".
@@ -20,6 +21,20 @@ class Log extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'log';
+    }
+
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                ],
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
     }
 
     /**
@@ -45,5 +60,19 @@ class Log extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created at'),
             'updated_at' => Yii::t('app', 'Updated at'),
         ];
+    }
+
+    public function saveDatabaseOperation($action,$model,$id)
+    {
+        $modelName = Yii::t('app',ucfirst($model));
+
+        if($action == 'create')
+            $this->message = Yii::t('app','{model}, {n}, created.',['model' => $modelName,'n' => $id]);
+        elseif($action == 'update')
+            $this->message = Yii::t('app','{model}, {n}, updated.',['model' => $modelName,'n' => $id]);
+        elseif($action == 'delete')
+            $this->message = Yii::t('app','{model}, {n}, deleted.',['model' => $modelName,'n' => $id]);
+
+        $this->save();
     }
 }

@@ -77,6 +77,7 @@ return [
     'Car' => 'Vehículo',
     'Cars' => 'Vehículos',
     'Car part' => 'Pieza de vehículo',
+    'Car_part' => 'Pieza de vehículo',
     'Car parts' => 'Piezas de vehículo',
     'Select all' => 'Seleccionar todo',
     'Clear all' => 'Limpiar todo',
@@ -105,6 +106,7 @@ return [
     'Administrative System' => 'Sistema Administrativo',
     'Inventory management and billing' => 'Gestión de inventario y facturación',
     'System alerts' => 'Alertas de sistema',
+    'System logs' => 'Registros del sistema',
     'Alerts' => 'Alertas',
     'System' => 'Sistema',
     'Low stock items' => 'Artículos con poca disponibilidad',
@@ -112,5 +114,9 @@ return [
     'See more' => 'Ver más',
     'In developing' => 'En desarrollo',
     'No occurrences' => 'Sin ocurrencias',
-    'Reassign' => 'Reasignar'
+    'Reassign' => 'Reasignar',
+    '{model}, {n}, created.' => '{model}: {n}, creado.',
+    '{model}, {n}, deleted.' => '{model}: {n}, eliminado.',
+    '{model}, {n}, updated.' => '{model}: {n}, modificado.',
+    'Person_item' => 'Asignación de artículo'
 ];

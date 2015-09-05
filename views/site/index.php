@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $low_stock_items app\models\Item[] */
 /* @var $empty_stock_items app\models\Item[] */
+/* @var $logs app\models\Log[] */
 
 $this->title = Yii::$app->params['company'];
 ?>
@@ -61,9 +62,17 @@ $this->title = Yii::$app->params['company'];
 
             <div class="col-lg-4">
                 <div class="panel panel-success">
-                    <div class="panel-heading"><?= Yii::t('app', 'System alerts') ?></div>
+                    <div class="panel-heading"><?= Yii::t('app', 'System logs') ?></div>
                     <div class="panel-body">
-                        <p><?= Yii::t('app', 'In developing') ?>...</p>
+                        <ul>
+                            <?php if (count($logs) > 0): ?>
+                                <?php foreach ($logs as $log): ?>
+                                    <li><?= Yii::$app->formatter->asDatetime($log->created_at); ?>: <?= $log->message ?></li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li><?= Yii::t('app','No occurrences') ?></li>
+                            <?php endif; ?>
+                        </ul>
 
                         <p><a class="btn btn-default"
                               href="<?= \yii\helpers\Url::to(['log/index']) ?>"><?= Yii::t('app', 'See more') ?> &raquo;</a>

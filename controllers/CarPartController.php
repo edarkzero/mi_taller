@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Color;
 use app\models\Damage;
+use app\models\Log;
 use app\models\Price;
 use app\models\Size;
 use Yii;
@@ -93,6 +94,7 @@ class CarPartController extends Controller
                 if(!$modelPrice->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($modelPrice->tableName())),'msj' => print_r($modelPrice->getErrors(),true)]),500);
                 $model->price_id = $modelPrice->id;
                 if(!$model->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($model->tableName())),'msj' => print_r($model->getErrors(),true)]),500);
+
                 $transaction->commit();
             }
             catch(\Exception $e)
@@ -100,6 +102,7 @@ class CarPartController extends Controller
                 $transaction->rollBack();
                 throw $e;
             }
+
             return $this->redirect(['index']);
         } else
         {
@@ -141,6 +144,7 @@ class CarPartController extends Controller
                 $transaction->rollBack();
                 throw $e;
             }
+
             return $this->redirect(['index']);
         } else
         {

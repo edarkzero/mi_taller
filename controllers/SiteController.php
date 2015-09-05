@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Item;
+use app\models\Log;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -55,10 +56,12 @@ class SiteController extends Controller
     {
         $low_stock_items = Item::find()->where('quantity >= 1 AND quantity <= 10')->all();
         $empty_stock_items = Item::find()->where('quantity = 0')->all();
+        $logs = Log::find()->orderBy('created_at DESC')->limit(10)->all();
 
         return $this->render('index',[
             'low_stock_items' => $low_stock_items,
-            'empty_stock_items' => $empty_stock_items
+            'empty_stock_items' => $empty_stock_items,
+            'logs' => $logs
         ]);
     }
 

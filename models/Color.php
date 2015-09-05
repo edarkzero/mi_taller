@@ -71,4 +71,26 @@ class Color extends \yii\db\ActiveRecord
     {
         return $this->hasMany(CarPart::className(), ['color_id' => 'id']);
     }
+
+    public function afterSave($insert,$changedAttributes)
+    {
+        parent::afterSave($insert,$changedAttributes);
+        $log = new Log();
+
+        if($insert)
+        {
+            $log->saveDatabaseOperation('create',$this->tableName(),$this->name);
+        }
+        else
+        {
+            $log->saveDatabaseOperation('update',$this->tableName(),$this->name);
+        }
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        $log = new Log();
+        $log->saveDatabaseOperation('delete',$this->tableName(),$this->name);
+    }
 }

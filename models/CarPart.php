@@ -51,6 +51,28 @@ class CarPart extends \yii\db\ActiveRecord
         ];
     }
 
+    public function afterSave($insert,$changedAttributes)
+    {
+        parent::afterSave($insert,$changedAttributes);
+        $log = new Log();
+
+        if($insert)
+        {
+            $log->saveDatabaseOperation('create',$this->tableName(),$this->id);
+        }
+        else
+        {
+            $log->saveDatabaseOperation('update',$this->tableName(),$this->id);
+        }
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        $log = new Log();
+        $log->saveDatabaseOperation('delete',$this->tableName(),$this->id);
+    }
+
     /**
      * @inheritdoc
      */
