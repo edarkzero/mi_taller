@@ -36,7 +36,7 @@ class BillController extends Controller
                     [
                         'allow' => true,
                         'matchCallback' => function ($rule, $action) {
-                            return \Yii::$app->user->id == 100;
+                            return \Yii::$app->user->id == 100 || \Yii::$app->user->id == 99;
                         },
                         'denyCallback' => function ($rule, $action) {
                             throw new \Exception('You are not allowed to access this page');
