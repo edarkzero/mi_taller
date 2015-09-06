@@ -7,3 +7,13 @@
 {
     display: none;
 }
+
+.btn.btn-fab i
+{
+    right: 4px;
+}
+
+#total-disp
+{
+    font-size: 1.5em;
+}

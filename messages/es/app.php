@@ -123,5 +123,7 @@ return [
     'Coordinates' => 'Coordenadas',
     'Coordinate' => 'Coordenada',
     'Reset' => 'Reiniciar',
-    'The requested car part need to be defined. You can do it <a href="{route}">here</a>' => 'Es necesario definir la pieza del vehículo solicitado. Puede hacerlo <a href="{route}">aquí</a>'
+    'The requested car part need to be defined. You can do it <a href="{route}">here</a>' => 'Es necesario definir la pieza del vehículo solicitado. Puede hacerlo <a href="{route}">aquí</a>',
+    'Save' => 'Guardar',
+    'Save and print' => 'Guardar e imprimir'
 ];

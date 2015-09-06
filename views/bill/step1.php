@@ -13,7 +13,7 @@ use kartik\select2\Select2;
 
 BillingAsset::register($this);
 
-$this->title = Yii::t('app', 'Create {modelClass}: ', ['modelClass' => Yii::t('app','Bill')]);
+$this->title = Yii::t('app', 'Create {modelClass}: ', ['modelClass' => Yii::t('app', 'Bill')]);
 $sizeUrl = \yii\helpers\Url::to(['car-part/size']);
 $colorUrl = \yii\helpers\Url::to(['car-part/color']);
 $damageUrl = \yii\helpers\Url::to(['car-part/damage']);
@@ -76,10 +76,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-12">
             <div class="panel panel-danger text-center">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><?= Yii::t('app','Total'); ?></h3>
+                    <h3 class="panel-title"><?= Yii::t('app', 'Total'); ?></h3>
                 </div>
                 <div class="panel-body">
-                    </strong><span id="total-disp">&nbsp;<?= Yii::$app->formatter->asCurrency(0.00); ?></span>
+                    <strong id="total-disp">&nbsp;<?= Yii::$app->formatter->asCurrency(0.00); ?></strong>
+                    <?= Html::submitButton('<i class="mdi-content-archive"></i>', ['class' => 'btn btn-fab btn-fab-mini btn-raised btn-sm btn-material-red', 'id' => 'bill-submit','title' => Yii::t('app','Save')]) ?>
+                    <?= Html::submitButton('<i class="mdi-content-content-paste"></i>', ['class' => 'btn btn-fab btn-fab-mini btn-raised btn-sm btn-material-red', 'id' => 'bill-submit-print','title' => Yii::t('app','Save and print')]) ?>
                 </div>
             </div>
         </div>
@@ -174,7 +176,7 @@ $form->field($carPart, 'damage_id')->widget(Select2::classname(), [
 ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Create'), ['class' => 'btn btn-success','id' => 'item-submit-modal']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Create'), ['class' => 'btn btn-success', 'id' => 'item-submit-modal']) ?>
     </div>
 
 <?php
