@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "car_part".
@@ -99,6 +100,17 @@ class CarPart extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created_at'),
             'updated_at' => Yii::t('app', 'Updated_at'),
         ];
+    }
+
+    /**
+     * @param $size
+     * @param $color
+     * @param $damage
+     * @return CarPart|null
+     */
+    public static function getByParts($size,$color,$damage)
+    {
+        return self::find()->filterWhere(['size_id' => $size,'color_id' => $color,'damage_id' => $damage])->one();
     }
 
     /**

@@ -90,6 +90,7 @@ return [
     'Sizes' => 'Tamaños',
     'Amount' => 'Cantidad',
     'Damage' => 'Daño',
+    'Alert' => 'Alerta',
     'Damages' => 'Daños',
     'Configuration' => 'Configuración',
     'Are you sure you want to delete this item?' => '¿Esta seguro que desea eliminar este elemento?',
@@ -120,5 +121,7 @@ return [
     '{model}, {n}, updated.' => '{model}, {n}, modificado.',
     'Person_item' => 'Asignación de artículo',
     'Coordinates' => 'Coordenadas',
-    'Coordinate' => 'Coordenada'
+    'Coordinate' => 'Coordenada',
+    'Reset' => 'Reiniciar',
+    'The requested car part need to be defined. You can do it <a href="{route}">here</a>' => 'Es necesario definir la pieza del vehículo solicitado. Puede hacerlo <a href="{route}">aquí</a>'
 ];

@@ -87,6 +87,13 @@ class CarPartController extends Controller
         $modelPrice = new Price();
         $modelPrice->tax = 12;
 
+        if(isset($_GET['size_id'],$_GET['damage_id'],$_GET['color_id']))
+        {
+            $model->size_id = $_GET['size_id'];
+            $model->color_id = $_GET['color_id'];
+            $model->damage_id = $_GET['damage_id'];
+        }
+
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $modelPrice->load(Yii::$app->request->post()) && $modelPrice->validate()) {
             $transaction = $model->getDb()->beginTransaction();
             try

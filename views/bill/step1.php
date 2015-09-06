@@ -13,7 +13,7 @@ use kartik\select2\Select2;
 
 BillingAsset::register($this);
 
-$this->title = Yii::t('app', 'Billing') . ' ' . Yii::t('app', 'Step {n}', ['n' => 1]);
+$this->title = Yii::t('app', 'Create {modelClass}: ', ['modelClass' => Yii::t('app','Bill')]);
 $sizeUrl = \yii\helpers\Url::to(['car-part/size']);
 $colorUrl = \yii\helpers\Url::to(['car-part/color']);
 $damageUrl = \yii\helpers\Url::to(['car-part/damage']);
@@ -21,8 +21,6 @@ $damageUrl = \yii\helpers\Url::to(['car-part/damage']);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Billing'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
-
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="row">
@@ -75,6 +73,19 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-danger text-center">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><?= Yii::t('app','Total'); ?></h3>
+                </div>
+                <div class="panel-body">
+                    </strong><span id="total-disp">&nbsp;<?= Yii::$app->formatter->asCurrency(0.00); ?></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
@@ -110,7 +121,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php
 Modal::begin([
     'header' => '<h2>' . Yii::t('app', 'Part details') . '</h2>',
-    'options' => ['id' => 'part-detail-modal','tabindex' => false]
+    'options' => ['id' => 'part-detail-modal', 'tabindex' => false]
 ]);
 
 $form = ActiveForm::begin([
@@ -163,7 +174,7 @@ $form->field($carPart, 'damage_id')->widget(Select2::classname(), [
 ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Create'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Create'), ['class' => 'btn btn-success','id' => 'item-submit-modal']) ?>
     </div>
 
 <?php

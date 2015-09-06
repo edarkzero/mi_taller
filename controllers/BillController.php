@@ -9,8 +9,9 @@ use app\models\Color;
 use Yii;
 use app\models\Bill;
 use app\models\BillSearch;
-use yii\base\Security;
+use yii\base\Exception;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -140,8 +141,42 @@ class BillController extends Controller
         }
     }
 
+    public function actionStoreChanges()
+    {
+        if(isset($_POST['CarPart']))
+        {
+            $result = [];
+            $selectedParts = $_POST['CarPart'];
+            $carPart = CarPart::getByParts($selectedParts['size_id'],$selectedParts['color_id'],$selectedParts['damage_id']);
+
+            if(isset($carPart,$carPart->price)) {
+                $total = $carPart->price->total;
+
+                if($_POST['mode'] == 0)
+                    Yii::$app->session['carPartTotal'] += $total;
+                elseif($_POST['mode'] == 1)
+                    Yii::$app->session['carPartTotal'] -= $total;
+
+                $result['total'] = Yii::$app->formatter->asCurrency(Yii::$app->session['carPartTotal']);
+                $result['error'] = false;
+            }
+
+            else
+            {
+                $result['message'] = Yii::t('app','The requested car part need to be defined. You can do it <a href="{route}">here</a>',['route' => Url::to(['car-part/create']).'?'.http_build_query($_POST['CarPart'])]);
+                $result['error'] = true;
+            }
+
+            echo json_encode($result);
+        }
+
+        else
+            throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
     public function actionStep1()
     {
+        Yii::$app->session['carPartTotal'] = 0.00;
         $carPart = new CarPart();
         $sizes = ArrayHelper::map(Size::find()->asArray()->all(),'id','name');
         $colors = ArrayHelper::map(Color::find()->asArray()->all(),'id','name');

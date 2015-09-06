@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use \yii\bootstrap\Modal;
 
 AppAsset::register($this);
 ?>
@@ -94,6 +95,16 @@ AppAsset::register($this);
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
+
+<?php
+Modal::begin([
+    'header' => '<h2>' . Yii::t('app', 'Alert') . '</h2>',
+    'options' => ['id' => 'error-modal']
+]);
+?>
+<?php
+Modal::end();
+?>
 
 <?php $this->endBody() ?>
 </body>
