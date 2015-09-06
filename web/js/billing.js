@@ -72,6 +72,18 @@ $(document).ready(function (e)
         storeChanges(0,false);
     });
 
+    $('#bill-submit').click(function(e)
+    {
+        e.preventDefault();
+        storeBill(0);
+    });
+
+    $('#bill-submit-print').click(function(e)
+    {
+        e.preventDefault();
+        storeBill(1);
+    });
+
     highlightControl(default_car_selection);
 });
 
@@ -153,7 +165,27 @@ function storeChanges(mode,all)
         },
         error: function(jqXHR,textStatus,errorThrown)
         {
-            alert(textStatus+", "+errorThrown);
+            $('#error-modal .modal-body').html(textStatus+", "+errorThrown);
+            $('#error-modal').modal('show');
+        }
+    });
+}
+
+function storeBill(mode)
+{
+    $.ajax('create',{
+        data: {mode: mode},
+        dataType: 'json',
+        method: 'POST',
+        success: function(data)
+        {
+            $('#error-modal .modal-body').html(data.message);
+            $('#error-modal').modal('show');
+        },
+        error: function(jqXHR,textStatus,errorThrown)
+        {
+            $('#error-modal .modal-body').html(textStatus+", "+errorThrown);
+            $('#error-modal').modal('show');
         }
     });
 }

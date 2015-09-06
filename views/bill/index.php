@@ -25,8 +25,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'price_id',
-            'discount',
+            [
+                'attribute' => 'price_total',
+                'label' => $searchModel->getAttributeLabel('price_id'),
+                'value' => function ($model, $key, $index, $column)
+                {
+                    return Yii::$app->formatter->asCurrency($model->getPriceTotal());
+                }
+            ],
+            'discount:currency',
             'created_at:datetime',
             'updated_at:datetime',
 

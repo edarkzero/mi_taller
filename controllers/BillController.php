@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\CarPart;
 use app\models\Damage;
+use app\models\Price;
 use app\models\Size;
 use app\models\Color;
 use Yii;
@@ -84,12 +85,49 @@ class BillController extends Controller
     {
         $model = new Bill();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model
-            ]);
+        if(isset($_POST['mode']))
+        {
+            $result = [];
+
+            if($_POST['mode'] == 0 || $_POST['mode'] == 1)
+            {
+                $transaction = $model->getDb()->beginTransaction();
+
+                try
+                {
+                    $modelPrice = new Price();
+                    $modelPrice->price = Yii::$app->session['carPartTotal'];
+                    $modelPrice->calculate();
+
+                    if(!$modelPrice->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($modelPrice->tableName())),'msj' => print_r($modelPrice->getErrors(),true)]),500);
+                    $model->price_id = $modelPrice->id;
+                    $model->discount = 0.00; //TODO: need to modify this value by the user from a modal
+
+                    if ($model->save())
+                        $result['message'] = Yii::t('app', '{modelClass} saved', ['modelClass' => Yii::t('app', ucfirst($model->tableName()))]);
+                    else
+                        $result['message'] = Yii::t('app', 'Error saving {model}: {msj}', ['model' => Yii::t('app', ucfirst($model->tableName())), 'msj' => print_r($model->errors, true)]);
+
+                    $transaction->commit();
+                }
+                catch(\Exception $e)
+                {
+                    $transaction->rollBack();
+                    $result['message'] = Yii::t('app', 'Error saving {model}: {msj}', ['model' => Yii::t('app', ucfirst($model->tableName())), 'msj' => $e]);
+                }
+            }
+
+            echo json_encode($result);
+        }
+        else
+        {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                return $this->render('create', [
+                    'model' => $model
+                ]);
+            }
         }
     }
 

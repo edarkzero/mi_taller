@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Bill;
+use yii\data\Sort;
 
 /**
  * BillSearch represents the model behind the search form about `app\models\Bill`.
@@ -20,7 +21,7 @@ class BillSearch extends Bill
         return [
             [['id', 'price_id'], 'integer'],
             [['discount'], 'number'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at','price_total'], 'safe'],
         ];
     }
 
@@ -43,9 +44,21 @@ class BillSearch extends Bill
     public function search($params)
     {
         $query = Bill::find();
+        $query->innerJoinWith('price');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => new Sort([
+                'attributes' => [
+                    'price_total' => [
+                        'asc' => ['price.total' => SORT_ASC],
+                        'desc' => ['price.total' => SORT_DESC]
+                    ],
+                    'discount',
+                    'created_at',
+                    'updated_at'
+                ],
+            ])
         ]);
 
         $this->load($params);
@@ -57,12 +70,13 @@ class BillSearch extends Bill
         }
 
         $query->andFilterWhere([
-            'id' => $this->id,
             'price_id' => $this->price_id,
             'discount' => $this->discount,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'updated_at' => $this->updated_at
         ]);
+
+        $query->andFilterWhere(['like','price.total',$this->price_total]);
 
         return $dataProvider;
     }

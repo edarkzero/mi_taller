@@ -18,6 +18,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class Bill extends \yii\db\ActiveRecord
 {
+    public $price_total;
+
     /**
      * @inheritdoc
      */
@@ -95,5 +97,10 @@ class Bill extends \yii\db\ActiveRecord
     public function getPrice()
     {
         return $this->hasOne(Price::className(), ['id' => 'price_id']);
+    }
+
+    public function getPriceTotal()
+    {
+        return isset($this->price) ? $this->price->total : '';
     }
 }

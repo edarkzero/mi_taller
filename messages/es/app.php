@@ -39,6 +39,7 @@ return [
     'Update Item' => 'Editar Artículo',
     'Delete Item' => 'Eliminar Artículo',
     'Create {modelClass}: ' => 'Crear {modelClass}',
+    '{modelClass} saved' => '{modelClass} guardado',
     'Update {modelClass}: ' => 'Editar {modelClass}',
     'Delete {modelClass}: ' => 'Eliminar {modelClass}',
     'Assign {modelClass}: ' => 'Asignar {modelClass}',
