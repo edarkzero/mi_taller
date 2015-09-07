@@ -85,7 +85,9 @@ class BillController extends Controller
     {
         $model = new Bill();
 
-        if(isset($_POST['mode']))
+        if(Yii::$app->session['carPartTotal'] <= 0.00) return;
+
+        if(isset($_POST['mode'],$_POST['discount']))
         {
             $result = [];
 
@@ -95,13 +97,18 @@ class BillController extends Controller
 
                 try
                 {
+                    $discount = (double)$_POST['discount'];
+
+                    if($discount > Yii::$app->session['carPartTotal'])
+                        $discount = 0.00;
+
                     $modelPrice = new Price();
-                    $modelPrice->price = Yii::$app->session['carPartTotal'];
+                    $modelPrice->price = (double)Yii::$app->session['carPartTotal'] - (double)$discount;
                     $modelPrice->calculate();
 
                     if(!$modelPrice->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($modelPrice->tableName())),'msj' => print_r($modelPrice->getErrors(),true)]),500);
                     $model->price_id = $modelPrice->id;
-                    $model->discount = 0.00; //TODO: need to modify this value by the user from a modal
+                    $model->discount = $discount; //TODO: need to modify this value by the user from a modal
 
                     if ($model->save())
                         $result['message'] = Yii::t('app', '{modelClass} saved', ['modelClass' => Yii::t('app', ucfirst($model->tableName()))]);
@@ -188,7 +195,7 @@ class BillController extends Controller
             $carPart = CarPart::getByParts($selectedParts['size_id'],$selectedParts['color_id'],$selectedParts['damage_id']);
 
             if(isset($carPart,$carPart->price)) {
-                $total = $carPart->price->total;
+                $total = (double)$carPart->price->total;
 
                 if($_POST['mode'] == 0)
                     Yii::$app->session['carPartTotal'] += $total;

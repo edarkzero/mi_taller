@@ -4,6 +4,7 @@ use app\assets\BillingAsset;
 use yii\widgets\ActiveForm;
 use yii\bootstrap\Modal;
 use kartik\select2\Select2;
+use kartik\money\MaskMoney;
 
 /* @var $this yii\web\View */
 /* @var $carPart app\models\CarPart */
@@ -18,9 +19,24 @@ $sizeUrl = \yii\helpers\Url::to(['car-part/size']);
 $colorUrl = \yii\helpers\Url::to(['car-part/color']);
 $damageUrl = \yii\helpers\Url::to(['car-part/damage']);
 
+$maskMoneyOptions = [
+    'prefix' => 'Bs.',
+    'suffix' => '',
+    'affixesStay' => true,
+    'thousands' => '.',
+    'decimal' => ',',
+    'precision' => 2,
+    'allowZero' => true,
+    'allowNegative' => false,
+];
+
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Billing'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<script>
+    var money_default_value = "<?= Yii::$app->formatter->asCurrency(0.00) ?>";
+</script>
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="row">
@@ -79,9 +95,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h3 class="panel-title"><?= Yii::t('app', 'Total'); ?></h3>
                 </div>
                 <div class="panel-body">
-                    <strong id="total-disp">&nbsp;<?= Yii::$app->formatter->asCurrency(0.00); ?></strong>
-                    <?= Html::submitButton('<i class="mdi-content-archive"></i>', ['class' => 'btn btn-fab btn-fab-mini btn-raised btn-sm btn-material-red', 'id' => 'bill-submit','title' => Yii::t('app','Save')]) ?>
-                    <?= Html::submitButton('<i class="mdi-content-content-paste"></i>', ['class' => 'btn btn-fab btn-fab-mini btn-raised btn-sm btn-material-red', 'id' => 'bill-submit-print','title' => Yii::t('app','Save and print')]) ?>
+                    <strong id="total-disp"><?= Yii::$app->formatter->asCurrency(0.00); ?></strong>
+                    <?= Html::submitButton('<i class="mdi-content-archive"></i>', ['class' => 'btn btn-fab btn-fab-mini btn-raised btn-sm btn-material-red', 'id' => 'bill-submit', 'title' => Yii::t('app', 'Save')]) ?>
+                    <?= Html::submitButton('<i class="mdi-content-content-paste"></i>', ['class' => 'btn btn-fab btn-fab-mini btn-raised btn-sm btn-material-red', 'id' => 'bill-submit-print', 'title' => Yii::t('app', 'Save and print')]) ?>
                 </div>
             </div>
         </div>
@@ -181,5 +197,36 @@ $form->field($carPart, 'damage_id')->widget(Select2::classname(), [
 
 <?php
 ActiveForm::end();
+Modal::end();
+
+Modal::begin([
+    'header' => '<h2>' . Yii::t('app', '¿Do you want to apply a discount?') . '</h2>',
+    'options' => ['id' => 'bill-discount-modal']
+]);
+?>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?=
+            MaskMoney::widget([
+                'id' => 'bill-discount',
+                'name' => 'bill-discount',
+                'value' => 0.00,
+                'pluginOptions' => $maskMoneyOptions
+            ]);
+            ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <?= Html::submitButton(Yii::t('app', 'Accept'), ['class' => 'btn btn-success', 'id' => 'discount-submit-modal']); ?>
+        </div>
+        <div class="col-md-6">
+            <?= Html::submitButton(Yii::t('app', 'Cancel'), ['data-dismiss' => 'modal','class' => 'btn btn-warning','id' => 'cancel-discount-submit-modal']); ?>
+        </div>
+    </div>
+
+<?php
 Modal::end();
 ?>
