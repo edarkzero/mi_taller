@@ -209,6 +209,7 @@ function storeBill()
         {
             $('#error-modal .modal-body').html(data.message);
             $('#error-modal').modal('show');
+            window.location.replace("index");
         },
         error: function(jqXHR,textStatus,errorThrown)
         {

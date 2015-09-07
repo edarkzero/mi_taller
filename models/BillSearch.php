@@ -52,12 +52,15 @@ class BillSearch extends Bill
                 'attributes' => [
                     'price_total' => [
                         'asc' => ['price.total' => SORT_ASC],
-                        'desc' => ['price.total' => SORT_DESC]
+                        'desc' => ['price.total' => SORT_DESC],
                     ],
                     'discount',
                     'created_at',
                     'updated_at'
                 ],
+                'defaultOrder' => [
+                    'created_at' => SORT_DESC
+                ]
             ])
         ]);
 
