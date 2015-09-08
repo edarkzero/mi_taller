@@ -110,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app', 'Sedan')]); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
-                    <img data-car="sedan" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/sedan-front.png"/>
+                    <img data-car-full="7" data-car="sedan" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/sedan-front.png"/>
                 </div>
             </div>
         </div>
@@ -120,7 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app', 'Truck')]); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
-                    <img data-car="wagon" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/wagon-front.png"/>
+                    <img data-car-full="8" data-car="wagon" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/wagon-front.png"/>
                 </div>
             </div>
         </div>
@@ -130,7 +130,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app', 'Compact')]); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
-                    <img data-car="sedan" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/sedan-front.png"/>
+                    <img data-car-full="6" data-car="sedan" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/sedan-front.png"/>
                 </div>
             </div>
         </div>

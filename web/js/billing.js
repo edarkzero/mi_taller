@@ -9,6 +9,7 @@ var carSlideMapActive = '#car-slide .item.active map';
 
 var s_view_extension = '.png';
 var default_car_selection = 'sedan';
+var default_car_full_selection = '7';
 
 var s_big = 3;
 var s_medium = 2;
@@ -16,6 +17,7 @@ var s_small = 1;
 var bill_mode = 0;
 var $last_area = null;
 var was_selected_area = null;
+var selected_car_full = null;
 
 var sedan_left_area = '<area data-part="door" data-tabulator="'+s_big+'" shape="poly" coords="761,130,749,118,697,115,670,104,608,77,554,61,496,55,428,55,390,59,353,68,303,90,241,125,251,133,302,101,343,79,398,63,459,60,518,65,567,76,607,93,625,105,626,108,607,121,614,136"  alt="" /><area data-tabulator="'+s_medium+'" shape="poly" coords="543,224,559,225,588,184,620,174,653,180,671,193,688,220,691,240,690,255,733,248,763,247,793,239,795,195,800,193,796,184,784,180,774,168,772,155,762,130,716,129,681,132,646,134,610,136,590,166,562,197,543,224"  alt="" /><area data-tabulator="'+s_big+'" shape="poly" coords="232,247,231,263,557,261,558,223,544,225,525,240,507,243,232,247"  alt="" /><area data-tabulator="'+s_big+'" shape="poly" coords="20,171,33,160,68,148,148,132,181,128,214,128,174,135,114,145,80,153,41,167,37,171"  alt="" /><area data-tabulator="'+s_big+'" shape="poly" coords="232,245,223,207,205,185,179,175,155,172,132,181,114,197,101,226,98,240,99,252,97,259,9,249,10,243,35,241,52,239,66,213,10,217,10,208,5,206,23,185,46,164,98,147,168,135,242,126,251,133,243,146,238,167,238,203,249,244"  alt="" /><area data-tabulator="'+s_big+'" shape="poly" coords="461,60,533,68,599,89,625,107,606,123,612,138,525,242,435,243,435,180,437,165,444,126,461,60"  alt="" /><area data-tabulator="'+s_medium+'" shape="poly" coords="249,243,238,207,238,163,244,138,344,75,404,61,459,59,438,151,435,242,249,243"  alt="" />';
 var sedan_right_area = '<area data-tabulator="'+s_big+'" shape="poly" coords="41,130,53,118,105,115,131,104,193,77,247,61,305,55,373,55,411,59,448,68,499,90,561,125,550,133,500,101,458,79,403,63,342,60,283,65,234,76,195,93,177,105,175,108,195,121,188,136" alt="" /><area data-tabulator="'+s_big+'" shape="poly" coords="259,224,242,225,213,184,182,174,148,180,130,193,114,220,111,240,111,255,68,248,38,247,8,239,7,195,1,193,5,184,18,180,28,168,29,155,40,130,85,129,121,132,155,134,191,136,212,166,239,197,259,224" alt="" /><area data-tabulator="'+s_big+'" shape="poly" coords="569,247,570,263,245,261,244,223,258,225,276,240,295,243,569,247" alt="" /><area data-tabulator="'+s_big+'" shape="poly" coords="781,171,768,160,734,148,653,132,620,128,588,128,628,135,688,145,722,153,761,167,764,171" alt="" /><area data-tabulator="'+s_big+'" shape="poly" coords="570,245,578,207,597,185,623,175,647,172,670,181,688,197,701,226,704,240,702,252,704,259,792,249,792,243,767,241,749,239,736,213,792,217,792,208,797,206,779,185,755,164,704,147,634,135,560,126,551,133,559,146,563,167,563,203,552,244" alt="" /><area data-tabulator="'+s_big+'" shape="poly" coords="341,60,269,68,202,89,177,107,195,123,189,138,277,242,367,243,366,180,364,165,357,126,341,60" alt="" /><area data-tabulator="'+s_big+'" shape="poly" coords="553,243,563,207,563,163,557,138,457,75,397,61,342,59,363,151,367,242,553,243" alt="" />';
@@ -29,6 +31,7 @@ $(document).ready(function (e)
         var glue = '/';
         var $s_car_image = $(this).children();
         var s_car = $s_car_image.attr('data-car');
+        selected_car_full = $s_car_image.attr('data-car-full');
         var $s_view_images = $(carSlideImg);
         $.each($s_view_images, function (index, s_view_image)
         {
@@ -183,7 +186,9 @@ function storeChanges(mode,all)
         q = $('#item-form-modal').serialize()+"&mode="+mode;
     else
     {
-        alert("FUNCIÓN EN DESARROLLO. No se realizó ningún calculo.");
+        if(selected_car_full == null)
+            selected_car_full = default_car_full_selection;
+        alert("FUNCIÓN EN DESARROLLO. No se realizó ningún calculo."+" Info: "+selected_car_full);
         return;
     }
 
