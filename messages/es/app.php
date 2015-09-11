@@ -107,6 +107,7 @@ return [
     'Assignment' => 'Asignación',
     'Administrative System' => 'Sistema Administrativo',
     'Inventory management and billing' => 'Gestión de inventario y facturación',
+    'Inventory' => 'Inventario',
     'System alerts' => 'Alertas de sistema',
     'System logs' => 'Registros del sistema',
     'Alerts' => 'Alertas',

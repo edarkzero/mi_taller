@@ -41,7 +41,7 @@ AppAsset::register($this);
             ['label' => \Yii::t('app','Home'), 'url' => ['/site/index']],
             ['label' => \Yii::t('app','Billing'), 'url' => ['/bill/index'],'active' => Yii::$app->controller->id == 'bill'],
             [
-                'label' => Yii::t('app','Item'),
+                'label' => Yii::t('app','Inventory'),
                 'items' => [
                     ['label' => \Yii::t('app','Admin'), 'url' => ['/item/index'],'active' => Yii::$app->controller->id == 'item'],
                     ['label' => \Yii::t('app','Assign'), 'url' => ['/person-item/index'],'active' => Yii::$app->controller->id == 'person-item'],
@@ -49,7 +49,7 @@ AppAsset::register($this);
                 'active' =>  Yii::$app->controller->id == 'item' || Yii::$app->controller->id == 'person-item'
             ],
             [
-                'label' => Yii::t('app','Employed'),
+                'label' => Yii::t('app','Employees'),
                 'items' => [
                     ['label' => \Yii::t('app','Job'), 'url' => ['/job/index'],'active' => Yii::$app->controller->id == 'job'],
                     ['label' => \Yii::t('app','Person'), 'url' => ['/person/index'],'active' => Yii::$app->controller->id == 'person'],
@@ -66,7 +66,7 @@ AppAsset::register($this);
                 ],
                 //'active' =>  Yii::$app->controller->id == 'job' || Yii::$app->controller->id == 'person'
             ],
-            ['label' => \Yii::t('app','Log'), 'url' => ['/log/index'],'active' => Yii::$app->controller->id == 'log'],
+            ['label' => \Yii::t('app','Logs'), 'url' => ['/log/index'],'active' => Yii::$app->controller->id == 'log'],
             /*['label' => \Yii::t('app','About'), 'url' => ['/site/about']],
             ['label' => \Yii::t('app','Contact'), 'url' => ['/site/contact']],*/
             Yii::$app->user->isGuest ?
