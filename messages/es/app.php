@@ -130,5 +130,10 @@ return [
     'Save and print' => 'Guardar e imprimir',
     '¿Do you want to apply a discount?' => '¿Desea aplicar un descuento?',
     'Accept' => 'Aceptar',
-    'Cancel' => 'Cancelar'
+    'Cancel' => 'Cancelar',
+    'Medium' => 'Mediano',
+    'Big' => 'Grande',
+    'Tiny' => 'Pequeño',
+    'Pickup' => 'Pickup',
+    '{size} Car' => 'Carro {size}'
 ];

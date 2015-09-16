@@ -58,23 +58,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= \yii\bootstrap\Carousel::widget([
                         'items' => [
                             [
-                                'content' => '<img data-view="left" class="img-responsive center-block" usemap="#map-left" src="' . Yii::getAlias('@web') . '/images/car-blueprint/sedan-left.png"/><map name="map-left" id="map-left"></map>',
+                                'content' => '<img data-view="left" class="img-responsive center-block" usemap="#map-left" src="' . Yii::getAlias('@web') . '/images/car-blueprint/medium-left.png"/><map name="map-left" id="map-left"></map>',
                                 //'caption' => Yii::t('app','Left side view')
                             ],
                             [
-                                'content' => '<img data-view="right" class="img-responsive center-block" usemap="#map-right" src="' . Yii::getAlias('@web') . '/images/car-blueprint/sedan-right.png"/><map name="map-right" id="map-right"></map>',
+                                'content' => '<img data-view="right" class="img-responsive center-block" usemap="#map-right" src="' . Yii::getAlias('@web') . '/images/car-blueprint/medium-right.png"/><map name="map-right" id="map-right"></map>',
                                 //'caption' => Yii::t('app','Right side view')
                             ],
                             [
-                                'content' => '<img data-view="back" class="img-responsive center-block" src="' . Yii::getAlias('@web') . '/images/car-blueprint/sedan-back.png"/>',
+                                'content' => '<img data-view="back" class="img-responsive center-block" src="' . Yii::getAlias('@web') . '/images/car-blueprint/medium-back.png"/>',
                                 //'caption' => Yii::t('app','Rear view')
                             ],
                             [
-                                'content' => '<img data-view="front" class="img-responsive center-block" src="' . Yii::getAlias('@web') . '/images/car-blueprint/sedan-front.png"/>',
+                                'content' => '<img data-view="front" class="img-responsive center-block" src="' . Yii::getAlias('@web') . '/images/car-blueprint/medium-front.png"/>',
                                 //'caption' => Yii::t('app','Front view')
                             ],
                             [
-                                'content' => '<img data-view="air" class="img-responsive center-block" src="' . Yii::getAlias('@web') . '/images/car-blueprint/sedan-air.png"/>',
+                                'content' => '<img data-view="air" class="img-responsive center-block" src="' . Yii::getAlias('@web') . '/images/car-blueprint/medium-air.png"/>',
                                 //'caption' => Yii::t('app','Aerial view')
                             ],
                         ],
@@ -107,30 +107,40 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
-                    <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app', 'Sedan')]); ?></h3>
+                    <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app','Tiny')]); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
-                    <img data-car-full="7" data-car="sedan" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/sedan-front.png"/>
+                    <img data-car-full="6" data-car="tiny" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/medium-front.png"/>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
-                    <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app', 'Truck')]); ?></h3>
+                    <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app','Medium')]); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
-                    <img data-car-full="8" data-car="wagon" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/wagon-front.png"/>
+                    <img data-car-full="7" data-car="medium" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/medium-front.png"/>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
-                    <h3 class="panel-title"><?= Yii::t('app', '{n_door} doors {car_type}', ['n_door' => 4, 'car_type' => Yii::t('app', 'Compact')]); ?></h3>
+                    <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app','Big')]); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
-                    <img data-car-full="6" data-car="sedan" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/sedan-front.png"/>
+                    <img data-car-full="8" data-car="big" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/big-front.png"/>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading text-center">
+                    <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app','Pickup')]); ?></h3>
+                </div>
+                <div class="panel-body car-select-option">
+                    <img data-car-full="9" data-car="pickup" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/medium-front.png"/>
                 </div>
             </div>
         </div>
