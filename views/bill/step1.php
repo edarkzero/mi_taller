@@ -110,7 +110,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app','Tiny')]); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
-                    <img data-car-full="6" data-car="tiny" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/medium-front.png"/>
+                    <img data-car-full="6" data-car="tiny" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/tiny-front.png"/>
                 </div>
             </div>
         </div>
@@ -140,7 +140,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app','Pickup')]); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
-                    <img data-car-full="9" data-car="pickup" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/medium-front.png"/>
+                    <img data-car-full="9" data-car="pickup" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/pickup-front.png"/>
                 </div>
             </div>
         </div>
