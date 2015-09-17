@@ -137,7 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
-                    <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app','Pickup')]); ?></h3>
+                    <h3 class="panel-title"><?= Yii::t('app','Pickup'); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
                     <img data-car-full="9" data-car="pickup" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/pickup-front.png"/>
