@@ -68,6 +68,12 @@ $config = [
                 ],
             ],
         ],
+        'formatter' => [
+            'class' => 'yii\i18n\Formatter',
+            'dateFormat' => 'php:d-m-Y',
+            'datetimeFormat' => 'php:d-m-Y h:i:s a',
+            'timeFormat' => 'php:h:i:s a',
+        ],
         'db' => require(__DIR__ . '/db.php'),
     ],
     'params' => $params,
