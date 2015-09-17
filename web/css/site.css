@@ -94,3 +94,14 @@ a.desc:after {
 {
     background-color: #009688;
 }
+
+.navbar-fixed-image .navbar-brand
+{
+    margin-left: 0px !important;
+    padding: 0px !important;
+}
+
+.navbar-fixed-image .navbar-brand img
+{
+    max-height: 60px;
+}

@@ -29,10 +29,10 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->params['company'],
+        'brandLabel' => Html::img(Yii::getAlias('@web').'/images/logo/logo_alpha.png'),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-fixed-top',
+            'class' => 'navbar navbar-fixed-top navbar-fixed-image',
         ],
     ]);
     echo Nav::widget([
