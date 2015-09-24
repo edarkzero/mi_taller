@@ -44,9 +44,9 @@ AppAsset::register($this);
                 'label' => Yii::t('app','Inventory'),
                 'items' => [
                     ['label' => \Yii::t('app','Admin'), 'url' => ['/item/index'],'active' => Yii::$app->controller->id == 'item'],
-                    ['label' => \Yii::t('app','Assign'), 'url' => ['/person-item/index'],'active' => Yii::$app->controller->id == 'person-item'],
+                    ['label' => \Yii::t('app','Assign'), 'url' => ['/item-assign/index'],'active' => Yii::$app->controller->id == 'item-assign'],
                 ],
-                'active' =>  Yii::$app->controller->id == 'item' || Yii::$app->controller->id == 'person-item'
+                'active' =>  Yii::$app->controller->id == 'item' || Yii::$app->controller->id == 'item-assign'
             ],
             [
                 'label' => Yii::t('app','Employees'),
