@@ -50,6 +50,7 @@ class BillSearch extends Bill
             'query' => $query,
             'sort' => new Sort([
                 'attributes' => [
+                    self::tableName().'.id',
                     'price_total' => [
                         'asc' => ['price.total' => SORT_ASC],
                         'desc' => ['price.total' => SORT_DESC],
@@ -73,6 +74,7 @@ class BillSearch extends Bill
         }
 
         $query->andFilterWhere([
+            self::tableName().'.id' => $this->id,
             'price_id' => $this->price_id,
             'discount' => $this->discount,
             'created_at' => $this->created_at,

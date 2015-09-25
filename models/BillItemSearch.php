@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use app\models\BillItem;
 
 /**
- * BillItemSearch represents the model behind the search form about `app\models\BillItem`.
+ * BillItemSearch represents the model behind the search form about `\app\models\BillItem`.
  */
 class BillItemSearch extends BillItem
 {
@@ -19,7 +19,7 @@ class BillItemSearch extends BillItem
     {
         return [
             [['id', 'item_id', 'bill_id', 'amount'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['description', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -63,6 +63,8 @@ class BillItemSearch extends BillItem
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
+
+        $query->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

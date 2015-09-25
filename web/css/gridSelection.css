@@ -1,0 +1,9 @@
+.table-select th:last-child, .table-select td:last-child
+{
+    display: none;
+}
+
+.table-select tr
+{
+    cursor: pointer;
+}

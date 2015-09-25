@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "bill_item".
@@ -11,11 +12,12 @@ use Yii;
  * @property string $item_id
  * @property string $bill_id
  * @property string $amount
+ * @property string $description
  * @property string $created_at
  * @property string $updated_at
  *
- * @property Item $item
  * @property Bill $bill
+ * @property Item $item
  */
 class BillItem extends \yii\db\ActiveRecord
 {
@@ -27,6 +29,20 @@ class BillItem extends \yii\db\ActiveRecord
         return 'bill_item';
     }
 
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                ],
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -35,7 +51,8 @@ class BillItem extends \yii\db\ActiveRecord
         return [
             [['item_id', 'bill_id'], 'required'],
             [['item_id', 'bill_id', 'amount'], 'integer'],
-            [['created_at', 'updated_at'], 'safe']
+            [['created_at', 'updated_at'], 'safe'],
+            [['description'], 'string', 'max' => 255]
         ];
     }
 
@@ -49,17 +66,28 @@ class BillItem extends \yii\db\ActiveRecord
             'item_id' => Yii::t('app', 'Bill'),
             'bill_id' => Yii::t('app', 'Item'),
             'amount' => Yii::t('app', 'Amount'),
+            'description' => Yii::t('app', 'Description'),
             'created_at' => Yii::t('app', 'Created_at'),
             'updated_at' => Yii::t('app', 'Updated_at'),
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getItem()
+    public function afterSave($insert,$changedAttributes)
     {
-        return $this->hasOne(Item::className(), ['id' => 'item_id']);
+        parent::afterSave($insert,$changedAttributes);
+        $log = new Log();
+
+        if($insert)
+            $log->saveDatabaseOperation('create',$this->tableName(),$this->description);
+        else
+            $log->saveDatabaseOperation('update',$this->tableName(),$this->description);
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        $log = new Log();
+        $log->saveDatabaseOperation('delete',$this->tableName(),$this->description);
     }
 
     /**
@@ -68,5 +96,13 @@ class BillItem extends \yii\db\ActiveRecord
     public function getBill()
     {
         return $this->hasOne(Bill::className(), ['id' => 'bill_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getItem()
+    {
+        return $this->hasOne(Item::className(), ['id' => 'item_id']);
     }
 }

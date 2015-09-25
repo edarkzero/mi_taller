@@ -135,5 +135,9 @@ return [
     'Big' => 'Grande',
     'Tiny' => 'Pequeño',
     'Pickup' => 'Pickup',
-    '{size} Car' => 'Carro {size}'
+    '{size} Car' => 'Carro {size}',
+    'Description' => 'Descripción',
+    'Bill Items' => 'Assignaciones',
+    'Bill Item' => 'Assignación',
+    'Assign selected' => 'Asignar seleccionado'
 ];
