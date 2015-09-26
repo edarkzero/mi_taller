@@ -17,7 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 GridViewSelectionAsset::register($this);
 
-$gridID = 'bill-grid';
+$billGridID = 'bill-grid';
+$itemGridID = 'item-grid';
 
 ?>
 <div class="bill-item-index">
@@ -26,15 +27,15 @@ $gridID = 'bill-grid';
     <div>
         <h1 class="pull-left"><?= Html::encode(Yii::t('app', 'Bills')) ?></h1>
         <p class="pull-right">
-            <?= Html::a(Yii::t('app', 'Assign selected'), '#', ['class' => 'btn btn-success','onclick' => 'GridViewGetSelected("#'.$gridID.'")']) ?>
+            <?= Html::a(Yii::t('app', 'Assign selected'), '#', ['class' => 'btn btn-success','onclick' => 'GridViewGetSelected("#'.$billGridID.'")']) ?>
         </p>
     </div>
     <div class="clearfix"></div>
 
-    <?php Pjax::begin(['id' => 'pjax1']); ?>
+    <?php Pjax::begin(['id' => $billGridID.'-wrapper']); ?>
 
     <?= GridView::widget([
-        'id' => $gridID,
+        'id' => $billGridID,
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'tableOptions' => ['class' => 'table table-bordered table-hover table-select table-select-one'],
@@ -69,9 +70,9 @@ Modal::begin([
 
     <div class="row">
         <div class="col-md-12">
-            <?php Pjax::begin(['id' => 'pjax2']); ?>
+            <?php Pjax::begin(['id' => $itemGridID.'-wrapper']); ?>
             <?= GridView::widget([
-                'id' => 'item-grid',
+                'id' => $itemGridID,
                 'dataProvider' => $itemDataProvider,
                 'filterModel' => $itemSearchModel,
                 'tableOptions' => ['class' => 'table table-bordered table-hover table-select table-select-all'],
