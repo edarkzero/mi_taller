@@ -56,7 +56,9 @@ class ItemAssignController extends Controller
 
             if(isset($_POST['item'],$_POST['quantity_user']))
             {
-                Yii::$app->session['item'][$_POST['item']] = $_POST['quantity_user'];
+                $item = Yii::$app->session['item'];
+                $item[$_POST['item']] = $_POST['quantity_user'];
+                Yii::$app->session['item'] = $item;
                 return ['output' => $_POST['quantity_user'], 'message' => ''];
             }
 
@@ -64,7 +66,6 @@ class ItemAssignController extends Controller
                 return ['output'=>'', 'message'=>'Validation error'];
         }
 
-        Yii::$app->session['item'] = [];
         $searchModel = new BillSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $itemSearchModel = new ItemSearch();

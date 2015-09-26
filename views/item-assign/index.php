@@ -120,10 +120,10 @@ Modal::begin([
 
     <div class="row">
         <div class="col-md-6">
-            <?= Html::submitButton(Yii::t('app', 'Accept'), ['class' => 'btn btn-success', 'id' => 'item-submit-modal']); ?>
+            <?= Html::submitButton(Yii::t('app', 'Accept'), ['class' => 'btn btn-success', 'id' => 'item-submit-modal','name' => 'item-submit-modal']); ?>
         </div>
         <div class="col-md-6">
-            <?= Html::submitButton(Yii::t('app', 'Cancel'), ['data-dismiss' => 'modal','class' => 'btn btn-warning','id' => 'cancel-item-submit-modal']); ?>
+            <?= Html::submitButton(Yii::t('app', 'Cancel'), ['data-dismiss' => 'modal','class' => 'btn btn-warning','id' => 'cancel-item-submit-modal','name' => 'cancel-item-submit-modal']); ?>
         </div>
     </div>
 
