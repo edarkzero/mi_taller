@@ -53,6 +53,11 @@ $itemGridID = 'item-grid';
             ],
             'discount:currency',
 
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'controller' => 'bill',
+                'buttonOptions' => ['data-pjax' => '0']
+            ],
             ['class' => 'yii\grid\CheckboxColumn'],
         ],
     ]); ?>
@@ -82,6 +87,11 @@ Modal::begin([
                     'name',
                     'quantity',
 
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'controller' => 'item',
+                        'buttonOptions' => ['data-pjax' => '0']
+                    ],
                     ['class' => 'yii\grid\CheckboxColumn'],
                 ],
             ]); ?>
