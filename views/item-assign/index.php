@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use app\assets\GridViewSelectionAsset;
 use \yii\bootstrap\Modal;
 use \yii\widgets\Pjax;
+use kartik\editable\Editable;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\BillSearch */
@@ -86,6 +87,24 @@ Modal::begin([
 
                     'name',
                     'quantity',
+                    [
+                        'attribute' => 'quantity_user',
+                        'format' => 'raw',
+                        'value' => function($model, $key, $index, $column) use (&$itemGridID)
+                        {
+                            return Editable::widget([
+                                'name'=>'quantity_user',
+                                'pjaxContainerId' => $itemGridID.'-wrapper',
+                                'asPopover' => true,
+                                'value' => !isset(Yii::$app->session['item'][$model->id]) ? 0 : Yii::$app->session['item'][$model->id],
+                                'header' => Yii::t('app','Quantity'),
+                                'options' => ['placeholder'=>Yii::t('app','Enter a number')],
+                                'beforeInput' => function ($form, $widget) use (&$model) {
+                                    echo Html::input('hidden','item',$model->id);
+                                }
+                            ]);
+                        }
+                    ],
 
                     [
                         'class' => 'yii\grid\ActionColumn',

@@ -21,7 +21,8 @@
         "romdim/yii2-bootstrap-material": "dev-master",
         "yiisoft/yii2-gii": "*",
         "kartik-v/yii2-money": "*",
-        "kartik-v/yii2-widget-select2": "@dev"
+        "kartik-v/yii2-widget-select2": "@dev",
+        "kartik-v/yii2-editable": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

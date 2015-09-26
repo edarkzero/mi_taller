@@ -50,6 +50,21 @@ class ItemAssignController extends Controller
      */
     public function actionIndex()
     {
+        if(isset($_POST['hasEditable']) && $_POST['hasEditable'] == 1)
+        {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            if(isset($_POST['item'],$_POST['quantity_user']))
+            {
+                Yii::$app->session['item'][$_POST['item']] = $_POST['quantity_user'];
+                return ['output' => $_POST['quantity_user'], 'message' => ''];
+            }
+
+            else
+                return ['output'=>'', 'message'=>'Validation error'];
+        }
+
+        Yii::$app->session['item'] = [];
         $searchModel = new BillSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $itemSearchModel = new ItemSearch();

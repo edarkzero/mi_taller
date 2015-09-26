@@ -59,6 +59,7 @@ return [
     'Car parts selection' => 'Selección de piezas de vehículo',
     'Next' => 'Siguiente',
     'Previous' => 'Anterior',
+    'Enter a number' => 'Ingrese un número',
     '{n_door} doors {car_type}' => '{car_type} {n_door} puertas',
     'Rear view' => 'Vista trasera',
     'Front view' => 'Vista frontal',
