@@ -4,10 +4,13 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\assets\GridViewSelectionAsset;
 use \yii\bootstrap\Modal;
+use \yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\BillSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $itemSearchModel app\models\ItemSearch */
+/* @var $itemDataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Bill Items');
 $this->params['breadcrumbs'][] = $this->title;
@@ -28,6 +31,8 @@ $gridID = 'bill-grid';
     </div>
     <div class="clearfix"></div>
 
+    <?php Pjax::begin(['id' => 'pjax1']); ?>
+
     <?= GridView::widget([
         'id' => $gridID,
         'dataProvider' => $dataProvider,
@@ -46,37 +51,49 @@ $gridID = 'bill-grid';
                 }
             ],
             'discount:currency',
-            'created_at:datetime',
-            'updated_at:datetime',
 
-            ['class' => 'yii\grid\ActionColumn'],
             ['class' => 'yii\grid\CheckboxColumn'],
         ],
     ]); ?>
+
+    <?php Pjax::end(); ?>
 
 </div>
 
 <?php
 Modal::begin([
-    'header' => '<h2>' . 'test' . '</h2>',
+    'header' => '<h2>' . Yii::t('app','Items') . '</h2>',
     'options' => ['id' => 'modal-assignment']
 ]);
 ?>
 
     <div class="row">
         <div class="col-md-12">
-            <?=
-            'test'
-            ?>
+            <?php Pjax::begin(['id' => 'pjax2']); ?>
+            <?= GridView::widget([
+                'id' => 'item-grid',
+                'dataProvider' => $itemDataProvider,
+                'filterModel' => $itemSearchModel,
+                'tableOptions' => ['class' => 'table table-bordered table-hover table-select table-select-all'],
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+
+                    'name',
+                    'quantity',
+
+                    ['class' => 'yii\grid\CheckboxColumn'],
+                ],
+            ]); ?>
+            <?php Pjax::end(); ?>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6">
-            <?= Html::submitButton(Yii::t('app', 'Accept'), ['class' => 'btn btn-success', 'id' => 'discount-submit-modal']); ?>
+            <?= Html::submitButton(Yii::t('app', 'Accept'), ['class' => 'btn btn-success', 'id' => 'item-submit-modal']); ?>
         </div>
         <div class="col-md-6">
-            <?= Html::submitButton(Yii::t('app', 'Cancel'), ['data-dismiss' => 'modal','class' => 'btn btn-warning','id' => 'cancel-discount-submit-modal']); ?>
+            <?= Html::submitButton(Yii::t('app', 'Cancel'), ['data-dismiss' => 'modal','class' => 'btn btn-warning','id' => 'cancel-item-submit-modal']); ?>
         </div>
     </div>
 

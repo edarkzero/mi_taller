@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Bill;
 use app\models\BillSearch;
+use app\models\ItemSearch;
 use Yii;
 use app\models\BillItem;
 use app\models\BillItemSearch;
@@ -51,10 +52,14 @@ class ItemAssignController extends Controller
     {
         $searchModel = new BillSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $itemSearchModel = new ItemSearch();
+        $itemDataProvider = $itemSearchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'itemSearchModel' => $itemSearchModel,
+            'itemDataProvider' => $itemDataProvider,
         ]);
     }
 

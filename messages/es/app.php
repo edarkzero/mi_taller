@@ -122,6 +122,7 @@ return [
     '{model}, {n}, deleted.' => '{model}, {n}, eliminado.',
     '{model}, {n}, updated.' => '{model}, {n}, modificado.',
     'Person_item' => 'Asignación de artículo',
+    'Bill_item' => 'Asignación de artículo',
     'Coordinates' => 'Coordenadas',
     'Coordinate' => 'Coordenada',
     'Reset' => 'Reiniciar',
