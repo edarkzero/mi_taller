@@ -11,7 +11,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $id
  * @property string $item_id
  * @property string $bill_id
- * @property string $amount
+ * @property string $quantity
  * @property string $description
  * @property string $created_at
  * @property string $updated_at
@@ -50,7 +50,7 @@ class BillItem extends \yii\db\ActiveRecord
     {
         return [
             [['item_id', 'bill_id'], 'required'],
-            [['item_id', 'bill_id', 'amount'], 'integer'],
+            [['item_id', 'bill_id', 'quantity'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['description'], 'string', 'max' => 255]
         ];
@@ -65,7 +65,7 @@ class BillItem extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'item_id' => Yii::t('app', 'Bill'),
             'bill_id' => Yii::t('app', 'Item'),
-            'amount' => Yii::t('app', 'Amount'),
+            'quantity' => Yii::t('app', 'Quantity'),
             'description' => Yii::t('app', 'Description'),
             'created_at' => Yii::t('app', 'Created_at'),
             'updated_at' => Yii::t('app', 'Updated_at'),

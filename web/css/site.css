@@ -105,3 +105,8 @@ a.desc:after {
 {
     max-height: 60px;
 }
+
+.kv-editable-popover
+{
+    background: rgb(255, 255, 255);
+}

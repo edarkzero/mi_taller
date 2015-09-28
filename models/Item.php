@@ -16,7 +16,9 @@ use yii\behaviors\TimestampBehavior;
  * @property string $created_at
  * @property string $updated_at
  *
+ * @property BillItem[] $billItems
  * @property ItemPrice[] $itemPrices
+ * @property PersonItem[] $personItems
  */
 class Item extends \yii\db\ActiveRecord
 {
@@ -94,13 +96,40 @@ class Item extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getBillItems()
+    {
+        return $this->hasMany(BillItem::className(), ['item_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getItemPrices()
     {
         return $this->hasMany(ItemPrice::className(), ['item_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPersonItems()
+    {
+        return $this->hasMany(PersonItem::className(), ['item_id' => 'id']);
+    }
+
     public function getTotal()
     {
         return $this->itemPrices[0]->price->total;
+    }
+
+    public function getItemQuantity($bill = null)
+    {
+        if(!isset($bill))
+            return 0;
+        else
+        {
+            $billItem = BillItem::find()->where(['bill_id' => $bill,'item_id' => 2])->one();
+            return $billItem->quantity;
+        }
     }
 }

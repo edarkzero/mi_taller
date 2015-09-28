@@ -85,4 +85,57 @@ class ItemSearch extends Item
 
         return $dataProvider;
     }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchWithItem($params)
+    {
+        $query = Item::find();
+        $query->innerJoinWith('itemPrices.price');
+        $query->joinWith('billItems');
+        $query->orderBy(BillItem::tableName().'.quantity DESC');
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => new Sort([
+                'attributes' => [
+                    'name',
+                    'code',
+                    'quantity',
+                    'quantity_stock',
+                    'created_at',
+                    'updated_at',
+                    'item_total' => [
+                        'asc' => ['price.total' => SORT_ASC],
+                        'desc' => ['price.total' => SORT_DESC]
+                    ]
+                ],
+            ])
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        $query->andFilterWhere([
+            'quantity' => $this->quantity,
+            'quantity_stock' => $this->quantity_stock,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
+        ]);
+
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'code', $this->code])->andFilterWhere(['like','price.total',$this->item_total]);
+
+        return $dataProvider;
+    }
 }

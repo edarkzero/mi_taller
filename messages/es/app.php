@@ -141,5 +141,9 @@ return [
     'Description' => 'Descripción',
     'Bill Items' => 'Assignaciones',
     'Bill Item' => 'Assignación',
-    'Assign selected' => 'Asignar seleccionado'
+    'Assign selected' => 'Asignar seleccionado',
+    'Quantity to use' => 'Cantidad a usar',
+    'Saved' => 'Guardado',
+    'Deleted' => 'Eliminado',
+    'Updated' => 'Editado'
 ];

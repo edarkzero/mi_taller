@@ -28,7 +28,7 @@ $itemGridID = 'item-grid';
     <div>
         <h1 class="pull-left"><?= Html::encode(Yii::t('app', 'Bills')) ?></h1>
         <p class="pull-right">
-            <?= Html::a(Yii::t('app', 'Assign selected'), '#', ['class' => 'btn btn-success','onclick' => 'GridViewGetSelected("#'.$billGridID.'")']) ?>
+            <?= Html::a(Yii::t('app', 'Assign selected'), '#', ['class' => 'btn btn-success','id' => 'select-button']) ?>
         </p>
     </div>
     <div class="clearfix"></div>
@@ -40,6 +40,10 @@ $itemGridID = 'item-grid';
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'tableOptions' => ['class' => 'table table-bordered table-hover table-select table-select-one'],
+        'rowOptions' => function($model, $key, $index, $grid)
+        {
+            return $model->haveItems() ? ['class' => 'info'] : null;
+        },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -85,18 +89,20 @@ Modal::begin([
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 
+                    'id',
                     'name',
                     'quantity',
                     [
                         'attribute' => 'quantity_user',
+                        'label' => Yii::t('app','Quantity to use'),
                         'format' => 'raw',
                         'value' => function($model, $key, $index, $column) use (&$itemGridID)
                         {
                             return Editable::widget([
                                 'name'=>'quantity_user',
+                                'value' => !isset(Yii::$app->session['item'][$model->id]) ? $model->getItemQuantity() : Yii::$app->session['item'][$model->id],
                                 'pjaxContainerId' => $itemGridID.'-wrapper',
                                 'asPopover' => true,
-                                'value' => !isset(Yii::$app->session['item'][$model->id]) ? 0 : Yii::$app->session['item'][$model->id],
                                 'header' => Yii::t('app','Quantity'),
                                 'options' => ['placeholder'=>Yii::t('app','Enter a number')],
                                 'beforeInput' => function ($form, $widget) use (&$model) {

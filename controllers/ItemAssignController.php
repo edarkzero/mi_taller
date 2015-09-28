@@ -7,7 +7,9 @@ use app\models\BillSearch;
 use app\models\ItemSearch;
 use Yii;
 use app\models\BillItem;
+use app\models\Item;
 use app\models\BillItemSearch;
+use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -56,6 +58,7 @@ class ItemAssignController extends Controller
 
             if(isset($_POST['item'],$_POST['quantity_user']))
             {
+                if(!isset(Yii::$app->session['item'])) Yii::$app->session['item'] = [];
                 $item = Yii::$app->session['item'];
                 $item[$_POST['item']] = $_POST['quantity_user'];
                 Yii::$app->session['item'] = $item;
@@ -66,10 +69,49 @@ class ItemAssignController extends Controller
                 return ['output'=>'', 'message'=>'Validation error'];
         }
 
+        elseif(isset($_POST['iks'],$_POST['bks'],$_POST['assign_mode']))
+        {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            //Create assignment
+            if($_POST['assign_mode'] == 1)
+            {
+                $items = Item::findAll($_POST['iks']);
+                $bill = Bill::findOne($_POST['bks'][0]);
+                $billItem = null;
+
+                $transaction = Bill::getDb()->beginTransaction();
+
+                try {
+                    foreach ($items as $item) {
+                        $billItem = new BillItem();
+                        $billItem->bill_id = $bill->id;
+                        $billItem->item_id = $item->id;
+
+                        $itemSession = Yii::$app->session['item'];
+                        $billItem->quantity = $itemSession[$item->id];
+                        if(!$billItem->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($billItem->tableName())),'msj' => print_r($billItem->getErrors(),true)]),500);
+                    }
+
+                    $transaction->commit();
+                    Yii::$app->session['item'] = [];
+                    return ['error' => false,'message' => Yii::t('app','Saved')];
+                }
+                catch(\Exception $e)
+                {
+                    $transaction->rollBack();
+                    return [
+                        'error' => true,
+                        'message' => print_r($e,true)
+                    ];
+                }
+            }
+        }
+
         $searchModel = new BillSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchWithItem(Yii::$app->request->queryParams);
         $itemSearchModel = new ItemSearch();
-        $itemDataProvider = $itemSearchModel->search(Yii::$app->request->queryParams);
+        $itemDataProvider = $itemSearchModel->searchWithItem(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

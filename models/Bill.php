@@ -15,6 +15,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string $updated_at
  *
  * @property Price $price
+ * @property BillItem[] $billItems
  */
 class Bill extends \yii\db\ActiveRecord
 {
@@ -102,5 +103,18 @@ class Bill extends \yii\db\ActiveRecord
     public function getPriceTotal()
     {
         return isset($this->price) ? $this->price->total : '';
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBillItems()
+    {
+        return $this->hasMany(BillItem::className(), ['bill_id' => 'id']);
+    }
+
+    public function haveItems()
+    {
+        return count($this->billItems) > 0;
     }
 }

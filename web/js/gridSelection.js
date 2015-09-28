@@ -15,6 +15,42 @@ $(document).ready(function (e) {
 
         GridViewToggleSelected(this,false);
     });
+
+    $('#item-submit-modal').click(function(event)
+    {
+        var item_keys = $('#item-grid').yiiGridView('getSelectedRows');
+        var bill_keys = $('#bill-grid').yiiGridView('getSelectedRows');
+
+        $.ajax('index', {
+            data: {iks: item_keys, bks: bill_keys,assign_mode:1},
+            dataType: 'json',
+            method: 'POST',
+            success: function (data)
+            {
+                $('#error-modal .modal-body').html(data.message);
+                $('#error-modal').modal('show');
+                window.location.replace("index");
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                $('#error-modal .modal-body').html(textStatus + ", " + errorThrown);
+                $('#error-modal').modal('show');
+            }
+        });
+    });
+
+    $('#cancel-item-submit-modal').click(function(event)
+    {
+
+    });
+
+    $('#select-button').click(function(event)
+    {
+        event.preventDefault();
+        var keys = $("#bill-grid").yiiGridView('getSelectedRows');
+        $.pjax.reload({container:'#item-grid-wrapper',type: 'POST',data:{selected:keys[0]}});
+        $('#modal-assignment').modal('show');
+    });
 });
 
 function GridViewToggleSelected(elem,deselect)
@@ -31,27 +67,4 @@ function GridViewToggleSelected(elem,deselect)
         $td.prop('checked', false);
         $tr.removeClass('success');
     }
-}
-
-function GridViewGetSelected(id)
-{
-    var keys = $(id).yiiGridView('getSelectedRows');
-
-    /*$.ajax('create', {
-        data: {selected:keys},
-        dataType: 'json',
-        method: 'POST',
-        success: function (data)
-        {
-            $('#error-modal .modal-body').html(data.message);
-            $('#error-modal').modal('show');
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-            $('#error-modal .modal-body').html(textStatus + ", " + errorThrown);
-            $('#error-modal').modal('show');
-        }
-    });*/
-
-    $('#modal-assignment').modal('show');
 }
