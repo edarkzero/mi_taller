@@ -84,13 +84,24 @@ class ItemAssignController extends Controller
 
                 try {
                     foreach ($items as $item) {
-                        $billItem = new BillItem();
-                        $billItem->bill_id = $bill->id;
-                        $billItem->item_id = $item->id;
+                        $billItem = BillItem::find()->where(['item_id' => $item->id,'bill_id' => $bill->id])->one();
+
+                        if($billItem == null)
+                        {
+                            $billItem = new BillItem();
+                            $billItem->bill_id = $bill->id;
+                            $billItem->item_id = $item->id;
+                        }
 
                         $itemSession = Yii::$app->session['item'];
+                        $oldQuantity = $billItem->quantity;
                         $billItem->quantity = $itemSession[$item->id];
-                        $item->quantity -= $billItem->quantity;
+
+                        if($oldQuantity > $billItem->quantity)
+                            $item->quantity += $billItem->quantity;
+                        elseif($oldQuantity < $billItem->quantity)
+                            $item->quantity -= $billItem->quantity;
+
                         $item->save(false);
                         if(!$billItem->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($billItem->tableName())),'msj' => print_r($billItem->getErrors(),true)]),500);
                     }

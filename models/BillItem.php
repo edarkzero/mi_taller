@@ -75,6 +75,7 @@ class BillItem extends \yii\db\ActiveRecord
     public function afterSave($insert,$changedAttributes)
     {
         parent::afterSave($insert,$changedAttributes);
+
         $log = new Log();
 
         if($insert)
