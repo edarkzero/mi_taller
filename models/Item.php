@@ -122,14 +122,22 @@ class Item extends \yii\db\ActiveRecord
         return $this->itemPrices[0]->price->total;
     }
 
-    public function getItemQuantity($bill = null)
+    public function getItemQuantity()
     {
-        if(!isset($bill))
+        if(!isset($_GET['selected']))
             return 0;
-        else
+
+        elseif(count($this->billItems) > 0)
         {
-            $billItem = BillItem::find()->where(['bill_id' => $bill,'item_id' => 2])->one();
-            return $billItem->quantity;
+            foreach($this->billItems as $billItem)
+            {
+                if($billItem->bill_id == $_GET['selected'])
+                {
+                    return $billItem->quantity;
+                }
+            }
         }
+
+        return 0;
     }
 }

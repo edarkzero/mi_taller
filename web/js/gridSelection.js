@@ -48,7 +48,7 @@ $(document).ready(function (e) {
     {
         event.preventDefault();
         var keys = $("#bill-grid").yiiGridView('getSelectedRows');
-        $.pjax.reload({container:'#item-grid-wrapper',type: 'POST',data:{selected:keys[0]}});
+        $.pjax.reload({container:'#item-grid-wrapper',type: 'GET',data:{selected:keys[0]},replace: false});
         $('#modal-assignment').modal('show');
     });
 });
