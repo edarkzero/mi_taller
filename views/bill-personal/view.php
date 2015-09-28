@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Bill */
+/* @var $model app\models\BillPersonal */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Bills'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Bill Personals'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="bill-view">
+<div class="bill-personal-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,11 +29,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            [
-                'label' => Yii::t('app','Price'),
-                'value' => Yii::$app->formatter->asCurrency($model->price->total),
-            ],
-            'discount:currency',
+            'bill_id',
+            'personal_id',
+            'amount',
+            'description',
             'created_at',
             'updated_at',
         ],
