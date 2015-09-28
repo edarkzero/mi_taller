@@ -1,5 +1,5 @@
 $(document).ready(function (e) {
-    $('.table-select-all tr').click(function(event)
+    $(document).on('click','.table-select-all tr',function(event)
     {
         GridViewToggleSelected(this,false);
     });
@@ -72,7 +72,7 @@ function GridViewToggleSelected(elem,deselect)
     var $tr = $(elem);
     var $td = $tr.find('td:last-child input');
 
-    if(!deselect) {
+    if (!deselect) {
         var newStatus = !$td.prop('checked');
         $td.prop('checked', newStatus);
         $tr.toggleClass('success');

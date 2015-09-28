@@ -90,6 +90,8 @@ class ItemAssignController extends Controller
 
                         $itemSession = Yii::$app->session['item'];
                         $billItem->quantity = $itemSession[$item->id];
+                        $item->quantity -= $billItem->quantity;
+                        $item->save(false);
                         if(!$billItem->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($billItem->tableName())),'msj' => print_r($billItem->getErrors(),true)]),500);
                     }
 
