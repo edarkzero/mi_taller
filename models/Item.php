@@ -122,6 +122,11 @@ class Item extends \yii\db\ActiveRecord
         return $this->itemPrices[0]->price->total;
     }
 
+    public function haveItems()
+    {
+        return $this->getItemQuantity() > 0;
+    }
+
     public function getItemQuantity()
     {
         if(!isset($_GET['selected']))

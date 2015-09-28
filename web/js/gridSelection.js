@@ -48,8 +48,22 @@ $(document).ready(function (e) {
     {
         event.preventDefault();
         var keys = $("#bill-grid").yiiGridView('getSelectedRows');
-        $.pjax.reload({container:'#item-grid-wrapper',type: 'GET',data:{selected:keys[0]},replace: false});
+        $.pjax.reload({
+            container:'#item-grid-wrapper',
+            type: 'GET',data:{selected:keys[0]},
+            replace: false
+        });
+    });
+
+    $('#item-grid-wrapper').on('pjax:success', function(data, status, xhr, options)
+    {
         $('#modal-assignment').modal('show');
+    });
+
+    $('#item-grid-wrapper').on('pjax:error', function(xhr, textStatus, error, options)
+    {
+        $('#error-modal .modal-body').html(textStatus + ", " + errorThrown);
+        $('#error-modal').modal('show');
     });
 });
 

@@ -85,6 +85,10 @@ Modal::begin([
                 'id' => $itemGridID,
                 'dataProvider' => $itemDataProvider,
                 'filterModel' => $itemSearchModel,
+                'rowOptions' => function($model, $key, $index, $grid)
+                {
+                    return $model->haveItems() ? ['class' => 'info'] : null;
+                },
                 'tableOptions' => ['class' => 'table table-bordered table-hover table-select table-select-all'],
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
