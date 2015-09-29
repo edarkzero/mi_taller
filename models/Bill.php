@@ -21,6 +21,9 @@ use yii\behaviors\TimestampBehavior;
 class Bill extends \yii\db\ActiveRecord
 {
     public $price_total;
+    public $bp_paid;
+    public $bp_description;
+    public $bp_amount;
 
     /**
      * @inheritdoc

@@ -22,7 +22,7 @@ class BillSearch extends Bill
         return [
             [['id', 'price_id'], 'integer'],
             [['discount'], 'number'],
-            [['created_at', 'updated_at','price_total'], 'safe'],
+            [['created_at', 'updated_at','price_total','bp_paid','bp_description','bp_amount'], 'safe'],
         ];
     }
 
@@ -171,6 +171,18 @@ class BillSearch extends Bill
                         'desc' => ['price.total' => SORT_DESC],
                     ],
                     'discount',
+                    'bp_paid' => [
+                        'asc' => [BillPersonal::tableName().'.paid' => SORT_ASC],
+                        'desc' => [BillPersonal::tableName().'.paid' => SORT_DESC],
+                    ],
+                    'bp_description' => [
+                        'asc' => [BillPersonal::tableName().'.description' => SORT_ASC],
+                        'desc' => [BillPersonal::tableName().'.description' => SORT_DESC],
+                    ],
+                    'bp_amount' => [
+                        'asc' => [BillPersonal::tableName().'.amount' => SORT_ASC],
+                        'desc' => [BillPersonal::tableName().'.amount' => SORT_DESC],
+                    ],
                     'created_at',
                     'updated_at'
                 ],
@@ -188,15 +200,21 @@ class BillSearch extends Bill
             return $dataProvider;
         }
 
+        if($this->bp_paid == 0)
+            $this->bp_paid = null;
+
         $query->andFilterWhere([
             self::tableName().'.id' => $this->id,
             'price_id' => $this->price_id,
             'discount' => $this->discount,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
+            BillPersonal::tableName().'.paid' => $this->bp_paid
         ]);
 
         $query->andFilterWhere(['like','price.total',$this->price_total]);
+        $query->andFilterWhere(['like',BillPersonal::tableName().'.amount',$this->bp_amount]);
+        $query->andFilterWhere(['like',BillPersonal::tableName().'.description',$this->bp_description]);
 
         return $dataProvider;
     }

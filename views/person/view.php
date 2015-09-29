@@ -133,7 +133,7 @@ BillPersonAsset::register($this);
                     {
                         return Html::checkbox('',$model->getBillPersonalPaid());
                     },
-                    'filter' => Html::activeCheckbox($billSearchModel,'id',['label' => ''])
+                    'filter' => Html::activeCheckbox($billSearchModel,'bp_paid',['label' => ''])
                 ],
                 /*[
                     'class' => 'yii\grid\ActionColumn',
