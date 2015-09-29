@@ -67,10 +67,10 @@ BillPersonAsset::register($this);
             'dataProvider' => $billDataProvider,
             'filterModel' => $billSearchModel,
             'tableOptions' => ['class' => 'table table-bordered table-hover table-select table-select-all'],
-            /*'rowOptions' => function($model, $key, $index, $grid)
+            'rowOptions' => function($model, $key, $index, $grid)
             {
-                return $model->haveItems() ? ['class' => 'info'] : null;
-            },*/
+                return $model->getBillPersonalPaid() == 1 ? ['class' => 'info'] : null;
+            },
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
 
@@ -91,7 +91,7 @@ BillPersonAsset::register($this);
                     {
                         //return $model->getBillPersonalAmount();
                         return Editable::widget([
-                            'name'=>'bill_amount',
+                            'name'=>'bp_description',
                             'value' => $model->getBillPersonalDescription(),
                             'pjaxContainerId' => $billGridWrapper,
                             'asPopover' => true,
@@ -112,7 +112,7 @@ BillPersonAsset::register($this);
                     {
                         //return $model->getBillPersonalAmount();
                         return Editable::widget([
-                            'name'=>'bill_amount',
+                            'name'=>'bp_amount',
                             'value' => $model->getBillPersonalAmount(),
                             'pjaxContainerId' => $billGridWrapper,
                             'asPopover' => true,

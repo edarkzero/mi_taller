@@ -70,6 +70,46 @@ class PersonController extends Controller
      */
     public function actionView($id)
     {
+        if(isset($_POST['hasEditable']) && $_POST['hasEditable'] == 1)
+        {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+            $bill = $_POST['bill'];
+            $person = $_POST['person'];
+
+            $billPerson = BillPersonal::find()->where(['bill_id' => $bill,'personal_id' => $person])->one();
+
+            if($billPerson == null)
+            {
+                $billPerson = new BillPersonal();
+                $billPerson->bill_id = $bill;
+                $billPerson->personal_id = $person;
+                $billPersonAmount = isset($_POST['bp_amount']) ? $_POST['bp_amount'] : 0.00;
+                $billPersonDescription = isset($_POST['bp_description']) ? $_POST['bp_description'] : "";
+            }
+
+            else
+            {
+                $billPersonAmount = isset($_POST['bp_amount']) ? $_POST['bp_amount'] : $billPerson->amount;
+                $billPersonDescription = isset($_POST['bp_description']) ? $_POST['bp_description'] : $billPerson->description;
+            }
+
+            $billPerson->description = $billPersonDescription;
+            $billPerson->amount = $billPersonAmount;
+
+            if(!$billPerson->save())
+                return ['output'=>'', 'message'=>print_r($billPerson->errors,true)];
+            else
+            {
+                if($billPersonAmount != 0.00)
+                    return ['output' => $billPersonAmount, 'message' => ''];
+                elseif($billPersonDescription != "")
+                    return ['output' => $billPersonDescription, 'message' => ''];
+            }
+
+            return ['output'=>'', 'message'=>'Validation error'];
+        }
+
         $billSearchModel = new BillSearch();
         $billDataProvider = $billSearchModel->searchWithPerson(Yii::$app->request->queryParams);
 
