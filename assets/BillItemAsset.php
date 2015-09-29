@@ -9,7 +9,7 @@ namespace app\assets;
 
 use yii\web\AssetBundle;
 
-class GridViewSelectionAsset extends AssetBundle
+class BillItemAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
@@ -18,6 +18,7 @@ class GridViewSelectionAsset extends AssetBundle
     ];
     public $js = [
         'js/gridSelection.js',
+        'js/billItem.js'
     ];
     public $depends = [
         'app\assets\AppAsset',

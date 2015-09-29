@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use app\assets\GridViewSelectionAsset;
+use app\assets\BillItemAsset;
 use \yii\bootstrap\Modal;
 use \yii\widgets\Pjax;
 use kartik\editable\Editable;
@@ -16,7 +16,7 @@ use kartik\editable\Editable;
 $this->title = Yii::t('app', 'Bill Items');
 $this->params['breadcrumbs'][] = $this->title;
 
-GridViewSelectionAsset::register($this);
+BillItemAsset::register($this);
 
 $billGridID = 'bill-grid';
 $itemGridID = 'item-grid';

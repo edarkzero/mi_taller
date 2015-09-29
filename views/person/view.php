@@ -3,15 +3,19 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
+use app\assets\BillPersonAsset;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Person */
-/* @var $billPersonalSearchModel app\models\BillPersonalSearch */
-/* @var $billPersonalDataProvider */
+/* @var $billSearchModel app\models\BillSearch */
+/* @var $billDataProvider */
 
 $this->title = $model->getFullName();
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'People'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+BillPersonAsset::register($this);
+
 ?>
 <div class="person-view">
 
@@ -45,9 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
         <div>
-            <h1 class="pull-left"><?= Html::encode(Yii::t('app', 'Bills')) ?></h1>
-            <p class="pull-right">
-                <?= Html::a(Yii::t('app', 'Assign selected'), '#', ['class' => 'btn btn-success','id' => 'select-button']) ?>
+            <h1><?= Html::encode(Yii::t('app', 'Bills')) ?></h1>
+            <p>
+                <?= Html::a(Yii::t('app', 'Create'), null, ['class' => 'btn btn-primary']) ?>
             </p>
         </div>
         <div class="clearfix"></div>
@@ -56,9 +60,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= \yii\grid\GridView::widget([
             'id' => 'bill-grid',
-            'dataProvider' => $billPersonalDataProvider,
-            'filterModel' => $billPersonalSearchModel,
-            'tableOptions' => ['class' => 'table table-bordered table-hover table-select table-select-one'],
+            'dataProvider' => $billDataProvider,
+            'filterModel' => $billSearchModel,
+            'tableOptions' => ['class' => 'table table-bordered table-hover table-select table-select-all'],
             /*'rowOptions' => function($model, $key, $index, $grid)
             {
                 return $model->haveItems() ? ['class' => 'info'] : null;
@@ -68,29 +72,43 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'id',
                 [
-                    'attribute' => 'personal_name',
-                    'label' => $billPersonalSearchModel->getAttributeLabel('personal_id'),
+                    'attribute' => 'price_total',
+                    'label' => Yii::t('app','Price'),
                     'value' => function ($model, $key, $index, $column)
                     {
-                        return $model->personal->getFullName();
+                        return Yii::$app->formatter->asCurrency($model->getPriceTotal());
                     }
                 ],
-                'description:text',
-                'amount:currency',
+                [
+                    'attribute' => 'bp_description',
+                    'label' => Yii::t('app','Description'),
+                    'value' => function ($model, $key, $index, $column)
+                    {
+                        return $model->getBillPersonalDescription();
+                    }
+                ],
+                [
+                    'attribute' => 'bp_amount',
+                    'label' => Yii::t('app','Amount'),
+                    'value' => function ($model, $key, $index, $column)
+                    {
+                        return $model->getBillPersonalAmount();
+                    }
+                ],
                 [
                     'attribute' => 'paid',
-                    'label' => $billPersonalSearchModel->getAttributeLabel('paid'),
+                    'label' => Yii::t('app','Paid'),
                     'format' => 'raw',
                     'value' => function ($model, $key, $index, $column)
                     {
-                        return Html::checkbox('',$model->paid);
+                        return Html::checkbox('',$model->getBillPersonalPaid());
                     },
-                    'filter' => Html::activeCheckbox($billPersonalSearchModel,'paid',['label' => ''])
+                    'filter' => Html::activeCheckbox($billSearchModel,'id',['label' => ''])
                 ],
 
                 [
                     'class' => 'yii\grid\ActionColumn',
-                    'controller' => 'bill',
+                    'controller' => 'bill-personal',
                     'buttonOptions' => ['data-pjax' => '0']
                 ],
                 ['class' => 'yii\grid\CheckboxColumn'],

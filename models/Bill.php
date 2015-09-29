@@ -16,6 +16,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Price $price
  * @property BillItem[] $billItems
+ * @property BillPersonal[] $billPersonals
  */
 class Bill extends \yii\db\ActiveRecord
 {
@@ -113,8 +114,58 @@ class Bill extends \yii\db\ActiveRecord
         return $this->hasMany(BillItem::className(), ['bill_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBillPersonals()
+    {
+        return $this->hasMany(BillPersonal::className(), ['bill_id' => 'id']);
+    }
+
     public function haveItems()
     {
         return count($this->billItems) > 0;
+    }
+
+    public function getBillPersonalDescription()
+    {
+        if(isset($this->billPersonals))
+        {
+            foreach($this->billPersonals as $billPersonal)
+            {
+                if($billPersonal->personal_id == Yii::$app->request->queryParams['id'])
+                    return $billPersonal->description;
+            }
+        }
+
+        return "";
+    }
+
+    public function getBillPersonalPaid()
+    {
+        if(isset($this->billPersonals))
+        {
+            foreach($this->billPersonals as $billPersonal)
+            {
+                if($billPersonal->personal_id == Yii::$app->request->queryParams['id'])
+                    return $billPersonal->paid;
+            }
+        }
+
+        return "";
+    }
+
+    public function getBillPersonalAmount()
+    {
+        if(isset($this->billPersonals))
+        {
+            foreach($this->billPersonals as $billPersonal)
+            {
+                if($billPersonal->personal_id == Yii::$app->request->queryParams['id'])
+                    return $billPersonal->amount;
+            }
+        }
+
+        return "";
     }
 }

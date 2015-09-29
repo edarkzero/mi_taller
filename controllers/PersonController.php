@@ -70,12 +70,12 @@ class PersonController extends Controller
      */
     public function actionView($id)
     {
-        $billPersonalSearchModel = new BillPersonalSearch();
-        $billPersonalDataProvider = $billPersonalSearchModel->search(Yii::$app->request->queryParams);
+        $billSearchModel = new BillSearch();
+        $billDataProvider = $billSearchModel->searchWithPerson(Yii::$app->request->queryParams);
 
         return $this->render('view', [
-            'billPersonalSearchModel' => $billPersonalSearchModel,
-            'billPersonalDataProvider' => $billPersonalDataProvider,
+            'billSearchModel' => $billSearchModel,
+            'billDataProvider' => $billDataProvider,
             'model' => $this->findModel($id),
         ]);
     }
