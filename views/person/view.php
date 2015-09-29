@@ -135,12 +135,17 @@ BillPersonAsset::register($this);
                     },
                     'filter' => Html::activeCheckbox($billSearchModel,'id',['label' => ''])
                 ],
-
-                [
+                /*[
                     'class' => 'yii\grid\ActionColumn',
                     'controller' => 'bill-personal',
+                    'buttons' => [
+                        'update' => function ($url, $model, $key) {
+                            if($model->getBillPersonalId() != "")
+                                return Html::a('Update', \yii\helpers\Url::to(['bill-personal/update','id' => $model->getBillPersonalId()]));
+                        },
+                    ],
                     'buttonOptions' => ['data-pjax' => '0']
-                ],
+                ],*/
                 ['class' => 'yii\grid\CheckboxColumn'],
             ],
         ]); ?>

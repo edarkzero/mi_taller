@@ -168,4 +168,18 @@ class Bill extends \yii\db\ActiveRecord
 
         return "";
     }
+
+    public function getBillPersonalId()
+    {
+        if(isset($this->billPersonals))
+        {
+            foreach($this->billPersonals as $billPersonal)
+            {
+                if($billPersonal->personal_id == Yii::$app->request->queryParams['id'])
+                    return $billPersonal->id;
+            }
+        }
+
+        return "";
+    }
 }
