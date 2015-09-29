@@ -101,9 +101,9 @@ class PersonController extends Controller
                 return ['output'=>'', 'message'=>print_r($billPerson->errors,true)];
             else
             {
-                if($billPersonAmount != 0.00)
+                if(isset($_POST['bp_amount']))
                     return ['output' => $billPersonAmount, 'message' => ''];
-                elseif($billPersonDescription != "")
+                elseif(isset($_POST['bp_description']))
                     return ['output' => $billPersonDescription, 'message' => ''];
             }
 
