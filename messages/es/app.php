@@ -148,5 +148,6 @@ return [
     'Deleted' => 'Eliminado',
     'Updated' => 'Editado',
     'Paid' => 'Pagado',
-    'Enter a description' => 'Ingresa una descripción'
+    'Enter a description' => 'Ingresa una descripción',
+    'Print voucher' => 'Imprimir combrobante'
 ];

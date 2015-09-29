@@ -55,7 +55,7 @@ BillPersonAsset::register($this);
         <div>
             <h1><?= Html::encode(Yii::t('app', 'Bills')) ?></h1>
             <p>
-                <?= Html::a(Yii::t('app', 'Create'), null, ['class' => 'btn btn-primary']) ?>
+                <?= Html::a(Yii::t('app', 'Print voucher'), null, ['class' => 'btn btn-primary']) ?>
             </p>
         </div>
         <div class="clearfix"></div>
