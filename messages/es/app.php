@@ -147,5 +147,6 @@ return [
     'Saved' => 'Guardado',
     'Deleted' => 'Eliminado',
     'Updated' => 'Editado',
-    'Paid' => 'Pagado'
+    'Paid' => 'Pagado',
+    'Enter a description' => 'Ingresa una descripción'
 ];

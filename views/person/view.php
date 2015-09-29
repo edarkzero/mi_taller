@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
 use app\assets\BillPersonAsset;
+use kartik\editable\Editable;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Person */
@@ -13,6 +14,9 @@ use app\assets\BillPersonAsset;
 $this->title = $model->getFullName();
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'People'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$billGridId = 'bill-grid';
+$billGridWrapper = $billGridId.'-wrapper';
 
 BillPersonAsset::register($this);
 
@@ -56,7 +60,7 @@ BillPersonAsset::register($this);
         </div>
         <div class="clearfix"></div>
 
-        <?php Pjax::begin(['id' => 'bill-grid-wrapper']); ?>
+        <?php Pjax::begin(['id' => $billGridId]); ?>
 
         <?= \yii\grid\GridView::widget([
             'id' => 'bill-grid',
@@ -82,17 +86,43 @@ BillPersonAsset::register($this);
                 [
                     'attribute' => 'bp_description',
                     'label' => Yii::t('app','Description'),
-                    'value' => function ($model, $key, $index, $column)
+                    'format' => 'raw',
+                    'value' => function ($model, $key, $index, $column) use (&$billGridWrapper)
                     {
-                        return $model->getBillPersonalDescription();
+                        //return $model->getBillPersonalAmount();
+                        return Editable::widget([
+                            'name'=>'bill_amount',
+                            'value' => $model->getBillPersonalDescription(),
+                            'pjaxContainerId' => $billGridWrapper,
+                            'asPopover' => true,
+                            'header' => Yii::t('app','Description'),
+                            'options' => ['placeholder'=>Yii::t('app','Enter a description')],
+                            'beforeInput' => function ($form, $widget) use (&$model) {
+                                echo Html::input('hidden','bill',$model->id);
+                                echo Html::input('hidden','person',Yii::$app->request->queryParams['id']);
+                            }
+                        ]);
                     }
                 ],
                 [
                     'attribute' => 'bp_amount',
                     'label' => Yii::t('app','Amount'),
-                    'value' => function ($model, $key, $index, $column)
+                    'format' => 'raw',
+                    'value' => function ($model, $key, $index, $column) use (&$billGridWrapper)
                     {
-                        return $model->getBillPersonalAmount();
+                        //return $model->getBillPersonalAmount();
+                        return Editable::widget([
+                            'name'=>'bill_amount',
+                            'value' => $model->getBillPersonalAmount(),
+                            'pjaxContainerId' => $billGridWrapper,
+                            'asPopover' => true,
+                            'header' => Yii::t('app','Amount'),
+                            'options' => ['placeholder'=>Yii::t('app','Enter a number')],
+                            'beforeInput' => function ($form, $widget) use (&$model) {
+                                echo Html::input('hidden','bill',$model->id);
+                                echo Html::input('hidden','person',Yii::$app->request->queryParams['id']);
+                            }
+                        ]);
                     }
                 ],
                 [
