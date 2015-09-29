@@ -55,15 +55,15 @@ BillPersonAsset::register($this);
         <div>
             <h1><?= Html::encode(Yii::t('app', 'Bills')) ?></h1>
             <p>
-                <?= Html::a(Yii::t('app', 'Print voucher'), null, ['class' => 'btn btn-primary']) ?>
+                <?= Html::a(Yii::t('app', 'Print voucher'), null, ['id' => 'voucher-btn','class' => 'btn btn-primary']) ?>
             </p>
         </div>
         <div class="clearfix"></div>
 
-        <?php Pjax::begin(['id' => $billGridId]); ?>
+        <?php Pjax::begin(['id' => $billGridWrapper]); ?>
 
         <?= \yii\grid\GridView::widget([
-            'id' => 'bill-grid',
+            'id' => $billGridId,
             'dataProvider' => $billDataProvider,
             'filterModel' => $billSearchModel,
             'tableOptions' => ['class' => 'table table-bordered table-hover table-select table-select-all'],

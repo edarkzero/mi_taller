@@ -9,6 +9,7 @@ use app\models\Job;
 use Yii;
 use app\models\Person;
 use app\models\PersonSearch;
+use yii\base\Exception;
 use yii\base\Model;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
@@ -108,6 +109,34 @@ class PersonController extends Controller
             }
 
             return ['output'=>'', 'message'=>'Validation error'];
+        }
+
+        if(isset($_POST['selected'],$_GET['id']))
+        {
+            $bill_ids = $_POST['selected'];
+            $billPersonals = BillPersonal::find()->where(['bill_id' => $bill_ids,'personal_id' => $_GET['id']])->all();
+
+            if(isset($billPersonals))
+            {
+                $transaction = BillPersonal::getDb()->beginTransaction();
+
+                try
+                {
+                    foreach($billPersonals as $billPersonal)
+                    {
+                        $billPersonal->paid = 1;
+
+                        if(!$billPersonal->save())
+                            throw new Exception(print_r($billPersonal->errors,true));
+                    }
+
+                    $transaction->commit();
+                }
+                catch(\Exception $e)
+                {
+                    $transaction->rollBack();
+                }
+            }
         }
 
         $billSearchModel = new BillSearch();
