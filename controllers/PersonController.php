@@ -124,7 +124,10 @@ class PersonController extends Controller
                 {
                     foreach($billPersonals as $billPersonal)
                     {
-                        $billPersonal->paid = 1;
+                        if($billPersonal->paid == 1)
+                            $billPersonal->paid = 0;
+                        else
+                            $billPersonal->paid = 1;
 
                         if(!$billPersonal->save())
                             throw new Exception(print_r($billPersonal->errors,true));
