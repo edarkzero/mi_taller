@@ -18,7 +18,7 @@ class BillPersonalSearch extends BillPersonal
     public function rules()
     {
         return [
-            [['id', 'bill_id', 'personal_id'], 'integer'],
+            [['id', 'bill_id', 'personal_id', 'paid'], 'integer'],
             [['amount'], 'number'],
             [['description', 'created_at', 'updated_at'], 'safe'],
         ];
@@ -61,6 +61,7 @@ class BillPersonalSearch extends BillPersonal
             'bill_id' => $this->bill_id,
             'personal_id' => $this->personal_id,
             'amount' => $this->amount,
+            'paid' => $this->paid,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);

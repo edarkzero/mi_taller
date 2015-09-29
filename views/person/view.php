@@ -6,8 +6,8 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Person */
-/* @var $billSearchModel app\models\BillSearch */
-/* @var $billDataProvider */
+/* @var $billPersonalSearchModel app\models\BillPersonalSearch */
+/* @var $billPersonalDataProvider */
 
 $this->title = $model->getFullName();
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'People'), 'url' => ['index']];
@@ -56,8 +56,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= \yii\grid\GridView::widget([
             'id' => 'bill-grid',
-            'dataProvider' => $billDataProvider,
-            'filterModel' => $billSearchModel,
+            'dataProvider' => $billPersonalDataProvider,
+            'filterModel' => $billPersonalSearchModel,
             'tableOptions' => ['class' => 'table table-bordered table-hover table-select table-select-one'],
             /*'rowOptions' => function($model, $key, $index, $grid)
             {
@@ -68,14 +68,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 'id',
                 [
-                    'attribute' => 'price_total',
-                    'label' => $billSearchModel->getAttributeLabel('price_id'),
+                    'attribute' => 'personal_name',
+                    'label' => $billPersonalSearchModel->getAttributeLabel('personal_id'),
                     'value' => function ($model, $key, $index, $column)
                     {
-                        return Yii::$app->formatter->asCurrency($model->getPriceTotal());
+                        return $model->personal->getFullName();
                     }
                 ],
-                'discount:currency',
+                'description:text',
+                'amount:currency',
+                [
+                    'attribute' => 'paid',
+                    'label' => $billPersonalSearchModel->getAttributeLabel('paid'),
+                    'format' => 'raw',
+                    'value' => function ($model, $key, $index, $column)
+                    {
+                        return Html::checkbox('',$model->paid);
+                    },
+                    'filter' => Html::activeCheckbox($billPersonalSearchModel,'paid',['label' => ''])
+                ],
 
                 [
                     'class' => 'yii\grid\ActionColumn',

@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'personal_id',
             'amount',
             'description',
+            // 'paid',
             // 'created_at',
             // 'updated_at',
 

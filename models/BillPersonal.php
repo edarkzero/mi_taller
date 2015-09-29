@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "bill_personal".
@@ -12,11 +13,12 @@ use Yii;
  * @property string $personal_id
  * @property string $amount
  * @property string $description
+ * @property integer $paid
  * @property string $created_at
  * @property string $updated_at
  *
- * @property Person $personal
  * @property Bill $bill
+ * @property Person $personal
  */
 class BillPersonal extends \yii\db\ActiveRecord
 {
@@ -28,6 +30,20 @@ class BillPersonal extends \yii\db\ActiveRecord
         return 'bill_personal';
     }
 
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                ],
+                'value' => new \yii\db\Expression('NOW()'),
+            ],
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -35,7 +51,7 @@ class BillPersonal extends \yii\db\ActiveRecord
     {
         return [
             [['bill_id', 'personal_id', 'amount'], 'required'],
-            [['bill_id', 'personal_id'], 'integer'],
+            [['bill_id', 'personal_id', 'paid'], 'integer'],
             [['amount'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
             [['description'], 'string', 'max' => 255]
@@ -53,17 +69,29 @@ class BillPersonal extends \yii\db\ActiveRecord
             'personal_id' => Yii::t('app', 'Personal'),
             'amount' => Yii::t('app', 'Amount'),
             'description' => Yii::t('app', 'Description'),
+            'paid' => Yii::t('app', 'Paid'),
             'created_at' => Yii::t('app', 'Created_at'),
             'updated_at' => Yii::t('app', 'Updated_at'),
         ];
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPersonal()
+    public function afterSave($insert,$changedAttributes)
     {
-        return $this->hasOne(Person::className(), ['id' => 'personal_id']);
+        parent::afterSave($insert,$changedAttributes);
+
+        $log = new Log();
+
+        if($insert)
+            $log->saveDatabaseOperation('create',$this->tableName(),$this->description);
+        else
+            $log->saveDatabaseOperation('update',$this->tableName(),$this->description);
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        $log = new Log();
+        $log->saveDatabaseOperation('delete',$this->tableName(),$this->description);
     }
 
     /**
@@ -72,5 +100,13 @@ class BillPersonal extends \yii\db\ActiveRecord
     public function getBill()
     {
         return $this->hasOne(Bill::className(), ['id' => 'bill_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPersonal()
+    {
+        return $this->hasOne(Person::className(), ['id' => 'personal_id']);
     }
 }

@@ -4,6 +4,7 @@ return [
     'Login' => 'Entrar',
     'Logout' => 'Salir',
     'Person' => 'Persona',
+    'Personal' => 'Personal',
     'People' => 'Personas',
     'Log' => 'Registro',
     'Logs' => 'Registros',
@@ -145,5 +146,6 @@ return [
     'Quantity to use' => 'Cantidad a usar',
     'Saved' => 'Guardado',
     'Deleted' => 'Eliminado',
-    'Updated' => 'Editado'
+    'Updated' => 'Editado',
+    'Paid' => 'Pagado'
 ];

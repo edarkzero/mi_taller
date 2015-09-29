@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\BillPersonal;
+use app\models\BillPersonalSearch;
 use app\models\BillSearch;
 use app\models\Job;
 use Yii;
@@ -68,12 +70,12 @@ class PersonController extends Controller
      */
     public function actionView($id)
     {
-        $billSearchModel = new BillSearch();
-        $billDataProvider = $billSearchModel->search(Yii::$app->request->queryParams);
+        $billPersonalSearchModel = new BillPersonalSearch();
+        $billPersonalDataProvider = $billPersonalSearchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('view', [
-            'billSearchModel' => $billSearchModel,
-            'billDataProvider' => $billDataProvider,
+            'billPersonalSearchModel' => $billPersonalSearchModel,
+            'billPersonalDataProvider' => $billPersonalDataProvider,
             'model' => $this->findModel($id),
         ]);
     }
