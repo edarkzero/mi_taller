@@ -116,16 +116,20 @@ class BillController extends Controller
                     {
                         $vehicle = new Vehicle();
                         $vehicle->attributes = $_POST['Vehicle'];
-                        if(!$vehicle->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($vehicle->tableName())),'msj' => print_r($vehicle->getErrors(),true)]),500);
-                        $model->vehicle_id = $vehicle->id;
+                        if(!empty($vehicle->brand) || !empty($vehicle->model) || !empty($vehicle->color) || !empty($vehicle->plaque)) {
+                            if (!$vehicle->save(false)) throw new Exception(Yii::t('app', 'Error saving {model}: {msj}', ['model' => Yii::t('app', ucfirst($vehicle->tableName())), 'msj' => print_r($vehicle->getErrors(), true)]), 500);
+                            $model->vehicle_id = $vehicle->id;
+                        }
                     }
 
                     if(isset($_POST['Customer']))
                     {
                         $customer = new Customer();
                         $customer->attributes = $_POST['Customer'];
-                        if(!$customer->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($customer->tableName())),'msj' => print_r($customer->getErrors(),true)]),500);
-                        $model->customer_id = $customer->id;
+                        if(!empty($customer->name) || !empty($customer->serial)) {
+                            if (!$customer->save(false)) throw new Exception(Yii::t('app', 'Error saving {model}: {msj}', ['model' => Yii::t('app', ucfirst($customer->tableName())), 'msj' => print_r($customer->getErrors(), true)]), 500);
+                            $model->customer_id = $customer->id;
+                        }
                     }
 
                     if ($model->save())

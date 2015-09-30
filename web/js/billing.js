@@ -242,7 +242,6 @@ function storeBill()
 {
     var data = $('#vehicle-details').serialize();
     data += '&mode='+bill_mode+'&discount='+$('#bill-discount-disp').maskMoney('unmasked')[0];
-    alert(data);
 
     $.ajax('create', {
         data: data,
