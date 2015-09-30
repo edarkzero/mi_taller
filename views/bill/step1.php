@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 //'caption' => Yii::t('app','Rear view')
                             ],
                             [
-                                'content' => '<img data-view="front" class="img-responsive center-block" usemap="#map-front" src="' . Yii::getAlias('@web') . '/images/car-blueprint/medium-front.png"/><map name="map-front" id="map-front"></map>',
+                                'content' => '<img data-view="front" class="img-responsive center-block" src="' . Yii::getAlias('@web') . '/images/car-blueprint/medium-front.png"/>',
                                 //'caption' => Yii::t('app','Front view')
                             ],
                             [
