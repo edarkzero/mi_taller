@@ -55,7 +55,7 @@ BillPersonAsset::register($this);
         <div>
             <h1><?= Html::encode(Yii::t('app', 'Bills')) ?></h1>
             <p>
-                <?= Html::a(Yii::t('app', 'Print voucher'), null, ['id' => 'voucher-btn','class' => 'btn btn-primary']) ?>
+                <?= Html::a(Yii::t('app', 'Print voucher'), null, ['id' => 'voucher-btn','class' => 'btn btn-primary','data-pjax' => '0']) ?>
             </p>
         </div>
         <div class="clearfix"></div>
@@ -155,3 +155,31 @@ BillPersonAsset::register($this);
     </div>
 
 </div>
+
+<?php
+\yii\bootstrap\Modal::begin([
+    'header' => '<h2>' . Yii::t('app','Voucher') . '</h2>',
+    'options' => ['id' => 'modal-voucher']
+]);
+?>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?php Pjax::begin(['id' => 'voucher-wrapper']); ?>
+                <p><?= Yii::t('app','Total').': '.yii::$app->formatter->asCurrency($total) ?></p>
+            <?php Pjax::end(); ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <?= Html::submitButton(Yii::t('app', 'Accept'), ['class' => 'btn btn-success', 'id' => 'bp-submit-modal','name' => 'item-submit-modal']); ?>
+        </div>
+        <div class="col-md-6">
+            <?= Html::submitButton(Yii::t('app', 'Cancel'), ['data-dismiss' => 'modal','class' => 'btn btn-warning pull-right','id' => 'cancel-bp-submit-modal','name' => 'cancel-item-submit-modal']); ?>
+        </div>
+    </div>
+
+<?php
+\yii\bootstrap\Modal::end();
+?>

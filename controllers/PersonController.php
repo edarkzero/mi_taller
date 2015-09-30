@@ -111,6 +111,8 @@ class PersonController extends Controller
             return ['output'=>'', 'message'=>'Validation error'];
         }
 
+        $total = 0.00;
+
         if(isset($_POST['selected'],$_GET['id']))
         {
             $bill_ids = $_POST['selected'];
@@ -118,26 +120,35 @@ class PersonController extends Controller
 
             if(isset($billPersonals))
             {
-                $transaction = BillPersonal::getDb()->beginTransaction();
+                $saveMode = isset($_POST['mode']) && $_POST['mode'] == 1;
+
+                if($saveMode)
+                    $transaction = BillPersonal::getDb()->beginTransaction();
 
                 try
                 {
                     foreach($billPersonals as $billPersonal)
                     {
-                        if($billPersonal->paid == 1)
-                            $billPersonal->paid = 0;
-                        else
-                            $billPersonal->paid = 1;
+                        $total += $billPersonal->amount;
 
-                        if(!$billPersonal->save())
-                            throw new Exception(print_r($billPersonal->errors,true));
+                        if($saveMode) {
+                            if ($billPersonal->paid == 1)
+                                $billPersonal->paid = 0;
+                            else
+                                $billPersonal->paid = 1;
+
+                            if (!$billPersonal->save())
+                                throw new Exception(print_r($billPersonal->errors, true));
+                        }
                     }
 
-                    $transaction->commit();
+                    if($saveMode)
+                        $transaction->commit();
                 }
                 catch(\Exception $e)
                 {
-                    $transaction->rollBack();
+                    if($saveMode)
+                        $transaction->rollBack();
                 }
             }
         }
@@ -149,6 +160,7 @@ class PersonController extends Controller
             'billSearchModel' => $billSearchModel,
             'billDataProvider' => $billDataProvider,
             'model' => $this->findModel($id),
+            'total' => $total
         ]);
     }
 

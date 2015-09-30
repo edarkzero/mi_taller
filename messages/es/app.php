@@ -149,5 +149,6 @@ return [
     'Updated' => 'Editado',
     'Paid' => 'Pagado',
     'Enter a description' => 'Ingresa una descripción',
-    'Print voucher' => 'Imprimir combrobante'
+    'Print voucher' => 'Imprimir combrobante',
+    'Voucher' => 'Comprobante'
 ];
