@@ -26,6 +26,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             [
+                'attribute' => 'vehicle_description',
+                'label' => Yii::t('app','Vehicle'),
+                'value' => function($model, $key, $index, $column)
+                {
+                    return $model->getVehicleDescription();
+                }
+            ],
+            [
+                'attribute' => 'customer_description',
+                'label' => Yii::t('app','Customer'),
+                'value' => function($model, $key, $index, $column)
+                {
+                    return $model->getCustomerDescription();
+                }
+            ],
+            [
                 'attribute' => 'price_total',
                 'label' => $searchModel->getAttributeLabel('price_id'),
                 'value' => function ($model, $key, $index, $column)

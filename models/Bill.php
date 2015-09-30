@@ -207,4 +207,24 @@ class Bill extends \yii\db\ActiveRecord
 
         return "";
     }
+
+    public function getVehicleDescription()
+    {
+        if(isset($this->vehicle))
+        {
+            return $this->vehicle->brand.', '.$this->vehicle->model.', '.$this->vehicle->color.', '.$this->vehicle->plaque;
+        }
+
+        return "";
+    }
+
+    public function getCustomerDescription()
+    {
+        if(isset($this->customer))
+        {
+            return $this->customer->serial.', '.$this->customer->name;
+        }
+
+        return "";
+    }
 }

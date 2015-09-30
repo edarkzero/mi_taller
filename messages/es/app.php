@@ -152,6 +152,8 @@ return [
     'Print voucher' => 'Imprimir combrobante',
     'Voucher' => 'Comprobante',
     'Details of vehicle' => 'Detalles de vehículo',
+    'Vehicle' => 'Vehículo',
+    'Customer' => 'Cliente',
     'Brand' => 'Marca',
     'Model' => 'Modelo',
     'Plaque' => 'Placa',
