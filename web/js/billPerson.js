@@ -11,6 +11,12 @@ $(document).ready(function (e) {
         reloadBillPersonData('#bill-grid-wrapper',1);
     });
 
+    $('#cancel-bp-submit-modal').click(function(event)
+    {
+        event.preventDefault();
+        $.pjax.reload({container:'#bill-grid-wrapper'});
+    });
+
     $('#voucher-wrapper').on('pjax:success', function(data, status, xhr, options)
     {
         $('#modal-voucher').modal('show');
