@@ -34,9 +34,9 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Billing'), 'url' => 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<script>
-    var money_default_value = "<?= Yii::$app->formatter->asCurrency(0.00) ?>";
-</script>
+    <script>
+        var money_default_value = "<?= Yii::$app->formatter->asCurrency(0.00) ?>";
+    </script>
     <h1><?= Html::encode($this->title) ?></h1>
 
     <div class="row">
@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
-                    <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app','Tiny')]); ?></h3>
+                    <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app', 'Tiny')]); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
                     <img data-car-full="6" data-car="tiny" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/tiny-front.png"/>
@@ -117,7 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
-                    <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app','Medium')]); ?></h3>
+                    <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app', 'Medium')]); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
                     <img data-car-full="7" data-car="medium" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/medium-front.png"/>
@@ -127,7 +127,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
-                    <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app','Big')]); ?></h3>
+                    <h3 class="panel-title"><?= Yii::t('app', '{size} Car', ['size' => Yii::t('app', 'Big')]); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
                     <img data-car-full="8" data-car="big" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/big-front.png"/>
@@ -137,7 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-4">
             <div class="panel panel-primary">
                 <div class="panel-heading text-center">
-                    <h3 class="panel-title"><?= Yii::t('app','Pickup'); ?></h3>
+                    <h3 class="panel-title"><?= Yii::t('app', 'Pickup'); ?></h3>
                 </div>
                 <div class="panel-body car-select-option">
                     <img data-car-full="9" data-car="pickup" class="img-responsive center-block" src="<?= Yii::getAlias('@web') ?>/images/car-blueprint/pickup-front.png"/>
@@ -210,46 +210,48 @@ ActiveForm::end();
 Modal::end();
 
 Modal::begin([
-    'header' => '<h2>' . Yii::t('app', 'Details of vehicle') .'<small>&nbsp;('. Yii::t('app','Optional') . ')</small></h2>',
+    'header' => '<h2>' . Yii::t('app', 'Details of vehicle') . '<small>&nbsp;(' . Yii::t('app', 'Optional') . ')</small></h2>',
     'options' => ['id' => 'bill-discount-modal']
 ]);
 ?>
 
-    <div class="row">
-        <div class="col-md-12">
-            <?= Html::textInput('vehicle-brand',null,['class' => 'form-control','placeholder' => Yii::t('app','Brand')]); ?>
+    <form id="vehicle-details">
+        <div class="row">
+            <div class="col-md-12">
+                <?= Html::textInput('Vehicle[brand]', null, ['class' => 'form-control', 'placeholder' => Yii::t('app', 'Brand')]); ?>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <?= Html::textInput('vehicle-model',null,['class' => 'form-control','placeholder' => Yii::t('app','Model')]); ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?= Html::textInput('Vehicle[model]', null, ['class' => 'form-control', 'placeholder' => Yii::t('app', 'Model')]); ?>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <?= Html::textInput('vehicle-color',null,['class' => 'form-control','placeholder' => Yii::t('app','Color')]); ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?= Html::textInput('Vehicle[color]', null, ['class' => 'form-control', 'placeholder' => Yii::t('app', 'Color')]); ?>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <?= Html::textInput('vehicle-plaque',null,['class' => 'form-control','placeholder' => Yii::t('app','Plaque')]); ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?= Html::textInput('Vehicle[plaque]', null, ['class' => 'form-control', 'placeholder' => Yii::t('app', 'Plaque')]); ?>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <?= Html::textInput('customer-name',null,['class' => 'form-control','placeholder' => Yii::t('app','Name').'/'.Yii::t('app','Tradename')]); ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?= Html::textInput('Customer[name]', null, ['class' => 'form-control', 'placeholder' => Yii::t('app', 'Name') . '/' . Yii::t('app', 'Tradename')]); ?>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <?= Html::textInput('customer-id',null,['class' => 'form-control','placeholder' => Yii::t('app','ID2').'/'.Yii::t('app','ISR')]); ?>
+        <div class="row">
+            <div class="col-md-12">
+                <?= Html::textInput('Customer[serial]', null, ['class' => 'form-control', 'placeholder' => Yii::t('app', 'ID2') . '/' . Yii::t('app', 'ISR')]); ?>
+            </div>
         </div>
-    </div>
+    </form>
 
     <div class="row">
         <div class="col-md-12">
@@ -275,7 +277,7 @@ Modal::begin([
             <?= Html::submitButton(Yii::t('app', 'Accept'), ['class' => 'btn btn-success', 'id' => 'discount-submit-modal']); ?>
         </div>
         <div class="col-md-6">
-            <?= Html::submitButton(Yii::t('app', 'Cancel'), ['data-dismiss' => 'modal','class' => 'btn btn-warning pull-right','id' => 'cancel-discount-submit-modal']); ?>
+            <?= Html::submitButton(Yii::t('app', 'Cancel'), ['data-dismiss' => 'modal', 'class' => 'btn btn-warning pull-right', 'id' => 'cancel-discount-submit-modal']); ?>
         </div>
     </div>
 

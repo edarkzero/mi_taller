@@ -3,10 +3,12 @@
 namespace app\controllers;
 
 use app\models\CarPart;
+use app\models\Customer;
 use app\models\Damage;
 use app\models\Price;
 use app\models\Size;
 use app\models\Color;
+use app\models\Vehicle;
 use Yii;
 use app\models\Bill;
 use app\models\BillSearch;
@@ -108,7 +110,23 @@ class BillController extends Controller
 
                     if(!$modelPrice->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($modelPrice->tableName())),'msj' => print_r($modelPrice->getErrors(),true)]),500);
                     $model->price_id = $modelPrice->id;
-                    $model->discount = $discount; //TODO: need to modify this value by the user from a modal
+                    $model->discount = $discount;
+
+                    if(isset($_POST['Vehicle']))
+                    {
+                        $vehicle = new Vehicle();
+                        $vehicle->attributes = $_POST['Vehicle'];
+                        if(!$vehicle->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($vehicle->tableName())),'msj' => print_r($vehicle->getErrors(),true)]),500);
+                        $model->vehicle_id = $vehicle->id;
+                    }
+
+                    if(isset($_POST['Customer']))
+                    {
+                        $customer = new Customer();
+                        $customer->attributes = $_POST['Customer'];
+                        if(!$customer->save(false)) throw new Exception(Yii::t('app','Error saving {model}: {msj}',['model' => Yii::t('app',ucfirst($customer->tableName())),'msj' => print_r($customer->getErrors(),true)]),500);
+                        $model->customer_id = $customer->id;
+                    }
 
                     if ($model->save())
                         $result['message'] = Yii::t('app', '{modelClass} saved', ['modelClass' => Yii::t('app', ucfirst($model->tableName()))]);

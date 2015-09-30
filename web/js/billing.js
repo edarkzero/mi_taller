@@ -240,10 +240,12 @@ function storeChanges(mode)
 
 function storeBill()
 {
-    alert()
+    var data = $('#vehicle-details').serialize();
+    data += '&mode='+bill_mode+'&discount='+$('#bill-discount-disp').maskMoney('unmasked')[0];
+    alert(data);
 
     $.ajax('create', {
-        data: {mode: bill_mode, discount: $('#bill-discount-disp').maskMoney('unmasked')[0]},
+        data: data,
         dataType: 'json',
         method: 'POST',
         success: function (data)

@@ -10,11 +10,15 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property string $id
  * @property string $price_id
+ * @property string $vehicle_id
+ * @property string $customer_id
  * @property string $discount
  * @property string $created_at
  * @property string $updated_at
  *
  * @property Price $price
+ * @property Vehicle $vehicle
+ * @property Customer $customer
  * @property BillItem[] $billItems
  * @property BillPersonal[] $billPersonals
  */
@@ -76,7 +80,7 @@ class Bill extends \yii\db\ActiveRecord
     {
         return [
             [['price_id'], 'required'],
-            [['price_id'], 'integer'],
+            [['price_id', 'vehicle_id', 'customer_id'], 'integer'],
             [['discount'], 'number'],
             [['created_at', 'updated_at'], 'safe']
         ];
@@ -90,6 +94,8 @@ class Bill extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'price_id' => Yii::t('app', 'Price'),
+            'vehicle_id' => Yii::t('app', 'Vehicle'),
+            'customer_id' => Yii::t('app', 'Customer'),
             'discount' => Yii::t('app', 'Discount'),
             'created_at' => Yii::t('app', 'Created_at'),
             'updated_at' => Yii::t('app', 'Updated_at'),
@@ -123,6 +129,22 @@ class Bill extends \yii\db\ActiveRecord
     public function getBillPersonals()
     {
         return $this->hasMany(BillPersonal::className(), ['bill_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getVehicle()
+    {
+        return $this->hasOne(Vehicle::className(), ['id' => 'vehicle_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCustomer()
+    {
+        return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
     }
 
     public function haveItems()
