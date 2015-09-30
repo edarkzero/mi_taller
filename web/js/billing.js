@@ -240,6 +240,8 @@ function storeChanges(mode)
 
 function storeBill()
 {
+    alert()
+
     $.ajax('create', {
         data: {mode: bill_mode, discount: $('#bill-discount-disp').maskMoney('unmasked')[0]},
         dataType: 'json',

@@ -210,10 +210,52 @@ ActiveForm::end();
 Modal::end();
 
 Modal::begin([
-    'header' => '<h2>' . Yii::t('app', '¿Do you want to apply a discount?') . '</h2>',
+    'header' => '<h2>' . Yii::t('app', 'Details of vehicle') .'<small>&nbsp;('. Yii::t('app','Optional') . ')</small></h2>',
     'options' => ['id' => 'bill-discount-modal']
 ]);
 ?>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?= Html::textInput('vehicle-brand',null,['class' => 'form-control','placeholder' => Yii::t('app','Brand')]); ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?= Html::textInput('vehicle-model',null,['class' => 'form-control','placeholder' => Yii::t('app','Model')]); ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?= Html::textInput('vehicle-color',null,['class' => 'form-control','placeholder' => Yii::t('app','Color')]); ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?= Html::textInput('vehicle-plaque',null,['class' => 'form-control','placeholder' => Yii::t('app','Plaque')]); ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?= Html::textInput('customer-name',null,['class' => 'form-control','placeholder' => Yii::t('app','Name').'/'.Yii::t('app','Tradename')]); ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?= Html::textInput('customer-id',null,['class' => 'form-control','placeholder' => Yii::t('app','ID2').'/'.Yii::t('app','ISR')]); ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3><?= Yii::t('app', '¿Do you want to apply a discount?'); ?></h3>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-12">
@@ -233,7 +275,7 @@ Modal::begin([
             <?= Html::submitButton(Yii::t('app', 'Accept'), ['class' => 'btn btn-success', 'id' => 'discount-submit-modal']); ?>
         </div>
         <div class="col-md-6">
-            <?= Html::submitButton(Yii::t('app', 'Cancel'), ['data-dismiss' => 'modal','class' => 'btn btn-warning','id' => 'cancel-discount-submit-modal']); ?>
+            <?= Html::submitButton(Yii::t('app', 'Cancel'), ['data-dismiss' => 'modal','class' => 'btn btn-warning pull-right','id' => 'cancel-discount-submit-modal']); ?>
         </div>
     </div>
 

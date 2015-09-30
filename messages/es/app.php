@@ -150,5 +150,14 @@ return [
     'Paid' => 'Pagado',
     'Enter a description' => 'Ingresa una descripción',
     'Print voucher' => 'Imprimir combrobante',
-    'Voucher' => 'Comprobante'
+    'Voucher' => 'Comprobante',
+    'Details of vehicle' => 'Detalles de vehículo',
+    'Brand' => 'Marca',
+    'Model' => 'Modelo',
+    'Plaque' => 'Placa',
+    'ISR' => 'RIF',
+    'ID2' => 'Cédula',
+    'Or' => 'o',
+    'Tradename' => 'Nombre comercial',
+    'Optional' => 'Opcional'
 ];
