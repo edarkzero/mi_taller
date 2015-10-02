@@ -13,8 +13,10 @@ use yii\behaviors\TimestampBehavior;
  * @property string $vehicle_id
  * @property string $customer_id
  * @property string $discount
+ * @property integer $draft
  * @property string $created_at
  * @property string $updated_at
+ * @property string $deleted_at
  *
  * @property Price $price
  * @property Vehicle $vehicle
@@ -80,9 +82,9 @@ class Bill extends \yii\db\ActiveRecord
     {
         return [
             [['price_id'], 'required'],
-            [['price_id', 'vehicle_id', 'customer_id'], 'integer'],
+            [['price_id', 'vehicle_id', 'customer_id', 'draft'], 'integer'],
             [['discount'], 'number'],
-            [['created_at', 'updated_at'], 'safe']
+            [['created_at', 'updated_at','deleted_at'], 'safe']
         ];
     }
 
@@ -96,9 +98,11 @@ class Bill extends \yii\db\ActiveRecord
             'price_id' => Yii::t('app', 'Price'),
             'vehicle_id' => Yii::t('app', 'Vehicle'),
             'customer_id' => Yii::t('app', 'Customer'),
+            'draft' => Yii::t('app', 'Bill draft'),
             'discount' => Yii::t('app', 'Discount'),
             'created_at' => Yii::t('app', 'Created_at'),
             'updated_at' => Yii::t('app', 'Updated_at'),
+            'deleted_at' => Yii::t('app', 'Deleted_at'),
         ];
     }
 
@@ -226,5 +230,10 @@ class Bill extends \yii\db\ActiveRecord
         }
 
         return "";
+    }
+
+    public function isDeleted()
+    {
+        return !empty($this->deleted_at);
     }
 }

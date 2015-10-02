@@ -161,5 +161,8 @@ return [
     'ID2' => 'Cédula',
     'Or' => 'o',
     'Tradename' => 'Nombre comercial',
-    'Optional' => 'Opcional'
+    'Optional' => 'Opcional',
+    'Bill draft' => 'Presupuesto',
+    'Filter' => 'Filtrar',
+    'Show' => 'Mostrar'
 ];

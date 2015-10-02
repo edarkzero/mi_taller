@@ -46,6 +46,7 @@ class BillSearch extends Bill
     {
         $query = Bill::find();
         $query->innerJoinWith('price');
+        $query->orderBy('deleted_at ASC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,11 +58,11 @@ class BillSearch extends Bill
                         'desc' => ['price.total' => SORT_DESC],
                     ],
                     'discount',
-                    'created_at',
-                    'updated_at'
+                    self::tableName().'.created_at',
+                    self::tableName().'.updated_at'
                 ],
                 'defaultOrder' => [
-                    'created_at' => SORT_DESC
+                    self::tableName().'.created_at' => SORT_DESC
                 ]
             ])
         ]);
@@ -78,8 +79,8 @@ class BillSearch extends Bill
             self::tableName().'.id' => $this->id,
             'price_id' => $this->price_id,
             'discount' => $this->discount,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            self::tableName().'.created_at' => $this->created_at,
+            self::tableName().'.updated_at' => $this->updated_at
         ]);
 
         $query->andFilterWhere(['like','price.total',$this->price_total]);
@@ -111,11 +112,11 @@ class BillSearch extends Bill
                         'desc' => ['price.total' => SORT_DESC],
                     ],
                     'discount',
-                    'created_at',
-                    'updated_at'
+                    self::tableName().'.created_at',
+                    self::tableName().'.updated_at'
                 ],
                 'defaultOrder' => [
-                    'updated_at' => SORT_DESC
+                    self::tableName().'.updated_at' => SORT_DESC
                 ]
             ])
         ]);
@@ -132,8 +133,8 @@ class BillSearch extends Bill
             self::tableName().'.id' => $this->id,
             'price_id' => $this->price_id,
             'discount' => $this->discount,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            self::tableName().'.created_at' => $this->created_at,
+            self::tableName().'.updated_at' => $this->updated_at
         ]);
 
         $query->andFilterWhere(['like','price.total',$this->price_total]);
@@ -183,11 +184,11 @@ class BillSearch extends Bill
                         'asc' => [BillPersonal::tableName().'.amount' => SORT_ASC],
                         'desc' => [BillPersonal::tableName().'.amount' => SORT_DESC],
                     ],
-                    'created_at',
-                    'updated_at'
+                    self::tableName().'.created_at',
+                    self::tableName().'.updated_at'
                 ],
                 'defaultOrder' => [
-                    'updated_at' => SORT_DESC
+                    self::tableName().'.updated_at' => SORT_DESC
                 ]
             ])
         ]);
@@ -207,8 +208,8 @@ class BillSearch extends Bill
             self::tableName().'.id' => $this->id,
             'price_id' => $this->price_id,
             'discount' => $this->discount,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            self::tableName().'.created_at' => $this->created_at,
+            self::tableName().'.updated_at' => $this->updated_at,
             BillPersonal::tableName().'.paid' => $this->bp_paid
         ]);
 
