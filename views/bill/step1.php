@@ -273,8 +273,11 @@ Modal::begin([
     </div>
 
     <div class="row">
-        <div class="col-md-6">
-            <?= Html::submitButton(Yii::t('app', 'Accept'), ['class' => 'btn btn-success', 'id' => 'discount-submit-modal']); ?>
+        <div class="col-md-3">
+            <?= Html::submitButton(Yii::t('app', 'Bill2'), ['class' => 'btn btn-success', 'id' => 'discount-submit-modal']); ?>
+        </div>
+        <div class="col-md-3">
+            <?= Html::submitButton(Yii::t('app', 'Bill draft'), ['class' => 'btn btn-info', 'id' => 'draft-submit-modal']); ?>
         </div>
         <div class="col-md-6">
             <?= Html::submitButton(Yii::t('app', 'Cancel'), ['data-dismiss' => 'modal', 'class' => 'btn btn-warning pull-right', 'id' => 'cancel-discount-submit-modal']); ?>

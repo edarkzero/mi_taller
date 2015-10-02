@@ -110,14 +110,20 @@ $(document).ready(function (e)
     $('#discount-submit-modal').click(function (e)
     {
         e.preventDefault();
-        storeBill();
+        storeBill(false);
+    });
+
+    $('#draft-submit-modal').click(function (e)
+    {
+        e.preventDefault();
+        storeBill(true);
     });
 
     $('#cancel-discount-submit-modal').click(function (e)
     {
         e.preventDefault();
-        jQuery("#bill-discount-disp").maskMoney('mask', 0.00);
-        storeBill();
+        /*jQuery("#bill-discount-disp").maskMoney('mask', 0.00);
+        storeBill();*/
     });
 
     $('#bill-discount-modal').on('show.bs.modal', function (e)
@@ -139,11 +145,11 @@ $(document).ready(function (e)
     });
 
     $('#bill-type').change(function (event) {
-        var bill_mode = $(this).val();
+        var bm = $(this).val();
 
         $.pjax.reload({
             container:'#bill-grid-wrapper',
-            type: 'POST',data:{bill_mode: bill_mode}
+            type: 'POST',data:{bill_mode: bm}
         });
     });
 
@@ -247,10 +253,13 @@ function storeChanges(mode)
     });
 }
 
-function storeBill()
+function storeBill(make_draft)
 {
     var data = $('#vehicle-details').serialize();
     data += '&mode='+bill_mode+'&discount='+$('#bill-discount-disp').maskMoney('unmasked')[0];
+
+    if(make_draft)
+        data += '&draft=1';
 
     $.ajax('create', {
         data: data,

@@ -116,6 +116,9 @@ class BillController extends Controller
                     $model->price_id = $modelPrice->id;
                     $model->discount = $discount;
 
+                    if(isset($_POST['draft']) && !empty($_POST['draft']))
+                        $model->draft = 1;
+
                     if(isset($_POST['Vehicle']))
                     {
                         $vehicle = new Vehicle();
