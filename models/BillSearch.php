@@ -20,9 +20,9 @@ class BillSearch extends Bill
     public function rules()
     {
         return [
-            [['id', 'price_id'], 'integer'],
+            [['id', 'price_id','draft'], 'integer'],
             [['discount'], 'number'],
-            [['created_at', 'updated_at','price_total','bp_paid','bp_description','bp_amount'], 'safe'],
+            [['created_at', 'updated_at','price_total','bp_paid','bp_description','bp_amount','draft','filter'], 'safe'],
         ];
     }
 
@@ -47,6 +47,14 @@ class BillSearch extends Bill
         $query = Bill::find();
         $query->innerJoinWith('price');
         $query->orderBy('deleted_at ASC');
+
+        if(isset($this->filter) && $this->filter != '')
+        {
+            if($this->filter == 0 || $this->filter == 1)
+                $query->where(['draft' => $this->filter]);
+            elseif($this->filter >= 2)
+                $query->where(['not',['deleted_at' => null]]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

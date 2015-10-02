@@ -58,6 +58,10 @@ class BillController extends Controller
     public function actionIndex()
     {
         $searchModel = new BillSearch();
+
+        if(isset($_POST['bill_mode']))
+            $searchModel->filter = $_POST['bill_mode'];
+
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

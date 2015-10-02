@@ -139,7 +139,12 @@ $(document).ready(function (e)
     });
 
     $('#bill-type').change(function (event) {
+        var bill_mode = $(this).val();
 
+        $.pjax.reload({
+            container:'#bill-grid-wrapper',
+            type: 'POST',data:{bill_mode: bill_mode}
+        });
     });
 
     highlightControl(default_car_selection);

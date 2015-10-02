@@ -11,6 +11,7 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'Bills');
 $this->params['breadcrumbs'][] = $this->title;
+$billGridID = 'bill-grid';
 ?>
 
 <div class="bill-index">
@@ -25,13 +26,16 @@ $this->params['breadcrumbs'][] = $this->title;
             <label for="select" class="col-lg-2 control-label"><?= Yii::t('app', 'Show'); ?></label>
 
             <div class="col-lg-2">
-                <?= Html::dropDownList('bill-type', 0, [Yii::t('app', 'All'), Yii::t('app', 'Bills'), Yii::t('app', 'Bill drafts'),Yii::t('app','Deleted2')], ['class' => 'form-control', 'id' => 'bill-type']); ?>
+                <?= Html::dropDownList('bill-type', $searchModel->filter, ['' => Yii::t('app', 'All'), '0' => Yii::t('app', 'Bills'), '1' => Yii::t('app', 'Bill drafts'), '2' => Yii::t('app','Deleted2')], ['class' => 'form-control', 'id' => 'bill-type']); ?>
             </div>
         </div>
     </fieldset>
     </p>
 
+    <?php \yii\widgets\Pjax::begin(['id' => $billGridID.'-wrapper']); ?>
+
     <?= GridView::widget([
+        'id' => $billGridID,
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'rowOptions' => function ($model, $key, $index, $grid) {
@@ -70,8 +74,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at:datetime',
             'updated_at:datetime',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttonOptions' => ['data-pjax' => '0']
+            ],
         ],
     ]); ?>
+
+    <?php \yii\widgets\Pjax::end(); ?>
 
 </div>

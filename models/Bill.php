@@ -30,6 +30,7 @@ class Bill extends \yii\db\ActiveRecord
     public $bp_paid;
     public $bp_description;
     public $bp_amount;
+    public $filter;
 
     /**
      * @inheritdoc
