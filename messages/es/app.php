@@ -146,6 +146,7 @@ return [
     'Quantity to use' => 'Cantidad a usar',
     'Saved' => 'Guardado',
     'Deleted' => 'Eliminado',
+    'Deleted2' => 'Eliminados',
     'Updated' => 'Editado',
     'Paid' => 'Pagado',
     'Enter a description' => 'Ingresa una descripción',
@@ -163,6 +164,7 @@ return [
     'Tradename' => 'Nombre comercial',
     'Optional' => 'Opcional',
     'Bill draft' => 'Presupuesto',
+    'Bill drafts' => 'Presupuestos',
     'Filter' => 'Filtrar',
     'Show' => 'Mostrar'
 ];

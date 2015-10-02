@@ -236,4 +236,9 @@ class Bill extends \yii\db\ActiveRecord
     {
         return !empty($this->deleted_at);
     }
+
+    public function isDraft()
+    {
+        return $this->draft == 1;
+    }
 }

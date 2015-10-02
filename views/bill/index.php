@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <label for="select" class="col-lg-2 control-label"><?= Yii::t('app', 'Show'); ?></label>
 
             <div class="col-lg-2">
-                <?= Html::dropDownList('bill-type', 0, [Yii::t('app', 'All'), Yii::t('app', 'Bills'), Yii::t('app', 'Bill draft')], ['class' => 'form-control', 'id' => 'bill-type']); ?>
+                <?= Html::dropDownList('bill-type', 0, [Yii::t('app', 'All'), Yii::t('app', 'Bills'), Yii::t('app', 'Bill drafts'),Yii::t('app','Deleted2')], ['class' => 'form-control', 'id' => 'bill-type']); ?>
             </div>
         </div>
     </fieldset>
@@ -35,7 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'rowOptions' => function ($model, $key, $index, $grid) {
-            return $model->isDeleted() ? ['class' => 'warning'] : null;
+            if($model->isDeleted())
+                return ['class' => 'danger'];
+            elseif($model->isDraft())
+                return ['class' => 'warning'];
+            else
+                return null;
         },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],

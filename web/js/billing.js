@@ -138,10 +138,8 @@ $(document).ready(function (e)
         }
     });
 
-    $(document).ready(function (e) {
-        $('#bill-type').change(function (event) {
-            
-        });
+    $('#bill-type').change(function (event) {
+
     });
 
     highlightControl(default_car_selection);
