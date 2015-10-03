@@ -93,7 +93,7 @@ $itemGridID = 'item-grid';
                 'controller' => 'bill',
                 'buttons' => [
                     'print' => function ($url, $model, $key) {
-                        return Html::a('<span class="glyphicon glyphicon-print"></span>', $url,['title' => Yii::t('app','Print'),'data-pjax' => '0','aria-label' => Yii::t('app','Print'),'target' => '_blank']);
+                        return Html::a('<span class="glyphicon glyphicon-print"></span>',['item-assign/print','id' => $model->id],['title' => Yii::t('app','Print'),'data-pjax' => '0','aria-label' => Yii::t('app','Print'),'target' => '_blank']);
                     },
                 ],
                 'template' => '{view} {update} {delete} {print}',
