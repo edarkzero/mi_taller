@@ -131,6 +131,7 @@ return [
     'The requested car part need to be defined. You can do it <a href="{route}">here</a>' => 'Es necesario definir la pieza del vehículo solicitado. Puede hacerlo <a href="{route}">aquí</a>',
     'Save' => 'Guardar',
     'Save and print' => 'Guardar e imprimir',
+    'Print' => 'Imprimir',
     '¿Do you want to apply a discount?' => '¿Desea aplicar un descuento?',
     'Accept' => 'Aceptar',
     'Cancel' => 'Cancelar',

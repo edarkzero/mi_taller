@@ -91,6 +91,12 @@ $itemGridID = 'item-grid';
             [
                 'class' => 'yii\grid\ActionColumn',
                 'controller' => 'bill',
+                'buttons' => [
+                    'print' => function ($url, $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-print"></span>', $url,['title' => Yii::t('app','Print'),'data-pjax' => '0','aria-label' => Yii::t('app','Print'),'target' => '_blank']);
+                    },
+                ],
+                'template' => '{view} {update} {delete} {print}',
                 'buttonOptions' => ['data-pjax' => '0']
             ],
             ['class' => 'yii\grid\CheckboxColumn'],
