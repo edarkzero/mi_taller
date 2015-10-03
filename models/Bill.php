@@ -31,6 +31,8 @@ class Bill extends \yii\db\ActiveRecord
     public $bp_description;
     public $bp_amount;
     public $filter;
+    public $outgoings;
+    public $gainings;
 
     /**
      * @inheritdoc
@@ -231,6 +233,47 @@ class Bill extends \yii\db\ActiveRecord
         }
 
         return "";
+    }
+
+    public function getOutgoings()
+    {
+        if(!isset($this->outgoings))
+        {
+            $result = 0.00;
+
+            if(isset($this->billItems))
+            {
+                foreach ($this->billItems as $billItem)
+                {
+                    if (isset($billItem->item)) {
+                        $result += (double)$billItem->item->getTotal() * (double)$billItem->quantity;
+                    }
+                }
+
+            }
+
+            if(isset($this->billPersonals))
+            {
+                foreach($this->billPersonals as $billPersonal)
+                {
+                    $result += (double)$billPersonal->amount;
+                }
+            }
+
+            $this->outgoings = $result;
+        }
+
+        return $this->outgoings;
+    }
+
+    public function getGainings()
+    {
+        if(!isset($this->outgoings))
+            $this->outgoings = $this->getOutgoings();
+
+        $this->gainings = (double) $this->getPriceTotal() - $this->outgoings;
+
+        return $this->gainings;
     }
 
     public function isDeleted()

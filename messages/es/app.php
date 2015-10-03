@@ -167,5 +167,7 @@ return [
     'Bill drafts' => 'Presupuestos',
     'Filter' => 'Filtrar',
     'Show' => 'Mostrar',
-    'Bill2' => 'Facturar'
+    'Bill2' => 'Facturar',
+    'Outgoings' => 'Gastos',
+    'Gainings' => 'Ganancias'
 ];

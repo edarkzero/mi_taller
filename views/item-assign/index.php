@@ -65,13 +65,28 @@ $itemGridID = 'item-grid';
             ],
             [
                 'attribute' => 'price_total',
-                'label' => $searchModel->getAttributeLabel('price_id'),
+                'label' => Yii::t('app','Bill'),
                 'value' => function ($model, $key, $index, $column)
                 {
                     return Yii::$app->formatter->asCurrency($model->getPriceTotal());
                 }
             ],
-            'discount:currency',
+            [
+                'attribute' => 'bill_item_outgoings',
+                'label' => Yii::t('app','Outgoings'),
+                'value' => function ($model, $key, $index, $column)
+                {
+                    return Yii::$app->formatter->asCurrency($model->getOutgoings());
+                }
+            ],
+            [
+                'attribute' => 'bill_item_gain',
+                'label' => Yii::t('app','Gainings'),
+                'value' => function ($model, $key, $index, $column)
+                {
+                    return Yii::$app->formatter->asCurrency($model->getGainings());
+                }
+            ],
 
             [
                 'class' => 'yii\grid\ActionColumn',
