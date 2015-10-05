@@ -235,31 +235,45 @@ class Bill extends \yii\db\ActiveRecord
         return "";
     }
 
+    public function getItemsTotal()
+    {
+        $result = 0.00;
+
+        if(isset($this->billItems))
+        {
+            foreach ($this->billItems as $billItem)
+            {
+                if (isset($billItem->item)) {
+                    $result += (double)$billItem->item->getTotal() * (double)$billItem->quantity;
+                }
+            }
+
+        }
+
+        return $result;
+    }
+
+    public function getPersonalTotal()
+    {
+        $result = 0.00;
+
+        if(isset($this->billPersonals))
+        {
+            foreach($this->billPersonals as $billPersonal)
+            {
+                $result += (double)$billPersonal->amount;
+            }
+        }
+
+        return $result;
+    }
+
     public function getOutgoings()
     {
         if(!isset($this->outgoings))
         {
-            $result = 0.00;
-
-            if(isset($this->billItems))
-            {
-                foreach ($this->billItems as $billItem)
-                {
-                    if (isset($billItem->item)) {
-                        $result += (double)$billItem->item->getTotal() * (double)$billItem->quantity;
-                    }
-                }
-
-            }
-
-            if(isset($this->billPersonals))
-            {
-                foreach($this->billPersonals as $billPersonal)
-                {
-                    $result += (double)$billPersonal->amount;
-                }
-            }
-
+            $result = $this->getItemsTotal();
+            $result += $this->getPersonalTotal();
             $this->outgoings = $result;
         }
 

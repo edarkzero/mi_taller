@@ -198,11 +198,13 @@ class ItemAssignController extends Controller
 
     public function actionPrint($id)
     {
-        $model = $this->findModel($id);
-
-        return $this->render('print',[
-           'model' => $model
-        ]);
+        if (($bill = Bill::findOne($id)) !== null) {
+            return $this->render('print',[
+                'bill' => $bill
+            ]);
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     /**

@@ -170,5 +170,6 @@ return [
     'Show' => 'Mostrar',
     'Bill2' => 'Facturar',
     'Outgoings' => 'Gastos',
-    'Gainings' => 'Ganancias'
+    'Gainings' => 'Ganancias',
+    'Summary' => 'Resumen'
 ];
