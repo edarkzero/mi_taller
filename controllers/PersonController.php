@@ -7,6 +7,7 @@ use app\models\BillPersonal;
 use app\models\BillPersonalSearch;
 use app\models\BillSearch;
 use app\models\Job;
+use kartik\mpdf\Pdf;
 use Yii;
 use app\models\Person;
 use app\models\PersonSearch;
@@ -313,11 +314,39 @@ class PersonController extends Controller
             $person = Person::findOne($_GET['p']);
             $billPersonal = BillPersonal::getAsociated($_GET['p'],$ids);
 
-            if ($person !== null && count($billPersonal) > 0)
-                return $this->render('print', [
+            if ($person !== null && count($billPersonal) > 0) {
+                $content = $this->renderPartial('print', [
                     'person' => $person,
                     'billPersonal' => $billPersonal
                 ]);
+
+                $pdf = new Pdf([
+                    // set to use core fonts only
+                    'mode' => Pdf::MODE_UTF8,
+                    // A4 paper format
+                    'format' => Pdf::FORMAT_A4,
+                    // portrait orientation
+                    'orientation' => Pdf::ORIENT_PORTRAIT,
+                    // stream to browser inline
+                    'destination' => Pdf::DEST_BROWSER,
+                    // your html content input
+                    'content' => $content,
+                    // format content from your own css file if needed or use the
+                    // enhanced bootstrap css built by Krajee for mPDF formatting
+                    'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+                    // any css to be embedded if required
+                    'cssInline' => '.kv-heading-1{font-size:18px}',
+                    // set mPDF properties on the fly
+                    'options' => ['title' => Yii::t('app','Bill').' '.Yii::t('app','Report')],
+                    // call mPDF methods on the fly
+                    'methods' => [
+                        'SetHeader'=>[Yii::t('app','Summary')],
+                        'SetFooter'=>['{PAGENO}'],
+                    ]
+                ]);
+
+                return $pdf->render();
+            }
         }
 
         else

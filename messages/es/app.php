@@ -172,5 +172,6 @@ return [
     'Outgoings' => 'Gastos',
     'Gainings' => 'Ganancias',
     'Summary' => 'Resumen',
+    'Report' => 'Reporte',
     'Split payment' => 'Dividir pago'
 ];

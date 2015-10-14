@@ -14,6 +14,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use kartik\mpdf\Pdf;
 
 /**
  * ItemAssignController implements the CRUD actions for BillItem model.
@@ -199,9 +200,36 @@ class ItemAssignController extends Controller
     public function actionPrint($id)
     {
         if (($bill = Bill::findOne($id)) !== null) {
-            return $this->render('print',[
+            $content = $this->renderPartial('print',[
                 'bill' => $bill
             ]);
+
+            $pdf = new Pdf([
+                // set to use core fonts only
+                'mode' => Pdf::MODE_UTF8,
+                // A4 paper format
+                'format' => Pdf::FORMAT_A4,
+                // portrait orientation
+                'orientation' => Pdf::ORIENT_PORTRAIT,
+                // stream to browser inline
+                'destination' => Pdf::DEST_BROWSER,
+                // your html content input
+                'content' => $content,
+                // format content from your own css file if needed or use the
+                // enhanced bootstrap css built by Krajee for mPDF formatting
+                'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+                // any css to be embedded if required
+                'cssInline' => '.kv-heading-1{font-size:18px}',
+                // set mPDF properties on the fly
+                'options' => ['title' => Yii::t('app','Bill').' '.Yii::t('app','Report')],
+                // call mPDF methods on the fly
+                'methods' => [
+                    'SetHeader'=>[Yii::t('app','Summary')],
+                    'SetFooter'=>['{PAGENO}'],
+                ]
+            ]);
+
+            return $pdf->render();
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
