@@ -171,5 +171,6 @@ return [
     'Bill2' => 'Facturar',
     'Outgoings' => 'Gastos',
     'Gainings' => 'Ganancias',
-    'Summary' => 'Resumen'
+    'Summary' => 'Resumen',
+    'Split payment' => 'Dividir pago'
 ];

@@ -138,6 +138,10 @@ BillPersonAsset::register($this);
                             'beforeInput' => function ($form, $widget) use (&$model) {
                                 echo Html::input('hidden','bill',$model->id);
                                 echo Html::input('hidden','person',Yii::$app->request->queryParams['id']);
+                            },
+                            'afterInput' => function ($form, $widget) use (&$model) {
+                                //echo Html::label('Dividir pago','split-bill-'.$model->id).Html::checkbox('split-bill-'.$model->id,true);
+                                echo '<div class="checkbox"><label>'.Html::checkbox('split-bill',false).'<span class="checkbox-material"><span class="check"></span></span> <span class="label-primary">'.Yii::t('app','Split payment').'</span></label></div>';
                             }
                         ]);
                     }
