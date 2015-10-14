@@ -109,4 +109,14 @@ class BillPersonal extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Person::className(), ['id' => 'personal_id']);
     }
+
+    /**
+     * @param $personal
+     * @param $bill
+     * @return null|BillPersonal|BillPersonal[]
+     */
+    public static function getAsociated($personal,$bill)
+    {
+        return self::find()->where(['personal_id' => $personal,'bill_id' => $bill])->all();
+    }
 }

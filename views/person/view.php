@@ -25,6 +25,8 @@ BillPersonAsset::register($this);
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <input type="hidden" name="person-id" id="person-id" value="<?= $model->id ?>">
+
     <p>
         <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [

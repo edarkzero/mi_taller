@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Bill;
 use app\models\BillPersonal;
 use app\models\BillPersonalSearch;
 use app\models\BillSearch;
@@ -132,8 +133,8 @@ class PersonController extends Controller
                         $total += $billPersonal->amount;
 
                         if($saveMode) {
-                            if ($billPersonal->paid == 1)
-                                $billPersonal->paid = 0;
+                            if ($billPersonal->paid == 0)
+                                $billPersonal->paid = 1;
                             else
                                 $billPersonal->paid = 1;
 
@@ -299,5 +300,27 @@ class PersonController extends Controller
         if(!$occurrence && $q != "")
             $out['results'][] = ['id' => $q, 'text' => $q];
         return $out;
+    }
+
+    public function actionPrint()
+    {
+        $person = null;
+        $billPersonal = null;
+
+        if(isset($_GET['p'],$_GET['s']))
+        {
+            $ids = explode(',',$_GET['s']);
+            $person = Person::findOne($_GET['p']);
+            $billPersonal = BillPersonal::getAsociated($_GET['p'],$ids);
+
+            if ($person !== null && count($billPersonal) > 0)
+                return $this->render('print', [
+                    'person' => $person,
+                    'billPersonal' => $billPersonal
+                ]);
+        }
+
+        else
+            throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

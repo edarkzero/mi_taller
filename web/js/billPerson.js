@@ -2,13 +2,13 @@ $(document).ready(function (e) {
     $('#voucher-btn').click(function(event)
     {
         event.preventDefault();
-        reloadBillPersonData('#voucher-wrapper',0);
+        reloadBillPersonData('#voucher-wrapper',0,false);
     });
 
     $('#bp-submit-modal').click(function(event)
     {
         event.preventDefault();
-        reloadBillPersonData('#bill-grid-wrapper',1);
+        reloadBillPersonData('#bill-grid-wrapper',1,true);
     });
 
     $('#cancel-bp-submit-modal').click(function(event)
@@ -34,12 +34,16 @@ $(document).ready(function (e) {
     });
 });
 
-function reloadBillPersonData(wrapper,mode)
+function reloadBillPersonData(wrapper,mode,openAfter)
 {
     var keys = $("#bill-grid").yiiGridView('getSelectedRows');
+
     $.pjax.reload({
         container:wrapper,
         type: 'POST',data:{selected:keys,mode: mode},
         replace: false
     });
+
+    if(openAfter)
+        window.open("print?p="+$('#person-id').val()+"&s="+keys);
 }
