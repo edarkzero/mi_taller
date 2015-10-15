@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Bill;
 use app\models\BillPersonal;
+use app\models\BillPersonalQuotes;
 use app\models\BillPersonalSearch;
 use app\models\BillSearch;
 use app\models\Job;
@@ -104,6 +105,20 @@ class PersonController extends Controller
                 return ['output'=>'', 'message'=>print_r($billPerson->errors,true)];
             else
             {
+                if(isset($_POST['split-bill']) && $_POST['split-bill'] == 1)
+                {
+                    $n_quotes = 2;
+
+                    for($i = 0 ; $i < $n_quotes ; $i++)
+                    {
+                        $quote = new BillPersonalQuotes();
+                        $quote->amount = (double)$billPerson->amount / (double)$n_quotes;
+                        $quote->bill_person_id = $billPerson->id;
+                        if(!$quote->save())
+                            return ['output'=>'', 'message'=>print_r($quote->errors,true)];
+                    }
+                }
+
                 if(isset($_POST['bp_amount']))
                     return ['output' => $billPersonAmount, 'message' => ''];
                 elseif(isset($_POST['bp_description']))

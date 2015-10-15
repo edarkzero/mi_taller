@@ -141,7 +141,7 @@ BillPersonAsset::register($this);
                             },
                             'afterInput' => function ($form, $widget) use (&$model) {
                                 //echo Html::label('Dividir pago','split-bill-'.$model->id).Html::checkbox('split-bill-'.$model->id,true);
-                                echo '<div class="checkbox"><label>'.Html::checkbox('split-bill',false).'<span class="checkbox-material"><span class="check"></span></span> <span class="label-primary">'.Yii::t('app','Split payment').'</span></label></div>';
+                                echo '<div class="checkbox"><label>'.Html::checkbox('split-bill',false,['class' => 'bill-divide']).'<span class="checkbox-material"><span class="check"></span></span> <span class="label-primary">'.Yii::t('app','Split payment').'</span></label></div>';
                             }
                         ]);
                     }
