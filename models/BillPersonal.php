@@ -19,6 +19,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Bill $bill
  * @property Person $personal
+ * @property BillPersonalQuotes[] $billPersonalQuotes
  */
 class BillPersonal extends \yii\db\ActiveRecord
 {
@@ -108,6 +109,14 @@ class BillPersonal extends \yii\db\ActiveRecord
     public function getPersonal()
     {
         return $this->hasOne(Person::className(), ['id' => 'personal_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBillPersonalQuotes()
+    {
+        return $this->hasMany(BillPersonalQuotes::className(), ['bill_person_id' => 'id']);
     }
 
     /**
